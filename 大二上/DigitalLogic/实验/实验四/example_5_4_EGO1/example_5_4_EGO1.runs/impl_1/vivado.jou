@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Sun Nov  3 15:18:26 2024
+# Process ID: 13628
+# Current directory: D:/DigitalLogic/实验/实验四/example_5_4_EGO1/example_5_4_EGO1.runs/impl_1
+# Command line: vivado.exe -log example_5_4_EGO1.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source example_5_4_EGO1.tcl -notrace
+# Log file: D:/DigitalLogic/实验/实验四/example_5_4_EGO1/example_5_4_EGO1.runs/impl_1/example_5_4_EGO1.vdi
+# Journal file: D:/DigitalLogic/实验/实验四/example_5_4_EGO1/example_5_4_EGO1.runs/impl_1\vivado.jou
+#-----------------------------------------------------------
+source example_5_4_EGO1.tcl -notrace

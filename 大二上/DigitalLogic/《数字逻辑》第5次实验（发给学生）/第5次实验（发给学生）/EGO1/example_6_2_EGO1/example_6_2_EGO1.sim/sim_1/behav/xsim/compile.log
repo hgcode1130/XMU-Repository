@@ -1,0 +1,11 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/DigitalLogic/EGO1/example_6_2_EGO1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module not_gate
+INFO: [VRFC 10-311] analyzing module and_gate2
+INFO: [VRFC 10-311] analyzing module nand_gate3
+INFO: [VRFC 10-311] analyzing module nor_gate2
+INFO: [VRFC 10-311] analyzing module nor_gate3
+INFO: [VRFC 10-311] analyzing module rs_flip_flop
+INFO: [VRFC 10-311] analyzing module example_6_2
+INFO: [VRFC 10-2458] undeclared symbol t5, assumed default net type wire [C:/DigitalLogic/EGO1/example_6_2_EGO1.v:118]
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/DigitalLogic/EGO1/example_6_2_sim_EGO1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module example_6_2_sim

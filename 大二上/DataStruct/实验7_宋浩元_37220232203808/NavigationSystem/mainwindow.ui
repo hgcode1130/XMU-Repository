@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>978</width>
+    <height>616</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1200</width>
+    <height>800</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QScrollArea" name="scrollArea">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>976</width>
+      <height>623</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>974</width>
+      <height>621</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/map/Map.png);</string>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>974</width>
+       <height>621</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>978</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menufile">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="actionempty"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>视图</string>
+    </property>
+    <addaction name="action_2"/>
+    <addaction name="action_10"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>操作</string>
+    </property>
+    <addaction name="action_5"/>
+    <addaction name="action_6"/>
+    <addaction name="action_7"/>
+    <addaction name="action_8"/>
+    <addaction name="action_9"/>
+   </widget>
+   <addaction name="menufile"/>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
+  </widget>
+  <action name="actionempty">
+   <property name="text">
+    <string>empty</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>显示所有点线</string>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="text">
+    <string>修改点名称</string>
+   </property>
+  </action>
+  <action name="action_6">
+   <property name="text">
+    <string>删除该点</string>
+   </property>
+  </action>
+  <action name="action_7">
+   <property name="text">
+    <string>设为起点</string>
+   </property>
+  </action>
+  <action name="action_8">
+   <property name="text">
+    <string>设为终点</string>
+   </property>
+  </action>
+  <action name="action_9">
+   <property name="text">
+    <string>显示最短路径</string>
+   </property>
+  </action>
+  <action name="action_10">
+   <property name="text">
+    <string>清楚所有点线</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

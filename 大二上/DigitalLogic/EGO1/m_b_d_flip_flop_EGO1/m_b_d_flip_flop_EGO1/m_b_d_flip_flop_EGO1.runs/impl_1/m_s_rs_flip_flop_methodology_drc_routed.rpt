@@ -1,0 +1,57 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Sun Oct 15 11:32:35 2023
+| Host         : DESKTOP-CSQVPR3 running 64-bit major release  (build 9200)
+| Command      : report_methodology -file m_s_rs_flip_flop_methodology_drc_routed.rpt -pb m_s_rs_flip_flop_methodology_drc_routed.pb -rpx m_s_rs_flip_flop_methodology_drc_routed.rpx
+| Design       : m_s_rs_flip_flop
+| Device       : xc7a35tcsg324-1
+| Speed File   : -1
+| Design State : Fully Routed
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Report Methodology
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: design_1
+      Design limits: <entire design considered>
+             Max violations: <unlimited>
+             Violations found: 4
++-----------+------------------+------------------------------+------------+
+| Rule      | Severity         | Description                  | Violations |
++-----------+------------------+------------------------------+------------+
+| TIMING-17 | Critical Warning | Non-clocked sequential cell  | 2          |
+| LUTAR-1   | Warning          | LUT drives async reset alert | 1          |
+| TIMING-20 | Warning          | Non-clocked latch            | 1          |
++-----------+------------------+------------------------------+------------+
+
+2. REPORT DETAILS
+-----------------
+TIMING-17#1 Critical Warning
+Non-clocked sequential cell  
+The clock pin q_reg_C/C is not reached by a timing clock
+Related violations: <none>
+
+TIMING-17#2 Critical Warning
+Non-clocked sequential cell  
+The clock pin q_reg_P/C is not reached by a timing clock
+Related violations: <none>
+
+LUTAR-1#1 Warning
+LUT drives async reset alert  
+LUT cell q_reg_LDC_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) q_reg_P/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+TIMING-20#1 Warning
+Non-clocked latch  
+The latch q_reg_LDC cannot be properly analyzed as its control pin q_reg_LDC/G is not reached by a timing clock
+Related violations: <none>
+
+

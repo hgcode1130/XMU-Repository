@@ -1,0 +1,641 @@
+
+*** Running vivado
+    with args -log E_CLOCK.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source E_CLOCK.tcl
+
+
+****** Vivado v2019.2 (64-bit)
+  **** SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+  **** IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+source E_CLOCK.tcl -notrace
+Command: synth_design -top E_CLOCK -part xc7a35tcsg324-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Device 21-403] Loading part xc7a35tcsg324-1
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 10500 
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:01 ; elapsed = 00:00:02 . Memory (MB): peak = 835.227 ; gain = 233.289
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'E_CLOCK' [D:/DigitalLogic/EGO1/E_CLOCK.v:101]
+WARNING: [Synth 8-567] referenced signal 'hours' should be on the sensitivity list [D:/DigitalLogic/EGO1/E_CLOCK.v:145]
+WARNING: [Synth 8-567] referenced signal 'minutes' should be on the sensitivity list [D:/DigitalLogic/EGO1/E_CLOCK.v:145]
+INFO: [Synth 8-6157] synthesizing module 'number' [D:/DigitalLogic/EGO1/E_CLOCK.v:3]
+WARNING: [Synth 8-567] referenced signal 'data' should be on the sensitivity list [D:/DigitalLogic/EGO1/E_CLOCK.v:41]
+WARNING: [Synth 8-3848] Net led1 in module/entity number does not have driver. [D:/DigitalLogic/EGO1/E_CLOCK.v:9]
+INFO: [Synth 8-6155] done synthesizing module 'number' (1#1) [D:/DigitalLogic/EGO1/E_CLOCK.v:3]
+WARNING: [Synth 8-7023] instance 'U1' of module 'number' has 7 connections declared, but only 6 given [D:/DigitalLogic/EGO1/E_CLOCK.v:157]
+INFO: [Synth 8-6155] done synthesizing module 'E_CLOCK' (2#1) [D:/DigitalLogic/EGO1/E_CLOCK.v:101]
+WARNING: [Synth 8-3331] design number has unconnected port led1[5]
+WARNING: [Synth 8-3331] design number has unconnected port led1[4]
+WARNING: [Synth 8-3331] design number has unconnected port led1[3]
+WARNING: [Synth 8-3331] design number has unconnected port led1[2]
+WARNING: [Synth 8-3331] design number has unconnected port led1[1]
+WARNING: [Synth 8-3331] design number has unconnected port led1[0]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:01 ; elapsed = 00:00:03 . Memory (MB): peak = 908.195 ; gain = 306.258
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 908.195 ; gain = 306.258
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 908.195 ; gain = 306.258
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 908.195 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [D:/DigitalLogic/EGO1/EGO1.xdc]
+CRITICAL WARNING: [Designutils 20-1307] Command '//----------------------------------------------系统时钟和复�?-----------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:1]
+CRITICAL WARNING: [Designutils 20-1307] Command '//-----------------------------------------------5个按�?--------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:6]
+WARNING: [Vivado 12-584] No ports matched 'btn_0'. [D:/DigitalLogic/EGO1/EGO1.xdc:7]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:7]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'btn_1'. [D:/DigitalLogic/EGO1/EGO1.xdc:8]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:8]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'btn_2'. [D:/DigitalLogic/EGO1/EGO1.xdc:9]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:9]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'btn_3'. [D:/DigitalLogic/EGO1/EGO1.xdc:10]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:10]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'btn_4'. [D:/DigitalLogic/EGO1/EGO1.xdc:11]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:11]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-507] No nets matched 'btn_0_IBUF'. [D:/DigitalLogic/EGO1/EGO1.xdc:13]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:13]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-507] No nets matched 'btn_1_IBUF'. [D:/DigitalLogic/EGO1/EGO1.xdc:14]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:14]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-507] No nets matched 'btn_2_IBUF'. [D:/DigitalLogic/EGO1/EGO1.xdc:15]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:15]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-507] No nets matched 'btn_3_IBUF'. [D:/DigitalLogic/EGO1/EGO1.xdc:16]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:16]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-507] No nets matched 'btn_4_IBUF'. [D:/DigitalLogic/EGO1/EGO1.xdc:17]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:17]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//---------------------------------------------拨码开关sw0~sw7----------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:20]
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[0]'. [D:/DigitalLogic/EGO1/EGO1.xdc:21]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:21]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[1]'. [D:/DigitalLogic/EGO1/EGO1.xdc:22]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:22]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[2]'. [D:/DigitalLogic/EGO1/EGO1.xdc:23]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:23]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[3]'. [D:/DigitalLogic/EGO1/EGO1.xdc:24]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:24]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[4]'. [D:/DigitalLogic/EGO1/EGO1.xdc:25]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:25]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[5]'. [D:/DigitalLogic/EGO1/EGO1.xdc:26]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:26]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[6]'. [D:/DigitalLogic/EGO1/EGO1.xdc:27]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:27]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[7]'. [D:/DigitalLogic/EGO1/EGO1.xdc:28]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:28]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//------------------------------------------拨码开关（DIP开关）sw8~sw15---------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:31]
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[0]'. [D:/DigitalLogic/EGO1/EGO1.xdc:32]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:32]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[1]'. [D:/DigitalLogic/EGO1/EGO1.xdc:33]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:33]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[2]'. [D:/DigitalLogic/EGO1/EGO1.xdc:34]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:34]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[3]'. [D:/DigitalLogic/EGO1/EGO1.xdc:35]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:35]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[4]'. [D:/DigitalLogic/EGO1/EGO1.xdc:36]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:36]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[5]'. [D:/DigitalLogic/EGO1/EGO1.xdc:37]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:37]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[6]'. [D:/DigitalLogic/EGO1/EGO1.xdc:38]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:38]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[7]'. [D:/DigitalLogic/EGO1/EGO1.xdc:39]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:39]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//---------------------------------------------LED0~LED15----------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:42]
+WARNING: [Vivado 12-584] No ports matched 'led_pin[0]'. [D:/DigitalLogic/EGO1/EGO1.xdc:43]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:43]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led_pin[1]'. [D:/DigitalLogic/EGO1/EGO1.xdc:44]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:44]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led_pin[2]'. [D:/DigitalLogic/EGO1/EGO1.xdc:45]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:45]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led_pin[3]'. [D:/DigitalLogic/EGO1/EGO1.xdc:46]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:46]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led_pin[4]'. [D:/DigitalLogic/EGO1/EGO1.xdc:47]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:47]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led_pin[5]'. [D:/DigitalLogic/EGO1/EGO1.xdc:48]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:48]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led_pin[6]'. [D:/DigitalLogic/EGO1/EGO1.xdc:49]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:49]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led_pin[7]'. [D:/DigitalLogic/EGO1/EGO1.xdc:50]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:50]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led_pin[8]'. [D:/DigitalLogic/EGO1/EGO1.xdc:52]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:52]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led_pin[9]'. [D:/DigitalLogic/EGO1/EGO1.xdc:53]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:53]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led_pin[10]'. [D:/DigitalLogic/EGO1/EGO1.xdc:54]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:54]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led_pin[11]'. [D:/DigitalLogic/EGO1/EGO1.xdc:55]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:55]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led_pin[12]'. [D:/DigitalLogic/EGO1/EGO1.xdc:56]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:56]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led_pin[13]'. [D:/DigitalLogic/EGO1/EGO1.xdc:57]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:57]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led_pin[14]'. [D:/DigitalLogic/EGO1/EGO1.xdc:58]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:58]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led_pin[15]'. [D:/DigitalLogic/EGO1/EGO1.xdc:59]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:59]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//-----------------------------------8个数码管位选信�?----------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:62]
+CRITICAL WARNING: [Designutils 20-1307] Command '//--------------------------------------------数码管段选信�?--------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:72]
+CRITICAL WARNING: [Designutils 20-1307] Command '//--------------------------------------VGA行同步场同步信号-----------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:92]
+WARNING: [Vivado 12-584] No ports matched 'vga_hs_pin'. [D:/DigitalLogic/EGO1/EGO1.xdc:93]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:93]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_vs_pin'. [D:/DigitalLogic/EGO1/EGO1.xdc:94]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:94]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//--------------------------------------VGA红绿蓝信�?-----------------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:97]
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[0]'. [D:/DigitalLogic/EGO1/EGO1.xdc:98]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:98]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[1]'. [D:/DigitalLogic/EGO1/EGO1.xdc:99]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:99]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[2]'. [D:/DigitalLogic/EGO1/EGO1.xdc:100]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:100]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[3]'. [D:/DigitalLogic/EGO1/EGO1.xdc:101]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:101]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[4]'. [D:/DigitalLogic/EGO1/EGO1.xdc:102]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:102]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[5]'. [D:/DigitalLogic/EGO1/EGO1.xdc:103]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:103]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[6]'. [D:/DigitalLogic/EGO1/EGO1.xdc:104]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:104]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[7]'. [D:/DigitalLogic/EGO1/EGO1.xdc:105]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:105]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[8]'. [D:/DigitalLogic/EGO1/EGO1.xdc:106]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:106]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[9]'. [D:/DigitalLogic/EGO1/EGO1.xdc:107]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:107]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[10]'. [D:/DigitalLogic/EGO1/EGO1.xdc:108]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:108]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[11]'. [D:/DigitalLogic/EGO1/EGO1.xdc:109]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:109]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//----------------------------------------------串口--------------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:112]
+WARNING: [Vivado 12-584] No ports matched 'PC_Uart_rxd'. [D:/DigitalLogic/EGO1/EGO1.xdc:113]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:113]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'PC_Uart_txd'. [D:/DigitalLogic/EGO1/EGO1.xdc:114]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:114]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//---------------------------------------------------PS2接口-------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:117]
+WARNING: [Vivado 12-584] No ports matched 'ps2_clk'. [D:/DigitalLogic/EGO1/EGO1.xdc:118]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:118]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'ps2_data'. [D:/DigitalLogic/EGO1/EGO1.xdc:119]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:119]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//------------------------------------------------IIC接口---------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:122]
+WARNING: [Vivado 12-584] No ports matched 'pw_iic_scl_io'. [D:/DigitalLogic/EGO1/EGO1.xdc:123]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:123]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'pw_iic_sda_io'. [D:/DigitalLogic/EGO1/EGO1.xdc:124]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:124]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//---------------------------------------------------蓝牙---------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:127]
+WARNING: [Vivado 12-584] No ports matched 'BT_Uart_rxd'. [D:/DigitalLogic/EGO1/EGO1.xdc:128]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:128]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'BT_Uart_txd'. [D:/DigitalLogic/EGO1/EGO1.xdc:129]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:129]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'bt_ctrl_o[0]'. [D:/DigitalLogic/EGO1/EGO1.xdc:131]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:131]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'bt_ctrl_o[1]'. [D:/DigitalLogic/EGO1/EGO1.xdc:132]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:132]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'bt_ctrl_o[2]'. [D:/DigitalLogic/EGO1/EGO1.xdc:133]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:133]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'bt_ctrl_o[3]'. [D:/DigitalLogic/EGO1/EGO1.xdc:134]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:134]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'bt_ctrl_o[4]'. [D:/DigitalLogic/EGO1/EGO1.xdc:135]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:135]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'bt_mcu_int_i'. [D:/DigitalLogic/EGO1/EGO1.xdc:137]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:137]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//-----------------------------------------------------音频接口---------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:141]
+WARNING: [Vivado 12-584] No ports matched 'audio_pwm_o'. [D:/DigitalLogic/EGO1/EGO1.xdc:142]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:142]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'audio_sd_o'. [D:/DigitalLogic/EGO1/EGO1.xdc:143]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:143]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//--------------------------------------------------------XADC模数转换-----------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:147]
+WARNING: [Vivado 12-584] No ports matched 'XADC_AUX_v_n'. [D:/DigitalLogic/EGO1/EGO1.xdc:148]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:148]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'XADC_AUX_v_p'. [D:/DigitalLogic/EGO1/EGO1.xdc:149]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:149]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'XADC_VP_VN_v_n'. [D:/DigitalLogic/EGO1/EGO1.xdc:150]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:150]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'XADC_VP_VN_v_p'. [D:/DigitalLogic/EGO1/EGO1.xdc:151]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:151]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//--------------------------------------------------------DAC数模转换---------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:154]
+WARNING: [Vivado 12-584] No ports matched 'dac_ile'. [D:/DigitalLogic/EGO1/EGO1.xdc:155]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:155]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_cs_n'. [D:/DigitalLogic/EGO1/EGO1.xdc:156]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:156]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_wr1_n'. [D:/DigitalLogic/EGO1/EGO1.xdc:157]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:157]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_wr2_n'. [D:/DigitalLogic/EGO1/EGO1.xdc:158]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:158]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_xfer_n'. [D:/DigitalLogic/EGO1/EGO1.xdc:159]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:159]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[0]'. [D:/DigitalLogic/EGO1/EGO1.xdc:161]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:161]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[1]'. [D:/DigitalLogic/EGO1/EGO1.xdc:162]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:162]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[2]'. [D:/DigitalLogic/EGO1/EGO1.xdc:163]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:163]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[3]'. [D:/DigitalLogic/EGO1/EGO1.xdc:164]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:164]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[4]'. [D:/DigitalLogic/EGO1/EGO1.xdc:165]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:165]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[5]'. [D:/DigitalLogic/EGO1/EGO1.xdc:166]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:166]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[6]'. [D:/DigitalLogic/EGO1/EGO1.xdc:167]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:167]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[7]'. [D:/DigitalLogic/EGO1/EGO1.xdc:168]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:168]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//-------------------------------------------------SDRAM芯片接口-------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:172]
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[18]'. [D:/DigitalLogic/EGO1/EGO1.xdc:173]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:173]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[17]'. [D:/DigitalLogic/EGO1/EGO1.xdc:174]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:174]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[16]'. [D:/DigitalLogic/EGO1/EGO1.xdc:175]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:175]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[15]'. [D:/DigitalLogic/EGO1/EGO1.xdc:176]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:176]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[14]'. [D:/DigitalLogic/EGO1/EGO1.xdc:177]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:177]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[13]'. [D:/DigitalLogic/EGO1/EGO1.xdc:178]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:178]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[12]'. [D:/DigitalLogic/EGO1/EGO1.xdc:179]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:179]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[11]'. [D:/DigitalLogic/EGO1/EGO1.xdc:180]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:180]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[10]'. [D:/DigitalLogic/EGO1/EGO1.xdc:181]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:181]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[9]'. [D:/DigitalLogic/EGO1/EGO1.xdc:182]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:182]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[8]'. [D:/DigitalLogic/EGO1/EGO1.xdc:183]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/EGO1.xdc:183]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[7]'. [D:/DigitalLogic/EGO1/EGO1.xdc:184]
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[6]'. [D:/DigitalLogic/EGO1/EGO1.xdc:185]
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[5]'. [D:/DigitalLogic/EGO1/EGO1.xdc:186]
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[4]'. [D:/DigitalLogic/EGO1/EGO1.xdc:187]
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[3]'. [D:/DigitalLogic/EGO1/EGO1.xdc:188]
+INFO: [Common 17-14] Message 'Vivado 12-584' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. [D:/DigitalLogic/EGO1/EGO1.xdc:188]
+CRITICAL WARNING: [Designutils 20-1307] Command '//--------------------------------------32个pmod接口（扩展接口）-------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/EGO1.xdc:219]
+Finished Parsing XDC File [D:/DigitalLogic/EGO1/EGO1.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [D:/DigitalLogic/EGO1/EGO1.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/E_CLOCK_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/E_CLOCK_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 988.520 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 988.520 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:03 ; elapsed = 00:00:07 . Memory (MB): peak = 988.520 ; gain = 386.582
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35tcsg324-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:03 ; elapsed = 00:00:07 . Memory (MB): peak = 988.520 ; gain = 386.582
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:03 ; elapsed = 00:00:07 . Memory (MB): peak = 988.520 ; gain = 386.582
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5587] ROM size for "seg_data" is below threshold of ROM address width. It will be mapped to LUTs
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:07 . Memory (MB): peak = 988.520 ; gain = 386.582
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      7 Bit       Adders := 2     
+	   2 Input      6 Bit       Adders := 1     
++---Registers : 
+	                8 Bit    Registers := 1     
+	                7 Bit    Registers := 2     
+	                6 Bit    Registers := 1     
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   2 Input      7 Bit        Muxes := 2     
+	   2 Input      6 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module E_CLOCK 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      7 Bit       Adders := 2     
+	   2 Input      6 Bit       Adders := 1     
++---Registers : 
+	                7 Bit    Registers := 2     
+	                6 Bit    Registers := 1     
++---Muxes : 
+	   2 Input      7 Bit        Muxes := 2     
+	   2 Input      6 Bit        Muxes := 1     
+Module number 
+Detailed RTL Component Info : 
++---Registers : 
+	                8 Bit    Registers := 1     
+	                1 Bit    Registers := 1     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+WARNING: [Synth 8-3917] design E_CLOCK has port seg_data_0_pin[7] driven by constant 0
+WARNING: [Synth 8-3917] design E_CLOCK has port seg_data_1_pin[7] driven by constant 0
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (i_1/\hours_reg[5] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (i_1/\seconds_reg[6] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (i_1/\minutes_reg[6] )
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:04 ; elapsed = 00:00:11 . Memory (MB): peak = 988.520 ; gain = 386.582
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:06 ; elapsed = 00:00:15 . Memory (MB): peak = 988.520 ; gain = 386.582
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:06 ; elapsed = 00:00:15 . Memory (MB): peak = 988.520 ; gain = 386.582
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:06 ; elapsed = 00:00:15 . Memory (MB): peak = 997.270 ; gain = 395.332
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:06 ; elapsed = 00:00:18 . Memory (MB): peak = 1013.105 ; gain = 411.168
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:06 ; elapsed = 00:00:18 . Memory (MB): peak = 1013.105 ; gain = 411.168
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:06 ; elapsed = 00:00:18 . Memory (MB): peak = 1013.105 ; gain = 411.168
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:06 ; elapsed = 00:00:18 . Memory (MB): peak = 1013.105 ; gain = 411.168
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:18 . Memory (MB): peak = 1013.105 ; gain = 411.168
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:06 ; elapsed = 00:00:18 . Memory (MB): peak = 1013.105 ; gain = 411.168
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-------+------+
+|      |Cell   |Count |
++------+-------+------+
+|1     |BUFG   |     1|
+|2     |CARRY4 |    24|
+|3     |LUT1   |     1|
+|4     |LUT2   |   122|
+|5     |LUT3   |     2|
+|6     |LUT4   |    10|
+|7     |LUT5   |    11|
+|8     |LUT6   |    32|
+|9     |FDCE   |    89|
+|10    |FDPE   |     1|
+|11    |IBUF   |     2|
+|12    |OBUF   |    24|
++------+-------+------+
+
+Report Instance Areas: 
++------+---------+-------+------+
+|      |Instance |Module |Cells |
++------+---------+-------+------+
+|1     |top      |       |   319|
+|2     |  U1     |number |   151|
++------+---------+-------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:06 ; elapsed = 00:00:18 . Memory (MB): peak = 1013.105 ; gain = 411.168
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 2 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:04 ; elapsed = 00:00:16 . Memory (MB): peak = 1013.105 ; gain = 330.844
+Synthesis Optimization Complete : Time (s): cpu = 00:00:06 ; elapsed = 00:00:18 . Memory (MB): peak = 1013.105 ; gain = 411.168
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1025.148 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 24 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1025.148 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+21 Infos, 118 Warnings, 118 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:08 ; elapsed = 00:00:21 . Memory (MB): peak = 1025.148 ; gain = 718.152
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1025.148 ; gain = 0.000
+WARNING: [Constraints 18-5210] No constraints selected for write.
+Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
+INFO: [Common 17-1381] The checkpoint 'D:/DigitalLogic/EGO1/E_CLOCK/E_CLOCK.runs/synth_1/E_CLOCK.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file E_CLOCK_utilization_synth.rpt -pb E_CLOCK_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Tue Dec  3 23:14:07 2024...

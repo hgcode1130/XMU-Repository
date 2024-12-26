@@ -1,0 +1,66 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Fri Nov 15 10:57:45 2024
+| Host         : DESKTOP-CSQVPR3 running 64-bit major release  (build 9200)
+| Command      : report_methodology -file ttl74148_exe_methodology_drc_routed.rpt -pb ttl74148_exe_methodology_drc_routed.pb -rpx ttl74148_exe_methodology_drc_routed.rpx
+| Design       : ttl74148_exe
+| Device       : xc7a35tcsg324-1
+| Speed File   : -1
+| Design State : Fully Routed
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Report Methodology
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: design_1
+      Design limits: <entire design considered>
+             Max violations: <unlimited>
+             Violations found: 6
++-----------+----------+------------------------------+------------+
+| Rule      | Severity | Description                  | Violations |
++-----------+----------+------------------------------+------------+
+| LUTAR-1   | Warning  | LUT drives async reset alert | 3          |
+| TIMING-20 | Warning  | Non-clocked latch            | 3          |
++-----------+----------+------------------------------+------------+
+
+2. REPORT DETAILS
+-----------------
+LUTAR-1#1 Warning
+LUT drives async reset alert  
+LUT cell U/fqa_reg_i_3, with 2 or more inputs, drives asynchronous preset/clear pin(s) U/fqa_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#2 Warning
+LUT drives async reset alert  
+LUT cell U/fqb_reg_i_3, with 2 or more inputs, drives asynchronous preset/clear pin(s) U/fqb_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#3 Warning
+LUT drives async reset alert  
+LUT cell U/fqc_reg_i_3, with 2 or more inputs, drives asynchronous preset/clear pin(s) U/fqc_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+TIMING-20#1 Warning
+Non-clocked latch  
+The latch U/fqa_reg cannot be properly analyzed as its control pin U/fqa_reg/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#2 Warning
+Non-clocked latch  
+The latch U/fqb_reg cannot be properly analyzed as its control pin U/fqb_reg/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#3 Warning
+Non-clocked latch  
+The latch U/fqc_reg cannot be properly analyzed as its control pin U/fqc_reg/G is not reached by a timing clock
+Related violations: <none>
+
+

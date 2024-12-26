@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Mon Oct  9 08:55:28 2023
+# Process ID: 7964
+# Current directory: C:/DigitalLogic/EGO1/clk_jk_flip_flop_EGO1/clk_jk_flip_flop_EGO1.runs/impl_1
+# Command line: vivado.exe -log clk_jk_flip_flop.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source clk_jk_flip_flop.tcl -notrace
+# Log file: C:/DigitalLogic/EGO1/clk_jk_flip_flop_EGO1/clk_jk_flip_flop_EGO1.runs/impl_1/clk_jk_flip_flop.vdi
+# Journal file: C:/DigitalLogic/EGO1/clk_jk_flip_flop_EGO1/clk_jk_flip_flop_EGO1.runs/impl_1\vivado.jou
+#-----------------------------------------------------------
+source clk_jk_flip_flop.tcl -notrace

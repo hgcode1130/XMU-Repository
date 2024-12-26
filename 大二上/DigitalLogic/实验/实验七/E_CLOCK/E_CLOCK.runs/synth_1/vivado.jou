@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Tue Dec  3 23:13:43 2024
+# Process ID: 25268
+# Current directory: D:/DigitalLogic/EGO1/E_CLOCK/E_CLOCK.runs/synth_1
+# Command line: vivado.exe -log E_CLOCK.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source E_CLOCK.tcl
+# Log file: D:/DigitalLogic/EGO1/E_CLOCK/E_CLOCK.runs/synth_1/E_CLOCK.vds
+# Journal file: D:/DigitalLogic/EGO1/E_CLOCK/E_CLOCK.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source E_CLOCK.tcl -notrace

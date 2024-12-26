@@ -1,0 +1,51 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Sat Sep 30 16:03:46 2023
+| Host         : DESKTOP-CSQVPR3 running 64-bit major release  (build 9200)
+| Command      : report_methodology -file rs_flip_flop_methodology_drc_routed.rpt -pb rs_flip_flop_methodology_drc_routed.pb -rpx rs_flip_flop_methodology_drc_routed.rpx
+| Design       : rs_flip_flop
+| Device       : xc7a35tcsg324-1
+| Speed File   : -1
+| Design State : Fully Routed
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Report Methodology
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: design_1
+      Design limits: <entire design considered>
+             Max violations: <unlimited>
+             Violations found: 3
++-----------+----------+------------------------------+------------+
+| Rule      | Severity | Description                  | Violations |
++-----------+----------+------------------------------+------------+
+| LUTAR-1   | Warning  | LUT drives async reset alert | 1          |
+| TIMING-20 | Warning  | Non-clocked latch            | 2          |
++-----------+----------+------------------------------+------------+
+
+2. REPORT DETAILS
+-----------------
+LUTAR-1#1 Warning
+LUT drives async reset alert  
+LUT cell led_pin_reg[1]_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) led_pin_reg[0]/CLR, led_pin_reg[1]/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+TIMING-20#1 Warning
+Non-clocked latch  
+The latch led_pin_reg[0] cannot be properly analyzed as its control pin led_pin_reg[0]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#2 Warning
+Non-clocked latch  
+The latch led_pin_reg[1] cannot be properly analyzed as its control pin led_pin_reg[1]/G is not reached by a timing clock
+Related violations: <none>
+
+

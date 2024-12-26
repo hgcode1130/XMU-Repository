@@ -1,0 +1,111 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Thu Nov 14 09:39:27 2024
+| Host         : DESKTOP-CSQVPR3 running 64-bit major release  (build 9200)
+| Command      : report_methodology -file ttl74138_exe_methodology_drc_routed.rpt -pb ttl74138_exe_methodology_drc_routed.pb -rpx ttl74138_exe_methodology_drc_routed.rpx
+| Design       : ttl74138_exe
+| Device       : xc7a35tcsg324-1
+| Speed File   : -1
+| Design State : Fully Routed
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Report Methodology
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: design_1
+      Design limits: <entire design considered>
+             Max violations: <unlimited>
+             Violations found: 15
++-----------+----------+------------------------------+------------+
+| Rule      | Severity | Description                  | Violations |
++-----------+----------+------------------------------+------------+
+| LUTAR-1   | Warning  | LUT drives async reset alert | 7          |
+| TIMING-20 | Warning  | Non-clocked latch            | 8          |
++-----------+----------+------------------------------+------------+
+
+2. REPORT DETAILS
+-----------------
+LUTAR-1#1 Warning
+LUT drives async reset alert  
+LUT cell U/f0, with 2 or more inputs, drives asynchronous preset/clear pin(s) U/f0_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#2 Warning
+LUT drives async reset alert  
+LUT cell U/f2_inferred__1/i_, with 2 or more inputs, drives asynchronous preset/clear pin(s) U/f2_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#3 Warning
+LUT drives async reset alert  
+LUT cell U/f3_inferred__0/i_, with 2 or more inputs, drives asynchronous preset/clear pin(s) U/f3_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#4 Warning
+LUT drives async reset alert  
+LUT cell U/f4_inferred__0/i_, with 2 or more inputs, drives asynchronous preset/clear pin(s) U/f4_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#5 Warning
+LUT drives async reset alert  
+LUT cell U/f5_inferred__0/i_, with 2 or more inputs, drives asynchronous preset/clear pin(s) U/f5_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#6 Warning
+LUT drives async reset alert  
+LUT cell U/f6_inferred__0/i_, with 2 or more inputs, drives asynchronous preset/clear pin(s) U/f6_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#7 Warning
+LUT drives async reset alert  
+LUT cell U/f7_reg_i_3, with 2 or more inputs, drives asynchronous preset/clear pin(s) U/f7_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+TIMING-20#1 Warning
+Non-clocked latch  
+The latch U/f0_reg cannot be properly analyzed as its control pin U/f0_reg/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#2 Warning
+Non-clocked latch  
+The latch U/f1_reg/L7 (in U/f1_reg macro) cannot be properly analyzed as its control pin U/f1_reg/L7/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#3 Warning
+Non-clocked latch  
+The latch U/f2_reg cannot be properly analyzed as its control pin U/f2_reg/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#4 Warning
+Non-clocked latch  
+The latch U/f3_reg cannot be properly analyzed as its control pin U/f3_reg/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#5 Warning
+Non-clocked latch  
+The latch U/f4_reg cannot be properly analyzed as its control pin U/f4_reg/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#6 Warning
+Non-clocked latch  
+The latch U/f5_reg cannot be properly analyzed as its control pin U/f5_reg/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#7 Warning
+Non-clocked latch  
+The latch U/f6_reg cannot be properly analyzed as its control pin U/f6_reg/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#8 Warning
+Non-clocked latch  
+The latch U/f7_reg cannot be properly analyzed as its control pin U/f7_reg/G is not reached by a timing clock
+Related violations: <none>
+
+

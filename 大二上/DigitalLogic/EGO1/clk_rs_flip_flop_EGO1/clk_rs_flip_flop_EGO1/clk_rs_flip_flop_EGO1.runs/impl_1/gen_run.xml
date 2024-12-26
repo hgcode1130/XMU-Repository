@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenRun Id="impl_1" LaunchPart="xc7a35tcsg324-1" LaunchTime="1696774708">
+  <File Type="BITSTR-BMM" Name="rs_flip_flop_bd.bmm"/>
+  <File Type="OPT-METHODOLOGY-DRC" Name="rs_flip_flop_methodology_drc_opted.rpt"/>
+  <File Type="INIT-TIMING" Name="rs_flip_flop_timing_summary_init.rpt"/>
+  <File Type="ROUTE-PWR" Name="rs_flip_flop_power_routed.rpt"/>
+  <File Type="PA-TCL" Name="rs_flip_flop.tcl"/>
+  <File Type="OPT-TIMING" Name="rs_flip_flop_timing_summary_opted.rpt"/>
+  <File Type="OPT-DCP" Name="rs_flip_flop_opt.dcp"/>
+  <File Type="ROUTE-PWR-SUM" Name="rs_flip_flop_power_summary_routed.pb"/>
+  <File Type="REPORTS-TCL" Name="rs_flip_flop_reports.tcl"/>
+  <File Type="OPT-DRC" Name="rs_flip_flop_drc_opted.rpt"/>
+  <File Type="OPT-HWDEF" Name="rs_flip_flop.hwdef"/>
+  <File Type="PWROPT-DCP" Name="rs_flip_flop_pwropt.dcp"/>
+  <File Type="PWROPT-DRC" Name="rs_flip_flop_drc_pwropted.rpt"/>
+  <File Type="PWROPT-TIMING" Name="rs_flip_flop_timing_summary_pwropted.rpt"/>
+  <File Type="PLACE-DCP" Name="rs_flip_flop_placed.dcp"/>
+  <File Type="PLACE-IO" Name="rs_flip_flop_io_placed.rpt"/>
+  <File Type="PLACE-CLK" Name="rs_flip_flop_clock_utilization_placed.rpt"/>
+  <File Type="PLACE-UTIL" Name="rs_flip_flop_utilization_placed.rpt"/>
+  <File Type="PLACE-UTIL-PB" Name="rs_flip_flop_utilization_placed.pb"/>
+  <File Type="PLACE-CTRL" Name="rs_flip_flop_control_sets_placed.rpt"/>
+  <File Type="PLACE-SIMILARITY" Name="rs_flip_flop_incremental_reuse_placed.rpt"/>
+  <File Type="PLACE-PRE-SIMILARITY" Name="rs_flip_flop_incremental_reuse_pre_placed.rpt"/>
+  <File Type="PLACE-TIMING" Name="rs_flip_flop_timing_summary_placed.rpt"/>
+  <File Type="POSTPLACE-PWROPT-DCP" Name="rs_flip_flop_postplace_pwropt.dcp"/>
+  <File Type="BG-BIN" Name="rs_flip_flop.bin"/>
+  <File Type="POSTPLACE-PWROPT-TIMING" Name="rs_flip_flop_timing_summary_postplace_pwropted.rpt"/>
+  <File Type="PHYSOPT-DCP" Name="rs_flip_flop_physopt.dcp"/>
+  <File Type="PHYSOPT-DRC" Name="rs_flip_flop_drc_physopted.rpt"/>
+  <File Type="BITSTR-MSK" Name="rs_flip_flop.msk"/>
+  <File Type="PHYSOPT-TIMING" Name="rs_flip_flop_timing_summary_physopted.rpt"/>
+  <File Type="ROUTE-ERROR-DCP" Name="rs_flip_flop_routed_error.dcp"/>
+  <File Type="ROUTE-DCP" Name="rs_flip_flop_routed.dcp"/>
+  <File Type="ROUTE-BLACKBOX-DCP" Name="rs_flip_flop_routed_bb.dcp"/>
+  <File Type="ROUTE-DRC" Name="rs_flip_flop_drc_routed.rpt"/>
+  <File Type="ROUTE-DRC-PB" Name="rs_flip_flop_drc_routed.pb"/>
+  <File Type="ROUTE-DRC-RPX" Name="rs_flip_flop_drc_routed.rpx"/>
+  <File Type="BITSTR-MMI" Name="rs_flip_flop.mmi"/>
+  <File Type="ROUTE-METHODOLOGY-DRC" Name="rs_flip_flop_methodology_drc_routed.rpt"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="rs_flip_flop_methodology_drc_routed.rpx"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="rs_flip_flop_methodology_drc_routed.pb"/>
+  <File Type="ROUTE-PWR-RPX" Name="rs_flip_flop_power_routed.rpx"/>
+  <File Type="ROUTE-STATUS" Name="rs_flip_flop_route_status.rpt"/>
+  <File Type="ROUTE-STATUS-PB" Name="rs_flip_flop_route_status.pb"/>
+  <File Type="ROUTE-TIMINGSUMMARY" Name="rs_flip_flop_timing_summary_routed.rpt"/>
+  <File Type="ROUTE-TIMING-PB" Name="rs_flip_flop_timing_summary_routed.pb"/>
+  <File Type="ROUTE-TIMING-RPX" Name="rs_flip_flop_timing_summary_routed.rpx"/>
+  <File Type="ROUTE-SIMILARITY" Name="rs_flip_flop_incremental_reuse_routed.rpt"/>
+  <File Type="ROUTE-CLK" Name="rs_flip_flop_clock_utilization_routed.rpt"/>
+  <File Type="ROUTE-BUS-SKEW" Name="rs_flip_flop_bus_skew_routed.rpt"/>
+  <File Type="ROUTE-BUS-SKEW-PB" Name="rs_flip_flop_bus_skew_routed.pb"/>
+  <File Type="ROUTE-BUS-SKEW-RPX" Name="rs_flip_flop_bus_skew_routed.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-DCP" Name="rs_flip_flop_postroute_physopt.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-BLACKBOX-DCP" Name="rs_flip_flop_postroute_physopt_bb.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING" Name="rs_flip_flop_timing_summary_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="rs_flip_flop_timing_summary_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-RPX" Name="rs_flip_flop_timing_summary_postroute_physopted.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW" Name="rs_flip_flop_bus_skew_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-PB" Name="rs_flip_flop_bus_skew_postroute_physopted.pb"/>
+  <File Type="BG-BIT" Name="rs_flip_flop.bit"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-RPX" Name="rs_flip_flop_bus_skew_postroute_physopted.rpx"/>
+  <File Type="BITSTR-RBT" Name="rs_flip_flop.rbt"/>
+  <File Type="BITSTR-NKY" Name="rs_flip_flop.nky"/>
+  <File Type="PDI-FILE" Name="rs_flip_flop.pdi"/>
+  <File Type="RCFI_FILE" Name="rs_flip_flop.rcfi"/>
+  <File Type="CFI_FILE" Name="rs_flip_flop.cfi"/>
+  <File Type="RNPI_FILE" Name="rs_flip_flop.rnpi"/>
+  <File Type="NPI_FILE" Name="rs_flip_flop.npi"/>
+  <File Type="RBD_FILE" Name="rs_flip_flop.rbd"/>
+  <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
+  <File Type="BITSTR-LTX" Name="rs_flip_flop.ltx"/>
+  <File Type="BITSTR-SYSDEF" Name="rs_flip_flop.sysdef"/>
+  <File Type="BG-BGN" Name="rs_flip_flop.bgn"/>
+  <File Type="BG-DRC" Name="rs_flip_flop.drc"/>
+  <File Type="RDI-RDI" Name="rs_flip_flop.vdi"/>
+  <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
+  <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
+    <Filter Type="Srcs"/>
+    <File Path="$PPRDIR/../clk_rs_flip_flop_EGO1.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="DesignMode" Val="RTL"/>
+      <Option Name="TopModule" Val="rs_flip_flop"/>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
+    <Filter Type="Constrs"/>
+    <File Path="$PPRDIR/../EGO1.xdc">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="ConstrsType" Val="XDC"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="utils" Type="Utils" RelSrcDir="$PSRCDIR/utils_1">
+    <Filter Type="Utils"/>
+    <Config>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <Strategy Version="1" Minor="2">
+    <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2019">
+      <Desc>Default settings for Implementation.</Desc>
+    </StratHandle>
+    <Step Id="init_design"/>
+    <Step Id="opt_design"/>
+    <Step Id="power_opt_design"/>
+    <Step Id="place_design"/>
+    <Step Id="post_place_power_opt_design"/>
+    <Step Id="phys_opt_design" EnableStepBool="1"/>
+    <Step Id="route_design"/>
+    <Step Id="post_route_phys_opt_design"/>
+    <Step Id="write_bitstream"/>
+  </Strategy>
+</GenRun>

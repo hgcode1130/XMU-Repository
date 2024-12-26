@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Thu Sep 19 13:02:09 2024
+# Process ID: 10052
+# Current directory: D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.runs/synth_2
+# Command line: vivado.exe -log flowing_light.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source flowing_light.tcl
+# Log file: D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.runs/synth_2/flowing_light.vds
+# Journal file: D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.runs/synth_2\vivado.jou
+#-----------------------------------------------------------
+source flowing_light.tcl -notrace

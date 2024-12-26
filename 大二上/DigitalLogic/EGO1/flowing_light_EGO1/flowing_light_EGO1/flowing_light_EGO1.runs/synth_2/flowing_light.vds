@@ -1,0 +1,597 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Thu Sep 19 13:02:09 2024
+# Process ID: 10052
+# Current directory: D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.runs/synth_2
+# Command line: vivado.exe -log flowing_light.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source flowing_light.tcl
+# Log file: D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.runs/synth_2/flowing_light.vds
+# Journal file: D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.runs/synth_2\vivado.jou
+#-----------------------------------------------------------
+source flowing_light.tcl -notrace
+Command: synth_design -top flowing_light -part xc7a35tcsg324-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Device 21-403] Loading part xc7a35tcsg324-1
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 7708 
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:01 ; elapsed = 00:00:02 . Memory (MB): peak = 836.344 ; gain = 233.844
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'flowing_light' [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/sources_1/new/flowing_light_EGO1.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'flowing_light' (1#1) [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/sources_1/new/flowing_light_EGO1.v:3]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 908.836 ; gain = 306.336
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 908.836 ; gain = 306.336
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 908.836 ; gain = 306.336
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 908.836 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc]
+CRITICAL WARNING: [Designutils 20-1307] Command '//----------------------------------------------系统时钟和复位------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:1]
+CRITICAL WARNING: [Designutils 20-1307] Command '//-----------------------------------------------5个按键---------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:6]
+WARNING: [Vivado 12-584] No ports matched 'btn_0'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:7]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:7]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'btn_1'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:8]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:8]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'btn_2'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:9]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:9]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'btn_3'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:10]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:10]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'btn_4'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:11]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:11]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//---------------------------------------------拨码开关sw0~sw7----------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:14]
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[0]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:15]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:15]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[1]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:16]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:16]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[2]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:17]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:17]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[3]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:18]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:18]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[4]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:19]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:19]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[5]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:20]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:20]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[6]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:21]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:21]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw_pin[7]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:22]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:22]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//------------------------------------------拨码开关（DIP开关）sw8~sw15---------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:25]
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[0]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:26]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:26]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[1]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:27]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:27]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[2]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:28]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:28]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[3]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:29]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:29]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[4]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:30]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:30]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[5]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:31]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:31]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[6]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:32]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:32]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dip_pin[7]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:33]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:33]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//---------------------------------------------LED0~LED15----------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:36]
+CRITICAL WARNING: [Designutils 20-1307] Command '//-----------------------------------8个数码管位选信号-----------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:56]
+WARNING: [Vivado 12-584] No ports matched 'seg_cs_pin[0]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:57]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:57]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_cs_pin[1]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:58]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:58]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_cs_pin[2]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:59]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:59]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_cs_pin[3]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:60]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:60]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_cs_pin[4]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:61]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:61]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_cs_pin[5]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:62]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:62]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_cs_pin[6]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:63]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:63]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_cs_pin[7]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:64]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:64]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//--------------------------------------------数码管段选信号---------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:66]
+WARNING: [Vivado 12-584] No ports matched 'seg_data_0_pin[0]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:67]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:67]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_data_0_pin[1]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:68]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:68]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_data_0_pin[2]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:69]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:69]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_data_0_pin[3]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:70]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:70]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_data_0_pin[4]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:71]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:71]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_data_0_pin[5]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:72]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:72]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_data_0_pin[6]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:73]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:73]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_data_0_pin[7]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:74]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:74]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_data_1_pin[0]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:76]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:76]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_data_1_pin[1]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:77]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:77]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_data_1_pin[2]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:78]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:78]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_data_1_pin[3]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:79]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:79]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_data_1_pin[4]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:80]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:80]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_data_1_pin[5]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:81]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:81]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_data_1_pin[6]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:82]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:82]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg_data_1_pin[7]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:83]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:83]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//--------------------------------------VGA行同步场同步信号-----------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:86]
+WARNING: [Vivado 12-584] No ports matched 'vga_hs_pin'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:87]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:87]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_vs_pin'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:88]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:88]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//--------------------------------------VGA红绿蓝信号------------------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:91]
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[0]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:92]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:92]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[1]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:93]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:93]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[2]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:94]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:94]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[3]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:95]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:95]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[4]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:96]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:96]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[5]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:97]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:97]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[6]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:98]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:98]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[7]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:99]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:99]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[8]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:100]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:100]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[9]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:101]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:101]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[10]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:102]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:102]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vga_data_pin[11]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:103]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:103]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//----------------------------------------------串口--------------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:106]
+WARNING: [Vivado 12-584] No ports matched 'PC_Uart_rxd'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:107]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:107]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'PC_Uart_txd'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:108]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:108]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//---------------------------------------------------PS2接口-------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:111]
+WARNING: [Vivado 12-584] No ports matched 'ps2_clk'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:112]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:112]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'ps2_data'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:113]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:113]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//------------------------------------------------IIC接口---------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:116]
+WARNING: [Vivado 12-584] No ports matched 'pw_iic_scl_io'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:117]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:117]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'pw_iic_sda_io'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:118]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:118]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//---------------------------------------------------蓝牙---------------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:121]
+WARNING: [Vivado 12-584] No ports matched 'BT_Uart_rxd'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:122]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:122]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'BT_Uart_txd'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:123]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:123]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'bt_ctrl_o[0]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:125]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:125]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'bt_ctrl_o[1]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:126]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:126]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'bt_ctrl_o[2]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:127]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:127]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'bt_ctrl_o[3]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:128]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:128]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'bt_ctrl_o[4]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:129]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:129]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'bt_mcu_int_i'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:131]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:131]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//-----------------------------------------------------音频接口---------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:135]
+WARNING: [Vivado 12-584] No ports matched 'audio_pwm_o'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:136]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:136]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'audio_sd_o'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:137]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:137]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//--------------------------------------------------------XADC模数转换-----------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:141]
+WARNING: [Vivado 12-584] No ports matched 'XADC_AUX_v_n'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:142]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:142]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'XADC_AUX_v_p'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:143]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:143]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'XADC_VP_VN_v_n'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:144]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:144]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'XADC_VP_VN_v_p'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:145]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:145]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//--------------------------------------------------------DAC数模转换---------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:148]
+WARNING: [Vivado 12-584] No ports matched 'dac_ile'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:149]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:149]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_cs_n'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:150]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:150]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_wr1_n'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:151]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:151]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_wr2_n'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:152]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:152]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_xfer_n'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:153]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:153]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[0]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:155]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:155]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[1]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:156]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:156]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[2]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:157]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:157]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[3]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:158]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:158]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[4]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:159]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:159]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[5]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:160]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:160]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[6]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:161]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:161]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'dac_data[7]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:162]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:162]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//-------------------------------------------------SDRAM芯片接口-------------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:166]
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[18]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:167]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:167]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[17]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:168]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:168]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[16]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:169]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:169]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[15]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:170]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:170]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[14]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:171]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:171]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[13]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:172]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:172]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[12]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:173]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:173]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sram_addr[11]'. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:174]
+INFO: [Common 17-14] Message 'Vivado 12-584' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:174]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:174]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+CRITICAL WARNING: [Designutils 20-1307] Command '//--------------------------------------32个pmod接口（扩展接口）-------------------------------' is not supported in the xdc constraint file. [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc:213]
+Finished Parsing XDC File [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.srcs/constrs_1/new/EGO1.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/flowing_light_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/flowing_light_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 980.379 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 980.379 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 980.379 ; gain = 377.879
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35tcsg324-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 980.379 ; gain = 377.879
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 980.379 ; gain = 377.879
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 980.379 ; gain = 377.879
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Registers : 
+	               16 Bit    Registers := 1     
++---Muxes : 
+	   2 Input     16 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module flowing_light 
+Detailed RTL Component Info : 
++---Registers : 
+	               16 Bit    Registers := 1     
++---Muxes : 
+	   2 Input     16 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 980.379 ; gain = 377.879
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 982.293 ; gain = 379.793
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 982.367 ; gain = 379.867
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 992.410 ; gain = 389.910
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1007.246 ; gain = 404.746
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1007.246 ; gain = 404.746
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1007.246 ; gain = 404.746
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1007.246 ; gain = 404.746
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1007.246 ; gain = 404.746
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1007.246 ; gain = 404.746
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-------+------+
+|      |Cell   |Count |
++------+-------+------+
+|1     |BUFG   |     1|
+|2     |CARRY4 |     6|
+|3     |LUT1   |     2|
+|4     |LUT4   |     1|
+|5     |LUT6   |     7|
+|6     |FDRE   |    39|
+|7     |FDSE   |     1|
+|8     |IBUF   |     2|
+|9     |OBUF   |    16|
++------+-------+------+
+
+Report Instance Areas: 
++------+---------+-------+------+
+|      |Instance |Module |Cells |
++------+---------+-------+------+
+|1     |top      |       |    75|
++------+---------+-------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1007.246 ; gain = 404.746
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:08 ; elapsed = 00:00:11 . Memory (MB): peak = 1007.246 ; gain = 333.203
+Synthesis Optimization Complete : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1007.246 ; gain = 404.746
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1019.277 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 6 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1024.430 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+15 Infos, 100 Warnings, 118 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 1024.430 ; gain = 718.250
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1024.430 ; gain = 0.000
+WARNING: [Constraints 18-5210] No constraints selected for write.
+Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
+INFO: [Common 17-1381] The checkpoint 'D:/DigitalLogic/EGO1/flowing_light_EGO1/flowing_light_EGO1/flowing_light_EGO1.runs/synth_2/flowing_light.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file flowing_light_utilization_synth.rpt -pb flowing_light_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Thu Sep 19 13:02:27 2024...

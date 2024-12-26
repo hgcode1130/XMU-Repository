@@ -1,0 +1,8 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/DigitalLogic/EGO1/example_5_3_EGO1/example_5_3_EGO1.srcs/sources_1/new/example_5_3_EGO1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module nor_gate
+INFO: [VRFC 10-311] analyzing module nand_gate
+INFO: [VRFC 10-311] analyzing module one_gate
+INFO: [VRFC 10-311] analyzing module d_flip_flop
+INFO: [VRFC 10-311] analyzing module example_5_3
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/DigitalLogic/EGO1/example_5_3_EGO1/example_5_3_EGO1.srcs/sim_1/new/example_5_3_sim_EGO1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module example_5_3_sim

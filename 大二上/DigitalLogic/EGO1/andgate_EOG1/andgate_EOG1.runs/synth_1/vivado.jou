@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Mon Sep 23 18:28:15 2024
+# Process ID: 6700
+# Current directory: D:/DigitalLogic/EGO1/andgate_EOG1/andgate_EOG1.runs/synth_1
+# Command line: vivado.exe -log andgate.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source andgate.tcl
+# Log file: D:/DigitalLogic/EGO1/andgate_EOG1/andgate_EOG1.runs/synth_1/andgate.vds
+# Journal file: D:/DigitalLogic/EGO1/andgate_EOG1/andgate_EOG1.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source andgate.tcl -notrace

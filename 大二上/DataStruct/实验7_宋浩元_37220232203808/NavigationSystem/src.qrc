@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/src/icon">
+        <file>src/img/logo_mini.jpg</file>
+        <file>src/img/logo.jpg</file>
+        <file>src/img/welcome.jpg</file>
+    </qresource>
+    <qresource prefix="/map">
+        <file>Map.png</file>
+    </qresource>
+    <qresource prefix="/sql">
+        <file>src/NEAR.sql</file>
+        <file>src/POINT.sql</file>
+        <file>src/USERS.sql</file>
+        <file>src/MyDataBase.db</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>src/img/logo.jpg</file>
+    </qresource>
+</RCC>

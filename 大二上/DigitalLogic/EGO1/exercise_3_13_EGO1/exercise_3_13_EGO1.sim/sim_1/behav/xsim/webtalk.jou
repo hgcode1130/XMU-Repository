@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Mon Sep 23 19:49:13 2024
+# Process ID: 44316
+# Current directory: D:/DigitalLogic/EGO1/exercise_3_13_EGO1/exercise_3_13_EGO1.sim/sim_1/behav/xsim
+# Command line: wbtcv.exe -mode batch -source D:/DigitalLogic/EGO1/exercise_3_13_EGO1/exercise_3_13_EGO1.sim/sim_1/behav/xsim/xsim.dir/exercise_3_13_sim_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: D:/DigitalLogic/EGO1/exercise_3_13_EGO1/exercise_3_13_EGO1.sim/sim_1/behav/xsim/webtalk.log
+# Journal file: D:/DigitalLogic/EGO1/exercise_3_13_EGO1/exercise_3_13_EGO1.sim/sim_1/behav/xsim\webtalk.jou
+#-----------------------------------------------------------
+source D:/DigitalLogic/EGO1/exercise_3_13_EGO1/exercise_3_13_EGO1.sim/sim_1/behav/xsim/xsim.dir/exercise_3_13_sim_behav/webtalk/xsim_webtalk.tcl -notrace
