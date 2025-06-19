@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- CanvasShapes.fxml -->
+<!-- GUI for manipulating a Polyline, a Polygon -->
+
+<?import java.lang.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch22.CanvasShapes.CanvasShapesController">
+   <children>
+      <Canvas fx:id="drawingCanvas" height="115.0" width="650.0" />
+   </children>
+</Pane>

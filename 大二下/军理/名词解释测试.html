@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>军事理论复习</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #34495e;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: #ecf0f1;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: none;
+            /* 默认隐藏所有section */
+        }
+
+        #terms {
+            display: block;
+            /* 默认显示名词解释 */
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 5px;
+        }
+
+        .term,
+        .question,
+        .analysis-title {
+            font-weight: bold;
+            color: #34495e;
+            margin-top: 15px;
+        }
+
+        .definition,
+        .answer,
+        .analysis-content {
+            margin-left: 20px;
+            color: #333;
+            display: none;
+            /* 默认隐藏答案 */
+        }
+
+        .definition.visible,
+        .answer.visible,
+        .analysis-content.visible {
+            display: block;
+            /* 点击后显示 */
+        }
+
+        .analysis-material {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .analysis-question {
+            margin-top: 10px;
+            color: #333;
+        }
+
+        .toggle-answer {
+            margin-left: 20px;
+            padding: 5px 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .toggle-answer:hover {
+            background-color: #2980b9;
+        }
+
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background-color: #34495e;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .pagination button:hover {
+            background-color: #2c3e50;
+        }
+
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>军事理论复习</h1>
+    </header>
+    <nav>
+        <a onclick="showSection('terms')">名词解释</a>
+        <a onclick="showSection('short-answer')">简答题</a>
+        <a onclick="showSection('analysis')">材料分析题</a>
+    </nav>
+    <main>
+        <section id="terms" class="section">
+            <h2>名词解释</h2>
+            <div class="page-content active">
+                <div class="term">军事科学</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">又称军事学，是反映战争和国防的本质与规律，并用于指导战争和国防的准备与实施的科学。</div>
+                <div class="term">毛泽东军事思想</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">是毛泽东关于中国革命战争、人民军队和国防建设以及军事领域一般规律问题的科学理论体系，是毛泽东思想的重要组成部分。</div>
+                <div class="term">战争观</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">是人们对战争本质问题的根本看法与态度。</div>
+                <div class="term">人民战争</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">是被压迫阶级和民族为谋求自身的解放，发动和依靠广大人民群众所进行的战争，具有正义性和群众性。</div>
+                <div class="term">积极防御</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">以积极的攻势行动，战胜进攻之敌的防御。</div>
+            </div>
+            <div class="page-content">
+                <div class="term">国际行为主体</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">是指能独立参与国际事务，并能独立行使国际权利，承担国际责任与义务的实体。</div>
+                <div class="term">国际战略格局</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">国际社会中国际战略力量之间在一定历史时期内相互联系、相互作用而形成的具有全球性的、相对稳定的力量对比结构及基本态势。</div>
+                <div class="term">国际战略力量</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">在国际关系中能够独立发挥作用，并对国际形势及国际战略的运用与发展具有巨大影响的国家或国家集团。</div>
+                <div class="term">两极格局</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">两大战略力量之间的相互对立和相互斗争，对整个国际事务起着决定性影响的局面。</div>
+                <div class="term">多元交叉格局</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">一种由两极向多极，或多极向两极的过渡性格局。</div>
+            </div>
+            <div class="pagination">
+                <button onclick="prevPage('terms')">上一页</button>
+                <button onclick="nextPage('terms')">下一页</button>
+            </div>
+        </section>
+        <section id="short-answer" class="section">
+            <h2>简答题</h2>
+            <div class="page-content active">
+                <div class="question">简述军事科学的任务与性质</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答え</button>
+                <div class="answer">
+                    任务：通过对战争和国防实践经验的科学总结，对战争和国防规律及其指导规律的不断探索，预测战争的发生、发展及特点，提出克敌制胜的原则、手段和方法；分析战略环境的发展变化及其影响，提出国家防卫的原则、目标和措施，为正确指导战争和国防的准备与实施，提供科学的理论指导和决策依据。性质：军事科学是一门具有特定范畴的综合性科学；也属于社会科学，具有鲜明的政治性和民族性。
+                </div>
+                <div class="question">简述军事科学的主要功能</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">为国家制订军事战略提供理论依据；为国家规划武装力量建设提供理论依据；为国家发展武器技术装备进行科学论证；为国家准备和实施战争提供理论依据。</div>
+                <div class="question">简述军事科学的研究对象</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">战争和国防。军事科学源于战争和国防的实践并运用于实践。</div>
+                <div class="question">简述军事科学的特点</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">？（待补充）</div>
+                <div class="question">简述大学生学习军事科学的意义</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">大学生参加军事训练、学习军事科学是法定的公民义务，责无旁贷；有利于提高全民国防意识，振奋民族精神；有利于加强国防后备力量建设；有利于培养德智体全面发展的“四有”新人。
+                </div>
+            </div>
+            <div class="page-content">
+                <div class="question">简述大学生学习军事科学的方法</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">拓展思维领域，综合运用各种思维方法；研究战例，借鉴历史；善于“合成”，融会贯通。</div>
+                <div class="question">简述毛泽东军事思想的科学含义</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">
+                    是马列主义普遍原理与中国革命和国防建设实际相结合的产物；是中国共产党领导中国人民及其军队长期军事实践经验的科学总结；根植深厚的中华文化沃土，多方面汲取了古今中外军事思想的精华；是中国共产党集体智慧的结晶，是党领导中国革命战争、军队建设、国防建设和反侵略战争的指导思想。
+                </div>
+                <div class="question">简述毛泽东军事思想的历史地位</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">把中国军事思想发展到一个全新的阶段，是中国革命战争胜利和国防现代化建设的理论指南；创造性地丰富和发展了马克思主义的军事理论宝库；在世界上有广泛而深远的影响。</div>
+                <div class="question">简述毛泽东思想的理论体系</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">战争观和方法论；人民军队思想；人民战争思想；人民战争的战略战术思想；国防建设思想。</div>
+                <div class="question">简述人民战争思想的基本理论观点</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">战争的正义性是实现人民战争的政治基础；革命是群众的战争；人民群众是战争伟力的最深厚根源；兵民是胜利之本；人是战争胜负的决定因素。</div>
+            </div>
+            <div class="pagination">
+                <button onclick="prevPage('short-answer')">上一页</button>
+                <button onclick="nextPage('short-answer')">下一页</button>
+            </div>
+        </section>
+        <section id="analysis" class="section">
+            <h2>材料分析题</h2>
+            <div class="page-content active">
+                <div class="analysis-item">
+                    <div class="analysis-title">1. 结合台海局势，谈谈你如何理解“研究和指导战争，要关照全局，把握关节”</div>
+                    <div class="analysis-material">（背景材料：台海局势）</div>
+                    <div class="analysis-question">如何理解“研究和指导战争，要关照全局，把握关节”？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">
+                        战争是一个由多种因素综合作用而形成的整体，有着整体与部分、全局与局部之分。关照全局是战争指导的首要问题，必须牢固树立全局观念，把握关节是推动全局发展的重要方法。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">2. 结合台海局势，谈谈你如何理解“研究和指导战争必须着眼其特点，着眼其发展”</div>
+                    <div class="analysis-material">（背景材料：台海局势）</div>
+                    <div class="analysis-question">如何理解“研究和指导战争必须着眼其特点，着眼其发展”？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">只有处理好一般规律和特殊规律的关系，才能正确认识和指导战争。认识和把握特殊战争规律，必须着眼其发展，把握好战争的时间、地域、任务三个要素。
+                    </div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">3. 结合台海局势，试述如何理解战争与政治的关系</div>
+                    <div class="analysis-material">（背景材料：台海局势）</div>
+                    <div class="analysis-question">如何理解战争与政治的关系？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">战争是流血的政治，战争的本质集中反映在战争和政治的关系之中。政治目的决定着战争目标和力量使用大小，战争为政治目的服务。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">4. 结合台海局势，试述如何理解“研究和指导战争，主观指导要符合客观实际”</div>
+                    <div class="analysis-material">（背景材料：台海局势）</div>
+                    <div class="analysis-question">如何理解“研究和指导战争，主观指导要符合客观实际”？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">战争的客观实际是不依赖人的意识而独立存在的，战争指导的关键在于主观指导与客观实际的矛盾。战争实践是主观符合客观实际的基本途径。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">5. 如何理解战争与经济的关系？分析伊朗局势</div>
+                    <div class="analysis-material">据报道，伊朗局势严峻，2019.5.19美海军“林肯号”航母与“奇尔沙治”攻击艇组成的双航母编队进入波斯湾。</div>
+                    <div class="analysis-question">如何理解战争与经济的关系？试分析伊朗再次成为热点的原因？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">战争是经济的竞赛，经济是战争的物质基础。伊朗作为中东地区的重要国家，其石油资源和地缘位置使其成为国际战略竞争的焦点。</div>
+                </div>
+            </div>
+            <div class="page-content">
+                <div class="analysis-item">
+                    <div class="analysis-title">6. 如何理解战争与政治的关系？分析伊朗局势</div>
+                    <div class="analysis-material">据报道，伊朗局势严峻，2019.5.19美海军“林肯号”航母与“奇尔沙治”攻击艇组成的双航母编队进入波斯湾。</div>
+                    <div class="analysis-question">如何理解战争与政治的关系？试分析伊朗再次成为热点的原因？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">战争是政治的延续，政治目的是战争的根源。伊朗核问题、地区影响力等政治因素是导致其成为热点的原因。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">7. 运用国际战略格局演变的动因与过程基本理论，分析中美贸易战</div>
+                    <div class="analysis-material">（背景材料：中美贸易战）</div>
+                    <div class="analysis-question">运用国际战略格局演变的动因与过程基本理论，分析中美贸易战。</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">国际战略格局的演变是国际战略力量及其相互关系的重大改变。中美贸易战反映了中美之间在经济、科技等领域的战略竞争，影响全球战略格局。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">8. 为什么研究和指导战争必须着眼其特点，着眼其发展？分析中日关系</div>
+                    <div class="analysis-material">（背景材料：中日关系发展及走向）</div>
+                    <div class="analysis-question">为什么研究和指导战争必须着眼其特点，着眼其发展？试分析中日关系发展及走向。</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">战争的特点是在其发展变化中表现出来的，认识和把握特殊战争规律必须着眼其发展。中日关系受历史、领土争端等因素影响，需动态分析其发展趋势。
+                    </div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">9. 为什么研究和指导战争，要关照全局，把握关节？分析中日关系</div>
+                    <div class="analysis-material">（背景材料：中日关系发展及走向）</div>
+                    <div class="analysis-question">为什么研究和指导战争，要关照全局，把握关节？分析中日关系发展及走向。</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">关照全局是战争指导的首要问题，把握关节是推动全局发展的重要方法。中日关系涉及东亚地区稳定，需从全局视角分析其影响。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">10. 如何理解国际战略格局演变的规律性特点？分析中国如何应对美日澳印四国的印太战略</div>
+                    <div class="analysis-material">2020年10月6日,美日澳印四国在东京举行四方会谈，就包括东海和南海在内的所谓地区局势进行磋商。</div>
+                    <div class="analysis-question">如何理解国际战略格局演变的规律性特点？试析中国如何应对美日澳印四国的印太战略?</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">国际战略格局演变具有必然性和偶然性、量变和质变、渐变和突变的特点。中国应通过外交、经济、军事等多方面手段，维护国家利益和地区稳定。
+                    </div>
+                </div>
+            </div>
+            <div class="pagination">
+                <button onclick="prevPage('analysis')">上一页</button>
+                <button onclick="nextPage('analysis')">下一页</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2023 军事理论复习</p>
+    </footer>
+    <script>
+        // 全局变量，记录每个题型的当前页码
+        let currentPage = {
+            'terms': 0,
+            'short-answer': 0,
+            'analysis': 0
+        };
+
+        function showSection(sectionId) {
+            // 隐藏所有section
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            // 显示选中的section
+            document.getElementById(sectionId).style.display = 'block';
+            // 重置当前题型的页码为0（第一页）
+            currentPage[sectionId] = 0;
+            // 显示第一页
+            showPage(sectionId, 0);
+        }
+
+        function showPage(sectionId, pageIndex) {
+            const section = document.getElementById(sectionId);
+            const pages = section.querySelectorAll('.page-content');
+            // 隐藏所有页
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            // 显示指定页
+            if (pages[pageIndex]) {
+                pages[pageIndex].classList.add('active');
+            }
+            // 更新当前页码
+            currentPage[sectionId] = pageIndex;
+        }
+
+        function nextPage(sectionId) {
+            const section = document.getElementById(sectionId);
+            const pages = section.querySelectorAll('.page-content');
+            let nextIndex = currentPage[sectionId] + 1;
+            if (nextIndex < pages.length) {
+                showPage(sectionId, nextIndex);
+            }
+        }
+
+        function prevPage(sectionId) {
+            let prevIndex = currentPage[sectionId] - 1;
+            if (prevIndex >= 0) {
+                showPage(sectionId, prevIndex);
+            }
+        }
+
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            if (answer.classList.contains('visible')) {
+                answer.classList.remove('visible');
+                button.textContent = '显示答案';
+            } else {
+                answer.classList.add('visible');
+                button.textContent = '隐藏答案';
+            }
+        }
+    </script>
+</body>
+
+</html>

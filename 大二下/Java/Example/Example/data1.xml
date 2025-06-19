@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="GB2312" standalone="no"?>
+<books>
+<book email="java@xmu.edu.cn">
+<Name>Java</Name>
+<Price>30.5</Price>
+</book>
+<book email="c++@xmu.edu.cn">
+<Name>C++</Name>
+<Price>38.0</Price>
+</book>
+<book email="ooad@xmu.edu.cn">
+<Name>OOAD</Name>
+<Price>39.5</Price>
+</book>
+</books>

@@ -1,0 +1,185 @@
+-- 创建 contacts 表
+CREATE TABLE contacts (
+    contact_id INT,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email VARCHAR(255),
+    phone VARCHAR(20),
+    customer_id INT
+);
+
+-- 创建 countries 表
+CREATE TABLE countries (
+    country_id CHAR(2),
+    country_name VARCHAR(40),
+    region_id INT
+);
+
+-- 创建 customers 表
+CREATE TABLE customers (
+    customer_id INT,
+    name VARCHAR(255),
+    address VARCHAR(255),
+    website VARCHAR(255),
+    credit_limit DECIMAL(8, 2)
+);
+
+-- 创建 employees 表
+CREATE TABLE employees (
+    employee_id INT,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email VARCHAR(255),
+    phone VARCHAR(50),
+    hire_date DATE,
+    manager_id INT,
+    job_title VARCHAR(255)
+);
+
+-- 创建 inventories 表
+CREATE TABLE inventories (
+    product_id INT,
+    warehouse_id INT,
+    quantity DECIMAL(8, 0)
+);
+
+-- 创建 locations 表
+CREATE TABLE locations (
+    location_id INT,
+    address VARCHAR(255),
+    postal_code VARCHAR(20),
+    city VARCHAR(50),
+    state VARCHAR(50),
+    country_id CHAR(2)
+);
+
+-- 创建 orders 表
+CREATE TABLE orders (
+    order_id INT,
+    customer_id INT,
+    status VARCHAR(20),
+    salesman_id INT,
+    order_date DATE
+);
+
+-- 创建 order_items 表
+CREATE TABLE order_items (
+    order_id INT,
+    item_id INT,
+    product_id INT,
+    quantity DECIMAL(8, 2),
+    unit_price DECIMAL(8, 2)
+);
+
+-- 创建 product_categories 表
+CREATE TABLE product_categories (
+    category_id INT,
+    category_name VARCHAR(255)
+);
+
+-- 创建 products 表
+CREATE TABLE products (
+    product_id INT,
+    product_name VARCHAR(255),
+    description VARCHAR(2000),
+    standard_cost DECIMAL(9, 2),
+    list_price DECIMAL(9, 2),
+    category_id INT
+);
+
+-- 创建 regions 表
+CREATE TABLE regions (
+    region_id INT,
+    region_name VARCHAR(50)
+);
+
+-- 创建 warehouses 表
+CREATE TABLE warehouses (
+    warehouse_id INT,
+    warehouse_name VARCHAR(255),
+    location_id INT
+); 
+
+-- 依次执行导入，替换路径为实际存储路径  （这个部分在控制台完成）
+-- 1. 导入 regions 表
+SOURCE D:/StudyRepo/大二下/数据库系统/实验/lab2/sql脚本/regions.sql;
+
+-- 2. 导入 countries 表，并添加外键依赖于 regions 表
+SOURCE D:/StudyRepo/大二下/数据库系统/实验/lab2/sql脚本/countries.sql;
+
+-- 3. 导入 locations 表，并添加外键依赖于 countries 表
+SOURCE D:/StudyRepo/大二下/数据库系统/实验/lab2/sql脚本/locations.sql;
+
+-- 4. 导入 warehouses 表，并添加外键依赖于 locations 表
+SOURCE D:/StudyRepo/大二下/数据库系统/实验/lab2/sql脚本/warehouses.sql;
+
+-- 5. 导入 product_categories 表
+SOURCE D:/StudyRepo/大二下/数据库系统/实验/lab2/sql脚本/product_categories.sql;
+
+-- 6. 导入 products 表，并添加外键依赖于 product_categories 表
+SOURCE D:/StudyRepo/大二下/数据库系统/实验/lab2/sql脚本/products.sql;
+
+-- 7. 导入 inventories 表，并添加外键依赖于 products 和 warehouses 表
+SOURCE D:/StudyRepo/大二下/数据库系统/实验/lab2/sql脚本/inventories.sql;
+
+-- 8. 导入 customers 表
+SOURCE D:/StudyRepo/大二下/数据库系统/实验/lab2/sql脚本/customers.sql;
+
+-- 9. 导入 contacts 表，并添加外键依赖于 customers 表
+SOURCE D:/StudyRepo/大二下/数据库系统/实验/lab2/sql脚本/contacts.sql;
+
+-- 10. 导入 employees 表，并添加自引用外键
+SOURCE D:/StudyRepo/大二下/数据库系统/实验/lab2/sql脚本/employees.sql;
+
+-- 11. 导入 orders 表，并添加外键依赖于 customers 和 employees 表
+SOURCE D:/StudyRepo/大二下/数据库系统/实验/lab2/sql脚本/orders.sql;
+
+-- 12. 导入 order_items 表，并添加外键依赖于 products 和 orders 表
+SOURCE D:/StudyRepo/大二下/数据库系统/实验/lab2/sql脚本/order_items.sql;
+
+
+-- 添加主键和约束
+ALTER TABLE regions ADD PRIMARY KEY (region_id);
+ALTER TABLE regions MODIFY region_name VARCHAR(50) NOT NULL;
+ALTER TABLE countries ADD PRIMARY KEY (country_id);
+ALTER TABLE countries ADD FOREIGN KEY (region_id) REFERENCES regions(region_id);
+ALTER TABLE countries MODIFY country_name VARCHAR(40) NOT NULL;
+ALTER TABLE locations ADD PRIMARY KEY (location_id);
+ALTER TABLE locations ADD FOREIGN KEY (country_id) REFERENCES countries(country_id);
+ALTER TABLE locations MODIFY address VARCHAR(255) NOT NULL;
+ALTER TABLE warehouses ADD PRIMARY KEY (warehouse_id);
+ALTER TABLE warehouses ADD FOREIGN KEY (location_id) REFERENCES locations(location_id);
+ALTER TABLE product_categories ADD PRIMARY KEY (category_id);
+ALTER TABLE product_categories MODIFY category_name VARCHAR(255) NOT NULL;
+ALTER TABLE products ADD PRIMARY KEY (product_id);
+ALTER TABLE products ADD FOREIGN KEY (category_id) REFERENCES product_categories(category_id);
+ALTER TABLE products MODIFY product_name VARCHAR(255) NOT NULL;
+ALTER TABLE inventories ADD PRIMARY KEY (product_id, warehouse_id);
+ALTER TABLE inventories ADD FOREIGN KEY (product_id) REFERENCES products(product_id);
+ALTER TABLE inventories ADD FOREIGN KEY (warehouse_id) REFERENCES warehouses(warehouse_id);
+ALTER TABLE inventories MODIFY quantity DECIMAL(8, 0) NOT NULL;
+ALTER TABLE customers ADD PRIMARY KEY (customer_id);
+ALTER TABLE customers MODIFY name VARCHAR(255) NOT NULL;
+ALTER TABLE contacts ADD PRIMARY KEY (contact_id);
+ALTER TABLE contacts ADD FOREIGN KEY (customer_id) REFERENCES customers(customer_id);
+ALTER TABLE contacts MODIFY first_name VARCHAR(255) NOT NULL;
+ALTER TABLE contacts MODIFY last_name VARCHAR(255) NOT NULL;
+ALTER TABLE contacts MODIFY email VARCHAR(255) NOT NULL;
+ALTER TABLE employees ADD PRIMARY KEY (employee_id);
+ALTER TABLE employees ADD FOREIGN KEY (manager_id) REFERENCES employees(employee_id);
+ALTER TABLE employees MODIFY first_name VARCHAR(255) NOT NULL;
+ALTER TABLE employees MODIFY last_name VARCHAR(255) NOT NULL;
+ALTER TABLE employees MODIFY email VARCHAR(255) NOT NULL;
+ALTER TABLE employees MODIFY phone VARCHAR(50) NOT NULL;
+ALTER TABLE employees MODIFY hire_date DATE NOT NULL;
+ALTER TABLE employees MODIFY job_title VARCHAR(255) NOT NULL;
+ALTER TABLE orders ADD PRIMARY KEY (order_id);
+ALTER TABLE orders ADD FOREIGN KEY (customer_id) REFERENCES customers(customer_id);
+ALTER TABLE orders ADD FOREIGN KEY (salesman_id) REFERENCES employees(employee_id);
+ALTER TABLE orders MODIFY status VARCHAR(20) NOT NULL;
+ALTER TABLE orders MODIFY order_date DATE NOT NULL;
+ALTER TABLE order_items ADD PRIMARY KEY (order_id, item_id);
+ALTER TABLE order_items ADD FOREIGN KEY (product_id) REFERENCES products(product_id);
+ALTER TABLE order_items ADD FOREIGN KEY (order_id) REFERENCES orders(order_id);
+ALTER TABLE order_items MODIFY quantity DECIMAL(8, 2) NOT NULL;
+ALTER TABLE order_items MODIFY unit_price DECIMAL(8, 2) NOT NULL;   

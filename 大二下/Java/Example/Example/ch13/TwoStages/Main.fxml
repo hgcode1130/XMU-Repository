@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="305.0" prefWidth="495.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch13.TwoStages.MainController">
+   <children>
+      <Button layoutX="182.0" layoutY="141.0" mnemonicParsing="false" onAction="#changeWindow" text="Go to Second Stage" />
+      <Label layoutX="70.0" layoutY="60.0" text="MainStage" />
+      <ColorPicker layoutX="196.0" layoutY="42.0" />
+   </children>
+</AnchorPane>

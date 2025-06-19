@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>军事理论复习</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #34495e;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: #ecf0f1;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: none;
+            /* 默认隐藏所有section */
+        }
+
+        #terms {
+            display: block;
+            /* 默认显示名词解释 */
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 5px;
+        }
+
+        .term,
+        .question,
+        .analysis-title {
+            font-weight: bold;
+            color: #34495e;
+            margin-top: 15px;
+        }
+
+        .definition,
+        .answer,
+        .analysis-content {
+            margin-left: 20px;
+            color: #333;
+            display: none;
+            /* 默认隐藏答案 */
+        }
+
+        .definition.visible,
+        .answer.visible,
+        .analysis-content.visible {
+            display: block;
+            /* 点击后显示 */
+        }
+
+        .analysis-material {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .analysis-question {
+            margin-top: 10px;
+            color: #333;
+        }
+
+        .toggle-answer {
+            margin-left: 20px;
+            padding: 5px 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .toggle-answer:hover {
+            background-color: #2980b9;
+        }
+
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background-color: #34495e;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .pagination button:hover {
+            background-color: #2c3e50;
+        }
+
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>军事理论复习</h1>
+    </header>
+    <nav>
+        <a onclick="showSection('terms')">名词解释</a>
+        <a onclick="showSection('short-answer')">简答题</a>
+        <a onclick="showSection('analysis')">材料分析题</a>
+    </nav>
+    <main>
+        <section id="terms" class="section">
+            <h2>名词解释</h2>
+            <!-- 页面1 -->
+            <div class="page-content active">
+                <div class="term">军事科学</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">又称军事学，是反映战争和国防的本质与规律，并用于指导战争和国防的准备与实施的科学。</div>
+                <div class="term">毛泽东军事思想</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">是毛泽东关于中国革命战争、人民军队和国防建设以及军事领域一般规律问题的科学理论体系，是毛泽东思想的重要组成部分。</div>
+                <div class="term">战争观</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">是人们对战争本质问题的根本看法与态度。</div>
+                <div class="term">人民战争</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">是被压迫阶级和民族为谋求自身的解放，发动和依靠广大人民群众所进行的战争，具有正义性和群众性。</div>
+                <div class="term">积极防御</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">以积极的攻势行动，战胜进攻之敌的防御。</div>
+            </div>
+            <!-- 页面2 -->
+            <div class="page-content">
+                <div class="term">国际行为主体</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">是指能独立参与国际事务，并能独立行使国际权利，承担国际责任与义务的实体。</div>
+                <div class="term">国际战略格局</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">国际社会中国际战略力量之间在一定历史时期内相互联系、相互作用而形成的具有全球性的、相对稳定的力量对比结构及基本态势。</div>
+                <div class="term">国际战略力量</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">在国际关系中能够独立发挥作用，并对国际形势及国际战略的运用与发展具有巨大影响的国家或国家集团。</div>
+                <div class="term">两极格局</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">两大战略力量之间的相互对立和相互斗争，对整个国际事务起着决定性影响的局面。</div>
+                <div class="term">多元交叉格局</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">一种由两极向多极，或多极向两极的过渡性格局。</div>
+            </div>
+            <!-- 页面3 -->
+            <div class="page-content">
+                <div class="term">多极格局</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">多种战略力量既相互独立又相互联系、既相互合作又相互制约而形成的一种相对平衡的战略关系。</div>
+                <div class="term">单极格局</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">某一个大国在国际战略格局中占据主导地位，形成一国独霸的局面。</div>
+                <div class="term">国防</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">
+                    是国家为防备和抵抗侵略，制止武装颠覆和分裂，保卫国家主权、统一、领土完整、安全和发展利益所进行的军事活动，以及与军事有关的政治、经济、外交、科技、教育等方面的活动。</div>
+                <div class="term">导弹</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">依靠自身动力装置推进，由制导系统控制飞行、导向目标，以其战斗部毁伤目标的武器。</div>
+                <div class="term">制导技术</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">又称精确制导技术，是利用目标辐射或反射的特征信号，发现、识别和跟踪目标，精确引导和控制武器命中目标的技术。</div>
+            </div>
+            <!-- 页面4 -->
+            <div class="page-content">
+                <div class="term">寻的制导</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">由弹上的导引头感受来自目标的辐射或反射能量，自动跟踪目标并形成制导指令、控制导弹飞向目标的技术。</div>
+                <div class="term">自主式制导</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">根据导弹内部或外部固定参考基准，导引控制导弹飞向目标的技术。</div>
+                <div class="term">复合制导</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">采用两种或以上制导方式，或在不同阶段采用不同的制导方式。</div>
+                <div class="term">遥控制导</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">由设在导弹以外的制导站控制导弹飞向目标的技术。</div>
+                <div class="term">精确制导武器</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">采用精确制导技术，直接命中概率较高的武器（50%以上）。</div>
+            </div>
+            <!-- 页面5 -->
+            <div class="page-content">
+                <div class="term">国防动员</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">国家为应对战争或其他安全威胁，使社会诸领域的全部或部分由平时状态转入战时状态或紧急状态的活动。</div>
+                <div class="term">武装力量动员</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">国家将军队及其他武装组织由平时体制转为战时体制所采取的措施。</div>
+                <div class="term">人民防空动员</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">国家战时发动和组织人民群众防备敌人空袭所采取的措施，也可简称人防动员/民防动员。</div>
+                <div class="term">国民经济动员</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">国家将经济部门、经济活动和相应的体制从平时状态转入战时状态所采取的措施，是战争动员的基础。</div>
+                <div class="term">科学技术动员</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">国家或政治集团为实施战争或应对其他军事危机，统一组织科学技术力量从事科学技术研发的活动，简称科技动员。</div>
+            </div>
+            <!-- 页面6 -->
+            <div class="page-content">
+                <div class="term">信息化海上作战平台</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">采用信息技术研制或改造的，供武器装备执行海上作战任务的处所、载体或者器具的总称。</div>
+                <div class="term">信息化作战平台</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">采用信息技术研制或改造的，供武器执行作战任务的处所、载体或者器具的总称。</div>
+                <div class="term">信息化陆上作战平台</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">采用信息技术研制或改造的，供武器执行陆上任务的处所、载体或器具的总称。</div>
+                <div class="term">军队指挥控制系统</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">简称指挥控制系统，是保障指挥员和指挥机关对作战人员和武器系统实施指挥和控制的信息系统。是指挥信息系统的核心。</div>
+                <div class="term">综合电子信息系统</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">按军队信息系统一体化原则和综合集成技术而构建的具有多种使命、多种功能的信息系统，是在战争中夺取信息优势、决策优势和全维优势的主要装备。</div>
+            </div>
+            <!-- 页面7 -->
+            <div class="page-content">
+                <div class="term">预警系统</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">采用一系列传感、遥控探测手段，发现，定位和识别敌方来袭目标，发出警报信号，为打击或者防范敌方目标提供相应的情报和反应时间的信息系统。</div>
+                <div class="term">导航系统</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="definition">通过实施提供位置、速度、航向、姿态及时间等信息，引导飞机、舰船、车辆等交通工具及人员沿着预期的路线到达目的地的信息系统。</div>
+            </div>
+            <div class="pagination">
+                <button onclick="prevPage('terms')">上一页</button>
+                <button onclick="nextPage('terms')">下一页</button>
+            </div>
+        </section>
+        <section id="short-answer" class="section">
+            <h2>简答题</h2>
+            <!-- 页面1 -->
+            <div class="page-content active">
+                <div class="question">简述军事科学的任务与性质</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">
+                    任务：通过对战争和国防实践经验的科学总结，对战争和国防规律及其指导规律的不断探索，预测战争的发生、发展及特点，提出克敌制胜的原则、手段和方法；分析战略环境的发展变化及其影响，提出国家防卫的原则、目标和措施，为正确指导战争和国防的准备与实施，提供科学的理论指导和决策依据。性质：军事科学是一门具有特定范畴的综合性科学；也属于社会科学，具有鲜明的政治性和民族性。
+                </div>
+                <div class="question">简述军事科学的主要功能</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">为国家制订军事战略提供理论依据；为国家规划武装力量建设提供理论依据；为国家发展武器技术装备进行科学论证；为国家准备和实施战争提供理论依据。</div>
+                <div class="question">简述军事科学的研究对象</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">战争和国防。军事科学源于战争和国防的实践并运用于实践。</div>
+                <div class="question">简述军事科学的特点</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">？（待补充）</div>
+                <div class="question">简述大学生学习军事科学的意义</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">大学生参加军事训练、学习军事科学是法定的公民义务，责无旁贷；有利于提高全民国防意识，振奋民族精神；有利于加强国防后备力量建设；有利于培养德智体全面发展的“四有”新人。
+                </div>
+            </div>
+            <!-- 页面2 -->
+            <div class="page-content">
+                <div class="question">简述大学生学习军事科学的方法</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">拓展思维领域，综合运用各种思维方法；研究战例，借鉴历史；善于“合成”，融会贯通。</div>
+                <div class="question">简述毛泽东军事思想的科学含义</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">
+                    是马列主义普遍原理与中国革命和国防建设实际相结合的产物；是中国共产党领导中国人民及其军队长期军事实践经验的科学总结；根植深厚的中华文化沃土，多方面汲取了古今中外军事思想的精华；是中国共产党集体智慧的结晶，是党领导中国革命战争、军队建设、国防建设和反侵略战争的指导思想。
+                </div>
+                <div class="question">简述毛泽东军事思想的历史地位</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">把中国军事思想发展到一个全新的阶段，是中国革命战争胜利和国防现代化建设的理论指南；创造性地丰富和发展了马克思主义的军事理论宝库；在世界上有广泛而深远的影响。</div>
+                <div class="question">简述毛泽东思想的理论体系</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">战争观和方法论；人民军队思想；人民战争思想；人民战争的战略战术思想；国防建设思想。</div>
+                <div class="question">简述人民战争思想的基本理论观点</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">战争的正义性是实现人民战争的政治基础；革命是群众的战争；人民群众是战争伟力的最深厚根源；兵民是胜利之本；人是战争胜负的决定因素。</div>
+            </div>
+            <!-- 页面3 -->
+            <div class="page-content">
+                <div class="question">简述“三结合”的武装力量体制</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">由中国人民解放军、中国人民武装警察部队和民兵构成的三结合武装力量机制。</div>
+                <div class="question">简述实行人民战争的主要原则和方法</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">
+                    坚持中国共产党对人民战争的统一领导；充分动员、组织和武装广大人民群众；发挥人民军队骨干力量的作用；实行“三结合”的武装力量体制和“三结合一配合”的组织斗争形式；建立巩固的革命根据地；运用灵活机动的战略战术。
+                </div>
+                <div class="question">简述历史唯物主义战争观</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">战争是阶级斗争的最高形式；战争是流血的政治；战争是经济的竞赛；用正义战争消灭非正义战争。</div>
+                <div class="question">简述制导技术的种类</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">自主式制导；寻的制导；遥控制导；复合制导。</div>
+                <div class="question">简述精确制导武器的作战特点</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">直接命中概率高；具有自主制导能力；作战效能好；射程远，威力大，机动性好，能有效摧毁目标。</div>
+            </div>
+            <!-- 页面4 -->
+            <div class="page-content">
+                <div class="question">简述精确制导武器的主要种类</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">导弹；制导炸弹；制导炮弹；制导地雷；制导鱼雷。</div>
+                <div class="question">简述国际战略格局的结构类型</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">单极格局；两极格局；多极格局；多元交叉格局。</div>
+                <div class="question">简述国际战略格局演变的规律性特点</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">
+                    必然性和偶然性的关系，必然性反映了格局发展的一般规律，偶然性也发挥重要作用；量变到质变过程；渐变和突变的方式，渐变是局部性变化，是旧格局向新格局转化的具体表现，质变是全面性变化，标志着旧格局的终结和新旧格局更替的开始。
+                </div>
+                <div class="question">简述国防的基本要素</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">
+                    国防的主体是国防活动的实行者，通常为国家；国防的对象，是指国防所要防备、抵抗和制止的行为，一是侵略，二是武装颠覆和分裂；国防的目的主要是捍卫国家的主权、统一、领土完整、安全和发展利益；国防的手段是为达到国防目的而采取的方法和措施，包括军事活动，以及与军事有关的政治、经济、外交、科技、教育等方面活动。
+                </div>
+                <div class="question">简述现代国防的基本特征</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">内涵更丰富；多种手段，多种斗争形式的角逐；综合国力的较量；与国家经济建设关系密切。</div>
+            </div>
+            <!-- 页面5 -->
+            <div class="page-content">
+                <div class="question">简述中国国防历史的启示</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">经济发展是国防强大的基础；政治昌明是国防巩固的根本；国家的统一和民族的团结是国防强大的关键；保持忧患意识是国防巩固发展的前提。</div>
+                <div class="question">简述中国地缘环境的基本情况</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">
+                    中国是边界线较长、相邻国家最多的国家之一；中国周边地区人口众多，是世界上大国最集中的地区；中国周边国家政治制度和经济发展水平差距很大，民族宗教矛盾交织，安全环境复杂；中国位于世界两大地缘战略区交接处，既受其他大国关系影响，又影响其他大国关系。
+                </div>
+                <div class="question">简述国家面临传统安全威胁</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">祖国统一面临复杂严峻的形势；海洋权益存在复杂九分；边界争端尚未完全解决。</div>
+                <div class="question">简述国防动员的意义</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">是增强国防实力的重要举措；是增强国防威慑力的有效手段；是夺取战争主动权的可靠保障。</div>
+                <div class="question">简述国防动员的分类</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">总动员（全面性，彻底性，持续性）；局部动员（有限性，不稳定性）。</div>
+            </div>
+            <!-- 页面6 -->
+            <div class="page-content">
+                <div class="question">简述国防动员的要求</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">速度要快；数量要充分；质量要高；范围要广；力求隐蔽安全。</div>
+                <div class="question">简述国防动员的内容</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">武装力量动员；国民经济动员；科学技术动员；人民防空动员；政治动员。</div>
+                <div class="question">简述国防动员的原则</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">统一领导；全民参与；长期准备；重点建设；统筹兼顾；有序高效。</div>
+                <div class="question">简述军队指挥控制系统的功能</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">迅速收集和处理情报；辅助指挥员快捷决策；实时观察战场情况；对武器进行自动控制；提高后勤指挥效率。</div>
+                <div class="question">简述军队指挥控制系统对作战的影响</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">使作战指挥机关更加精干高效；为军队机动能力的提高创造许多有利条件；通过自动化控制可以提高武器效能，这是一个主要功用；影响信息和后勤保障。</div>
+            </div>
+            <!-- 页面7 -->
+            <div class="page-content">
+                <div class="question">简述军队指挥控制系统的构成</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">信息收集分系统；信息传递分系统；信息处理分系统；信息显示分系统；决策监控分系统；执行分系统。</div>
+                <div class="question">简述典型的预警系统</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">天基预警系统；空中预警系统；陆基预警系统；海基预警系统。</div>
+                <div class="question">简述典型的导航系统</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">自主式导航系统；陆基无线电导航系统；全球卫星导航系统。</div>
+                <div class="question">简述信息化海上作战平台对作战的影响</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">对抗空间由单维转向多维；作战机动由兵力机动转向火力机动；攻守态势由近距格斗转向远程打击；兵力编成部署由集中配置转向小群组合；打击方式由硬摧毁转向“软硬结合战”。
+                </div>
+                <div class="question">简述信息化作战平台的特征</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">战场态势感知共享；交战空间全维一体；软硬互补精确打击；实施联动平行作战；系统配套精确保障。</div>
+            </div>
+            <!-- 页面8 -->
+            <div class="page-content">
+                <div class="question">简述信息化空中作战平台对作战的影响</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">空袭作战成为独立的作战阶段；精确打击和对地面作战提供近实时支援成为主要作战任务；夜间和不良气候下的空战成为常态。</div>
+                <div class="question">简述信息化战争的特征</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">
+                    武器装备的高度信息化；战争能量释放形态的信息主导化；战场空间的多维一体化；信息系统成为作战双方的主要打击目标；制信息权成为战场争夺的核心和基础；基于网络体系的联合作战平台成为战斗力的基本形态；软杀伤与硬摧毁有机结合成为作战的普遍法则。
+                </div>
+                <div class="question">简述信息化战争的科学内涵</div>
+                <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                <div class="answer">
+                    信息化战争是依托网络化信息系统，使用信息化武器及相应作战方法，在陆海空天和网络电磁等空间及认知领域进行的以体系对抗为主要形式的战争，是信息时代战争的基本形态；是时代的产物；很可能是在核威慑条件下进行的常规战争；是大量使用信息化武器装备，参战部队的作战指挥实现网络化一体化，以全新的信息化战争理论为指导的战争；是多维空间紧密相连，认知和信息空间占相当大比例的战争。
+                </div>
+            </div>
+            <div class="pagination">
+                <button onclick="prevPage('short-answer')">上一页</button>
+                <button onclick="nextPage('short-answer')">下一页</button>
+            </div>
+        </section>
+        <section id="analysis" class="section">
+            <h2>材料分析题</h2>
+            <!-- 页面1 -->
+            <div class="page-content active">
+                <div class="analysis-item">
+                    <div class="analysis-title">1. 结合台海局势，谈谈你如何理解“研究和指导战争，要关照全局，把握关节”</div>
+                    <div class="analysis-material">（背景材料：台海局势）</div>
+                    <div class="analysis-question">如何理解“研究和指导战争，要关照全局，把握关节”？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">
+                        战争是一个由多种因素综合作用而形成的整体，有着整体与部分、全局与局部之分。关照全局是战争指导的首要问题，必须牢固树立全局观念，把握关节是推动全局发展的重要方法。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">2. 结合台海局势，谈谈你如何理解“研究和指导战争必须着眼其特点，着眼其发展”</div>
+                    <div class="analysis-material">（背景材料：台海局势）</div>
+                    <div class="analysis-question">如何理解“研究和指导战争必须着眼其特点，着眼其发展”？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">只有处理好一般规律和特殊规律的关系，才能正确认识和指导战争。认识和把握特殊战争规律，必须着眼其发展，把握好战争的时间、地域、任务三个要素。
+                    </div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">3. 结合台海局势，试述如何理解战争与政治的关系</div>
+                    <div class="analysis-material">（背景材料：台海局势）</div>
+                    <div class="analysis-question">如何理解战争与政治的关系？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">战争是流血的政治，战争的本质集中反映在战争和政治的关系之中。政治目的决定着战争目标和力量使用大小，战争为政治目的服务。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">4. 结合台海局势，试述如何理解“研究和指导战争，主观指导要符合客观实际”</div>
+                    <div class="analysis-material">（背景材料：台海局势）</div>
+                    <div class="analysis-question">如何理解“研究和指导战争，主观指导要符合客观实际”？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">战争的客观实际是不依赖人的意识而独立存在的，战争指导的关键在于主观指导与客观实际的矛盾。战争实践是主观符合客观实际的基本途径。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">5. 如何理解战争与经济的关系？分析伊朗局势</div>
+                    <div class="analysis-material">据报道，伊朗局势严峻，2019.5.19美海军“林肯号”航母与“奇尔沙治”攻击艇组成的双航母编队进入波斯湾。</div>
+                    <div class="analysis-question">如何理解战争与经济的关系？试分析伊朗再次成为热点的原因？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">战争是经济的竞赛，经济是战争的物质基础。伊朗作为中东地区的重要国家，其石油资源和地缘位置使其成为国际战略竞争的焦点。</div>
+                </div>
+            </div>
+            <!-- 页面2 -->
+            <div class="page-content">
+                <div class="analysis-item">
+                    <div class="analysis-title">6. 如何理解战争与政治的关系？分析伊朗局势</div>
+                    <div class="analysis-material">据报道，伊朗局势严峻，2019.5.19美海军“林肯号”航母与“奇尔沙治”攻击艇组成的双航母编队进入波斯湾。</div>
+                    <div class="analysis-question">如何理解战争与政治的关系？试分析伊朗再次成为热点的原因？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">战争是政治的延续，政治目的是战争的根源。伊朗核问题、地区影响力等政治因素是导致其成为热点的原因。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">7. 运用国际战略格局演变的动因与过程基本理论，分析中美贸易战</div>
+                    <div class="analysis-material">（背景材料：中美贸易战）</div>
+                    <div class="analysis-question">运用国际战略格局演变的动因与过程基本理论，分析中美贸易战。</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">国际战略格局的演变是国际战略力量及其相互关系的重大改变。中美贸易战反映了中美之间在经济、科技等领域的战略竞争，影响全球战略格局。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">8. 为什么研究和指导战争必须着眼其特点，着眼其发展？分析中日关系</div>
+                    <div class="analysis-material">（背景材料：中日关系发展及走向）</div>
+                    <div class="analysis-question">为什么研究和指导战争必须着眼其特点，着眼其发展？试分析中日关系发展及走向。</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">战争的特点是在其发展变化中表现出来的，认识和把握特殊战争规律必须着眼其发展。中日关系受历史、领土争端等因素影响，需动态分析其发展趋势。
+                    </div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">9. 为什么研究和指导战争，要关照全局，把握关节？分析中日关系</div>
+                    <div class="analysis-material">（背景材料：中日关系发展及走向）</div>
+                    <div class="analysis-question">为什么研究和指导战争，要关照全局，把握关节？分析中日关系发展及走向。</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">关照全局是战争指导的首要问题，把握关节是推动全局发展的重要方法。中日关系涉及东亚地区稳定，需从全局视角分析其影响。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">10. 如何理解国际战略格局演变的规律性特点？分析中国如何应对美日澳印四国的印太战略</div>
+                    <div class="analysis-material">2020年10月6日,美日澳印四国在东京举行四方会谈，就包括东海和南海在内的所谓地区局势进行磋商。</div>
+                    <div class="analysis-question">如何理解国际战略格局演变的规律性特点？试析中国如何应对美日澳印四国的印太战略?</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">国际战略格局演变具有必然性和偶然性、量变和质变、渐变和突变的特点。中国应通过外交、经济、军事等多方面手段，维护国家利益和地区稳定。
+                    </div>
+                </div>
+            </div>
+            <!-- 页面3 -->
+            <div class="page-content">
+                <div class="analysis-item">
+                    <div class="analysis-title">11. 如何理解“研究和指导战争，要关照全局，把握关节”？分析中国抗疫效果</div>
+                    <div class="analysis-material">2020年1月23,武汉宣布封城，封锁内外交通:4月8日解封,武汉人民封城长达76天的抗疫战斗告一段落;9月8日,全国召开抗疫表彰大会。
+                    </div>
+                    <div class="analysis-question">如何理解“研究和指导战争，要关照全局，把握关节”？试析中国抗疫为什么取得较好的效果?</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">抗疫是一场人民战争，关照全局意味着统筹全国资源，把握关节如封城、疫苗研发等关键措施。中国通过集中力量办大事，取得了较好的抗疫效果。
+                    </div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">12. 如何理解“研究和指导战争必须着眼其特点和发展”？分析中印关系</div>
+                    <div class="analysis-material">2020年6月15日,在中印边境加勒万河谷地区,中印双方发生激烈的肢体冲突。</div>
+                    <div class="analysis-question">如何理解“研究和指导战争必须着眼其特点和发展”？试析中印关系的特点及其应对。</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">中印关系受地缘政治、历史遗留问题等影响，需着眼其特点和发展趋势，通过对话、合作等方式维护边境稳定。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">13. 如何理解国际战略格局演变的动因？分析中国如何应对美日澳印四国的印太战略</div>
+                    <div class="analysis-material">2020年10月6日,美日澳印四国在东京举行四方会谈，就包括东海和南海在内的所谓地区局势进行磋商。</div>
+                    <div class="analysis-question">如何理解国际战略格局演变的动因？试析中国如何应对美日澳印四国的印太战略?</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">国际战略格局演变的动因包括国际战略力量的对比变化、内外因素的共同作用。中国应加强自身实力，灵活运用外交策略，维护国家利益。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">14. 如何理解国际战略格局的本质？分析美欧抱团对中国的影响</div>
+                    <div class="analysis-material">
+                        2021年5月19日,美国国务院发布了一份声明称,为了关国的国家利益,决定豁免对北溪号线(俄德新建中的天然气输送管线)运营公司及其高官实施的制裁计划。</div>
+                    <div class="analysis-question">如何理解国际战略格局的本质？试析美欧抱团对中国的影响。</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">国际战略格局的本质是国际战略力量的对比关系。美欧从经济、技术等领域对中国形成压力，但也提供了合作与竞争并存的机遇。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">15. 如何理解“研究和指导战争，必须主观指导符合客观实际”？分析西方抗疫效果</div>
+                    <div class="analysis-material">截至2021年5月28日,新冠疫情在美国、印度新增确诊数仍然居高不下。</div>
+                    <div class="analysis-question">如何理解“研究和指导战争，必须主观指导符合客观实际”？试析西方抗疫为何难以取得中国的抗疫效果?</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">主观指导必须符合客观实际，西方国家在抗疫中未能有效控制疫情，反映了其政策与疫情客观情况的不匹配。</div>
+                </div>
+            </div>
+            <!-- 页面4 -->
+            <div class="page-content">
+                <div class="analysis-item">
+                    <div class="analysis-title">16. 如何理解“研究和指导战争必须认识战争规律”? 分析西方抗疫效果</div>
+                    <div class="analysis-material">截至2021年5月28日,新冠疫情在美国、印度新增确诊数仍然居高不下。</div>
+                    <div class="analysis-question">如何理解“研究和指导战争必须认识战争规律”? 试析西方抗疫为何难以取得中国的抗疫效果?</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">认识战争规律是指导战争的关键，西方国家在抗疫中未能有效认识和应对疫情的规律，导致抗疫效果不佳。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">17. 如何理解国际战略格局的构成要素？分析中美在伊核协议中的角色</div>
+                    <div class="analysis-material">
+                        据伊朗法尔斯社2021年5月20日新闻,伊朗总统鲁哈尼当天宣布,伊核协议谈判各方已经同意解除伊朗在石油、石化产品、航运、保险和央行等主要领域的制裁。</div>
+                    <div class="analysis-question">如何理解国际战略格局的构成要素？试析中美在伊核协议中扮演的角色?</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">国际战略格局的构成要素是国际战略力量，中美作为主要战略力量，在伊核协议中扮演着重要角色，影响着中东地区的战略格局。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">18. 如何理解国际战略格局演变的动因？分析当今世界“百年未有之大变局”</div>
+                    <div class="analysis-material">近年来,随着中美战略博弈的加剧,美、日、欧、俄、印等国家或国家集团力量此消彼长,对国际战略格局的变化产生了重要的影响。</div>
+                    <div class="analysis-question">如何理解国际战略格局演变的动因？试分析如何理解当今世界“百年未有之大变局”？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">
+                        国际战略格局演变的动因包括国际战略力量的对比变化、内外因素的共同作用。当今世界正经历百年未有之大变局，表现为全球治理体系的变革、新兴国家的崛起等。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">19. 如何理解“研究和指导战争，必须关照全局，把握关节”？分析如何抗疫才能取得理想效果</div>
+                    <div class="analysis-material">截至2021年5月28日,新冠疫情在美国、印度新增确诊数仍然居高不下。</div>
+                    <div class="analysis-question">如何理解“研究和指导战争，必须关照全局，把握关节”？试析如何抗疫才能取得理想效果。</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">抗疫需要关照全局，统筹资源，把握关键环节如疫苗接种、疫情防控措施等，才能取得理想效果。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">20. 如何理解“研究和指导战争必须着眼其特点和发展”？分析如何抗击奥密克戎</div>
+                    <div class="analysis-material">2021年11.9首次在南非检测出新冠变种奥密克隆。12.14美疾控中心显示，美国有35个州报告奥密克戎病例。</div>
+                    <div class="analysis-question">如何理解“研究和指导战争必须着眼其特点和发展”？试分析如何抗击奥密克戎才能取得较好的抗疫效果？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">抗击奥密克戎需要着眼其传播特点和发展趋势，采取针对性的防控措施，如加强疫苗研发、提高检测能力等。</div>
+                </div>
+            </div>
+            <!-- 页面5 -->
+            <div class="page-content">
+                <div class="analysis-item">
+                    <div class="analysis-title">21. 如何理解国际战略格局演变的规律性特点？分析中国如何在中美战略竞争中取得优势地位</div>
+                    <div class="analysis-material">当下世界进入大变革时代，人类文明进入东西方文明的交汇点，文明相融的过程总会伴随着摩擦，进而辐射到政治经济军事等方面，中美战略竞争不可避免。
+                    </div>
+                    <div class="analysis-question">如何理解国际战略格局演变的规律性特点？试分析中国如何在中美战略竞争中取得优势地位？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">国际战略格局演变具有必然性和偶然性、量变和质变、渐变和突变的特点。中国应通过提升综合国力、加强国际合作等方式，在战略竞争中取得优势。
+                    </div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">22. 如何理解国际战略格局演变的动因？分析美国扩大同盟体系对国际战略格局的影响</div>
+                    <div class="analysis-material">美日印澳四方安全对话领导人峰会于2022年5.21在东京召开，美国试图通过峰会强化自身主导作用，通过和盟友抱团扩大同盟体系。</div>
+                    <div class="analysis-question">如何理解国际战略格局演变的动因？分析美国扩大同盟体系对国际战略格局的影响。</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">国际战略格局演变的动因包括国际战略力量的对比变化。美国扩大同盟体系可能加剧地区紧张局势，影响全球战略平衡。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">23. 如何理解”人民战争思想的基本理论观点“？分析如何应对全球疫情</div>
+                    <div class="analysis-material">在全球范围内，新冠疫情仍在许多国家肆虐，抗疫形势严峻。</div>
+                    <div class="analysis-question">如何理解”人民战争思想的基本理论观点“？试分析我们应如何应对？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">人民战争思想强调战争的正义性、群众性，人民群众是战争伟力的最深厚根源。应对全球疫情需动员全社会力量，采取科学防控措施。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">24. 实行人民战争思想的方法有哪些？分析如何抗疫才能取得较好抗疫效果</div>
+                    <div class="analysis-material">截至2022.5.20上海新增本土确诊病例88例，无症状感染者770例，累计确诊6521例，但上海本轮疫情对全国造成较大影响。</div>
+                    <div class="analysis-question">实行人民战争思想的方法有哪些？试分析如何抗疫才能取得较好抗疫效果？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">实行人民战争思想的方法包括坚持党的领导、充分动员群众、发挥人民军队作用等。抗疫需加强组织领导、科学防控、提高公众参与度。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">25. 如何理解国际战略格局演变的规律性特点？分析中国能从俄乌冲突中获得什么启示</div>
+                    <div class="analysis-material">2022.2.24，俄罗斯总统普京对乌克兰发动特别军事行动，俄乌战争爆发，而后西方国家对俄罗斯采取一些列制裁措施。</div>
+                    <div class="analysis-question">如何理解国际战略格局演变的规律性特点？分析中国能从俄乌冲突中获得什么启示？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">国际战略格局演变具有必然性和偶然性、量变和质变、渐变和突变的特点。俄乌冲突启示中国需加强自身实力，维护国家安全和利益。</div>
+                </div>
+            </div>
+            <!-- 页面6 -->
+            <div class="page-content">
+                <div class="analysis-item">
+                    <div class="analysis-title">26. 如何理解国际战略格局演变的规律性特点？结合俄乌战争</div>
+                    <div class="analysis-material">（背景材料：俄乌战争）</div>
+                    <div class="analysis-question">如何理解国际战略格局演变的规律性特点？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">国际战略格局演变具有必然性和偶然性、量变和质变、渐变和突变的特点。俄乌战争是国际战略力量对比变化的体现，影响全球战略格局。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">27. 如何理解国际战略格局演变的动因？结合中印冲突</div>
+                    <div class="analysis-material">（背景材料：中印冲突）</div>
+                    <div class="analysis-question">如何理解国际战略格局演变的动因？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">国际战略格局演变的动因包括国际战略力量的对比变化、内外因素的共同作用。中印冲突反映了地区战略竞争，影响亚洲战略格局。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">28. 如何理解“研究和指导战争，要关照全局，把握关节”？结合中印冲突</div>
+                    <div class="analysis-material">（背景材料：中印冲突）</div>
+                    <div class="analysis-question">如何理解“研究和指导战争，要关照全局，把握关节”？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">关照全局是战争指导的首要问题，把握关节是推动全局发展的重要方法。中印冲突需从全局视角分析，关注边境稳定和地区安全。</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-title">29. 如何理解国际战略格局演变的规律性特点？结合美方的印太战略</div>
+                    <div class="analysis-material">（背景材料：美方的印太战略）</div>
+                    <div class="analysis-question">如何理解国际战略格局演变的规律性特点？</div>
+                    <button class="toggle-answer" onclick="toggleAnswer(this)">显示答案</button>
+                    <div class="analysis-content">国际战略格局演变具有必然性和偶然性、量变和质变、渐变和突变的特点。美方的印太战略是其全球战略调整的一部分，影响亚太地区战略格局。</div>
+                </div>
+            </div>
+            <div class="pagination">
+                <button onclick="prevPage('analysis')">上一页</button>
+                <button onclick="nextPage('analysis')">下一页</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 军事理论复习</p>
+    </footer>
+    <script>
+        // 全局变量，记录每个题型的当前页码
+        let currentPage = {
+            'terms': 0,
+            'short-answer': 0,
+            'analysis': 0
+        };
+
+        function showSection(sectionId) {
+            // 隐藏所有section
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            // 显示选中的section
+            document.getElementById(sectionId).style.display = 'block';
+            // 重置当前题型的页码为0（第一页）
+            currentPage[sectionId] = 0;
+            // 显示第一页
+            showPage(sectionId, 0);
+        }
+
+        function showPage(sectionId, pageIndex) {
+            const section = document.getElementById(sectionId);
+            const pages = section.querySelectorAll('.page-content');
+            // 隐藏所有页
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            // 显示指定页
+            if (pages[pageIndex]) {
+                pages[pageIndex].classList.add('active');
+            }
+            // 更新当前页码
+            currentPage[sectionId] = pageIndex;
+        }
+
+        function nextPage(sectionId) {
+            const section = document.getElementById(sectionId);
+            const pages = section.querySelectorAll('.page-content');
+            let nextIndex = currentPage[sectionId] + 1;
+            if (nextIndex < pages.length) {
+                showPage(sectionId, nextIndex);
+            }
+        }
+
+        function prevPage(sectionId) {
+            let prevIndex = currentPage[sectionId] - 1;
+            if (prevIndex >= 0) {
+                showPage(sectionId, prevIndex);
+            }
+        }
+
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            if (answer.classList.contains('visible')) {
+                answer.classList.remove('visible');
+                button.textContent = '显示答案';
+            } else {
+                answer.classList.add('visible');
+                button.textContent = '隐藏答案';
+            }
+        }
+    </script>
+</body>
+
+</html>

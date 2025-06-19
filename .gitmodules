@@ -1,0 +1,3 @@
+[submodule "大二下/CNI/CHI-Exp/cni-exp"]
+	path = 大二下/CNI/CHI-Exp/cni-exp
+	url = git@gitee.com:huangucode/cni-exp.git

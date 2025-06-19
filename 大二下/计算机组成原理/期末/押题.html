@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>复习题汇总</title>
+  <!-- 引入 Vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <!-- 引入 Element-UI 样式与脚本 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <style>
+
+    body {
+      padding: 20px;
+      background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    }
+
+    h2 {
+      color: #409EFF;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .question-card {
+      margin-bottom: 20px;
+    }
+
+    .question-header {
+      font-size: 18px;
+      color: #303133;
+      display: flex;
+      align-items: center;
+    }
+
+    .question-tag {
+      margin-right: 10px;
+    }
+
+    .el-card {
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .placeholder {
+      text-align: center;
+      color: #999;
+      padding: 40px 0;
+      background-color: #fafafa;
+      border: 1px dashed #d3dce6;
+      border-radius: 4px;
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <el-container>
+      <el-header>
+        <h2>计算机组成原理—简答题复习</h2>
+      </el-header>
+      <el-main>
+        <el-tabs v-model="activeTab" type="card">
+          <el-tab-pane label="全部" name="all"></el-tab-pane>
+          <el-tab-pane v-for="tag in tags" :key="tag" :label="tag" :name="tag"></el-tab-pane>
+        </el-tabs>
+
+        <el-collapse accordion>
+          <template v-for="item in pagedQuestions" :key="item.id">
+            <el-collapse-item :title="item.id + '. ' + item.title" :name="item.id" class="question-card">
+              <el-card>
+                <div slot="header" class="question-header">
+                  <el-tag type="info" class="question-tag">标签：{{ item.tag }}</el-tag>
+                  <span>{{ item.id }}. {{ item.title }}</span>
+                </div>
+                <div v-html="item.content"></div>
+              </el-card>
+            </el-collapse-item>
+          </template>
+        </el-collapse>
+
+        <div class="pagination">
+          <el-pagination background layout="prev, pager, next" :page-size="pageSize" :total="filteredQuestions.length"
+            v-model="currentPage"></el-pagination>
+        </div>
+      </el-main>
+    </el-container>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        activeTab: 'all',
+        currentPage: 1,
+        pageSize: 5,
+        questions: [
+          {
+            id: '1', tag: '数据通路', title: '单总线数据通路的特点', content: `
+            <ul>
+              <li><strong>运算器输入输出暂存器</strong>
+                <ul>
+                  <li>暂存参与运算及运算后的数据。</li>
+                  <li>隔离缓冲：隔离运算器与总线，缓冲速度差异。</li>
+                  <li>信号配合：读写依控制信号操作，实现数据的同步。</li>
+                </ul>
+              </li>
+              <li><strong>三态门</strong>
+                <ul>
+                  <li>共享总线：通过高阻态避免信号冲突，实现部件共享。</li>
+                  <li>灵活控制：由控制单元精准控制使能。</li>
+                  <li>抗干扰：高阻态减少信号干扰。</li>
+                </ul>
+              </li>
+              <li><strong>总体</strong>
+                <ul>
+                  <li>结构简单，成本低。</li>
+                  <li>使用分时复用，需精确调度。</li>
+                  <li>传输效率相对受限。</li>
+                </ul>
+              </li>
+            </ul>
+          `},
+          {
+            id: '2', tag: '数据通路', title: '单周期与多周期 MIPS 处理器数据通路的区别', content: `
+            <ul>
+              <li>不再区分指令存储器和数据存储器。</li>
+              <li>部分单元（如 ALU、寄存器对）可在同一条指令的不同时钟周期内多次使用。</li>
+              <li>在主要功能单元输出端增加附加寄存器（如 DR、IR）。</li>
+              <li>PC 增加使能端。</li>
+              <li>增加和扩展了部分多路选择器。</li>
+              <li>增加了 ALU 控制器。</li>
+            </ul>
+          `},
+          {
+            id: '3', tag: '架构', title: '冯诺依曼计算机特点', content: `
+            <ul>
+              <li>由计算器、存储器、控制器、输入输出设备构成。</li>
+              <li>以计算器为主体。</li>
+              <li>指令与数据都以二进制存储。</li>
+              <li>指令与数据都存储在存储器中，且顺序存储。</li>
+              <li>指令由操作码和地址码组成。</li>
+            </ul>
+          `},
+          {
+            id: '4', tag: '定点数', title: '定点数运算溢出判断的三种方式', content: `
+            <ol>
+              <li>根据操作数和运算结果的符号位是否一致检测。</li>
+              <li>根据运算过程最高数据位的进位和符号位进位是否一致检测。</li>
+              <li>使用变形补码的符号位进行检测。</li>
+              <li>浮点数的阶码大于正阶码时。</li>
+            </ol>
+          `},
+          {
+            id: '5', tag: '控制器', title: '微程序设计与硬布线控制器设计的共同点与区别', content: `
+            <p><strong>共同点：</strong>生成控制信号，保障系统各部件协同工作。</p>
+            <ul>
+              <li><strong>时序控制</strong>：硬布线用组合逻辑，微程序用存储微指令。</li>
+              <li><strong>运行速度</strong>：硬布线快，微程序慢。</li>
+              <li><strong>电路复杂度与维护</strong>：硬布线电路复杂难改；微程序易修改升级。</li>
+              <li><strong>应用场景</strong>：硬布线常用于 RISC，微程序常用于 CISC。</li>
+            </ul>
+          `},
+          {
+            id: '6', tag: '微程序', title: '微指令微地址的生成逻辑', content: `
+            <div class="placeholder"><img src="image.png" alt="微指令微地址生成逻辑示意图" />
+</div>
+          `},
+          {
+            id: '7', tag: '总线仲裁', title: '总线仲裁中集中式仲裁方式的各自特点', content: `
+            <ul>
+              <li><strong>链式查询</strong>
+                <ul><li>优点：结构简单，控制线少，扩容容易。</li><li>缺点：优先级固定，仲裁速度慢，存在单点故障。</li></ul>
+              </li>
+              <li><strong>计数器定时查询</strong>
+                <ul><li>优点：用计数地址替代 BG，可动态改变优先级。</li><li>缺点：速度慢，结构复杂。</li></ul>
+              </li>
+              <li><strong>独立请求方式</strong>
+                <ul><li>灵活度最高。</li><li>结构最复杂，控制线最多。</li><li>仲裁速度最快。</li></ul>
+              </li>
+            </ul>
+          `},
+          {
+            id: '8', tag: '通信', title: '同步、半同步、异步通信的特点', content: `
+            <ul>
+              <li><strong>同步</strong>：公共时钟定时，接口逻辑简单，速度快，但受最慢设备限制。</li>
+              <li><strong>半同步</strong>：保留同步时钟，又允许不同速率，兼顾简单与灵活。</li>
+              <li><strong>异步</strong>：无固定时钟，使用握手信号，不同频率设备可通信。</li>
+            </ul>
+          `},
+          {
+            id: '9', tag: '互锁', title: '总线信号互锁的三种方式', content: `
+            <ul>
+              <li><strong>非互锁：</strong>REQ→ACK（如 SPI 总线）。</li>
+              <li><strong>半互锁：</strong>撤销依赖应答建立（如 I2C 协议）。</li>
+              <li><strong>全互锁：</strong>应答撤销依赖请求撤销（如 AMBA AHB）。</li>
+            </ul>
+          `},
+          {
+            id: '10', tag: '传输', title: 'DMA 与中断技术的区别', content: `
+            <ul>
+              <li>中断请求 CPU 时间；DMA 请求总线控制权。</li>
+              <li>中断由 CPU 程序传送，需保存/恢复现场；DMA 由硬件直接传输，无需寄存器中转。</li>
+              <li>中断可处理随机事件；DMA 仅用于数据传输。</li>
+            </ul>
+          `},
+          {
+            id: '11', tag: '传输', title: '程序查询、中断、DMA 方式特点', content: `
+            <ul>
+              <li><strong>程序查询</strong>：CPU 轮询执行 I/O 程序。</li>
+              <li><strong>程序中断</strong>：消除轮询开销，但增加上下文切换时间。</li>
+              <li><strong>DMA</strong>：DMA 控制器接管总线，外设↔内存直接传输。</li>
+            </ul>
+          `},
+          {
+            id: '12', tag: '优先级', title: '响应优先级与处理优先级的区别', content: `
+            <ul>
+              <li>响应优先级：CPU 响应中断请求的顺序，由硬件决定。</li>
+              <li>处理优先级：CPU 实际处理中断的顺序，可通过软件屏蔽调整。</li>
+            </ul>
+          `},
+          {
+            id: '13', tag: '向量中断', title: '向量中断、中断向量、中断向量表概念', content: `
+            <ul>
+              <li>中断向量：中断服务程序入口地址。</li>
+              <li>中断向量表：所有中断向量的集合。</li>
+              <li>向量中断：通过向量地址识别中断源。</li>
+            </ul>
+          `},
+          {
+            id: '14', tag: '中断响应', title: '中断响应周期要完成的工作', content: `
+            <ol>
+              <li>关中断：保证保存断点与现场保护完整性（硬件自动完成）。</li>
+              <li>保存断点：x86 保存 CS/IP/PSW 至堆栈；MIPS 保存 PC 至 EPC。</li>
+              <li>中断识别：查找中断源，清除请求，将入口地址送入 PC。</li>
+            </ol>
+          `}
+        ]
+      },
+      computed: {
+        tags() {
+          return [...new Set(this.questions.map(q => q.tag))];
+        },
+        filteredQuestions() {
+          return this.activeTab === 'all' ? this.questions : this.questions.filter(q => q.tag === this.activeTab);
+        },
+        pagedQuestions() {
+          const start = (this.currentPage - 1) * this.pageSize;
+          return this.filteredQuestions.slice(start, start + this.pageSize);
+        }
+      },
+      watch: {
+        activeTab() { this.currentPage = 1; }
+      }
+    });
+  </script>
+</body>
+
+</html>
