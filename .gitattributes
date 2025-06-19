@@ -1,3 +1,10 @@
 大二上/DigitalLogic/实验/实验四/37220232203808_宋浩元_实验四.rar filter=lfs diff=lfs merge=lfs -text
 大二上/DigitalLogic/实验/实验四/example_5_3_1_EGO1/example_5_3_1_EGO1.sim/sim_1/behav/xsim/example_5_3_1_sim_EGO1_behav.wdb filter=lfs diff=lfs merge=lfs -text
 大二上/DataStruct/实验1_宋浩元_37220232203808(2).rar filter=lfs diff=lfs merge=lfs -text
+
+*.pdf filter=lfs diff=lfs merge=lfs -text
+*.pptx filter=lfs diff=lfs merge=lfs -text
+*.docx filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
+*.rar filter=lfs diff=lfs merge=lfs -text
+*.psd filter=lfs diff=lfs merge=lfs -text
