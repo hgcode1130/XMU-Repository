@@ -1,3 +1,9 @@
 [submodule "大二下/CNI/CHI-Exp/cni-exp"]
 	path = 大二下/CNI/CHI-Exp/cni-exp
 	url = git@gitee.com:huangucode/cni-exp.git
+[submodule "StudyRepo/大二小学期/personal_course"]
+	path = StudyRepo/大二小学期/personal_course
+	url = https://github.com/hgcode1130/PersonalCoursesManagement.git
+[submodule "大二下/游戏基础/-3500canteen"]
+    path = 大二下/游戏基础/-3500canteen
+    url = https://github.com/hgcode1130/-3500canteen.git
