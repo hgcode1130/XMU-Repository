@@ -1,0 +1,57 @@
+/* 
+  定义两套主题的 CSS 变量
+  通过切换 <html> 标签上的 data-theme 属性来改变整站风格
+*/
+
+/* 日间主题 (Day Time) */
+:root[data-theme='day'] {
+  --layout-bg-color: #f0f2f5;
+  --sidebar-bg-color: #304156;
+  --sidebar-text-color: #bfcbd9;
+  --sidebar-active-text-color: #409EFF;
+  --sidebar-logo-bg-color: #2b2f3a;
+  --header-bg-color: #ffffff;
+  --header-text-color: #333333;
+  --header-border-color: #dcdfe6;
+  --main-bg-color: #f0f2f5;
+  --main-text-color: #303133;
+  /* 为视图区域设计的微妙网格背景 */
+  --main-bg-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.08) 1px, transparent 0);
+  --main-bg-size: 20px 20px;
+
+}
+
+/* 夜间主题 (Night Time) */
+:root[data-theme='night'] {
+  --layout-bg-color: #141414;
+  --sidebar-bg-color: #1f1f1f;
+  --sidebar-text-color: #a6a6a6;
+  --sidebar-active-text-color: #2a77e8;
+  --sidebar-logo-bg-color: #141414;
+  --header-bg-color: #1f1f1f;
+  --header-text-color: #e0e0e0;
+  --header-border-color: #3a3a3a;
+  --main-bg-color: #141414;
+  --main-text-color: #e0e0e0;
+  /* 为夜间模式设计的微妙点状背景 */
+  --main-bg-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.1) 1px, transparent 0);
+  --main-bg-size: 25px 25px;
+
+}
+
+/* Element Plus 变量覆盖 */
+:root[data-theme='night'] {
+  --el-bg-color: #1f1f1f;
+  --el-text-color-primary: #e0e0e0;
+  --el-text-color-regular: #c9c9c9;
+  --el-fill-color-light: #2a2a2a;
+  --el-border-color-lighter: #3a3a3a;
+  --el-border-color-light: #414141;
+  --el-card-bg-color: #262626;
+  --el-table-tr-bg-color: #262626;
+  --el-table-header-bg-color: #2a2a2a;
+  --el-table-border-color: #3a3a3a;
+  --el-table-row-hover-bg-color: #333333;
+  --el-color-primary-light-3: #3e85ef;
+  --el-color-primary: #2a77e8;
+}

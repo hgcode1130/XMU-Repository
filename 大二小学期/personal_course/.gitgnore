@@ -1,0 +1,44 @@
+# 编译输出
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# IDE文件
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.project
+.classpath
+
+# 日志文件
+*.log
+logs/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 环境配置文件（包含敏感信息）
+**/application-local.yml
+**/application-secret.yml
+**/.env
+**/.env.local
+
+# Node.js (前端)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+
+# 临时文件
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
