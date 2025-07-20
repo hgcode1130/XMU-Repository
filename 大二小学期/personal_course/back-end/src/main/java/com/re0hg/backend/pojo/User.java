@@ -6,7 +6,10 @@ package com.re0hg.backend.pojo;
  * @date 2025/6/22
  */
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,6 +17,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data // Lombok 注解，自动生成 Getter, Setter, toString, equals, hashCode 等方法
+@AllArgsConstructor // Lombok 注解，自动生成全参构造方法
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {

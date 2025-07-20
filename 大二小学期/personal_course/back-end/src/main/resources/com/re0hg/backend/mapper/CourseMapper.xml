@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.re0hg.backend.mapper.CourseMapper">
+
+    <!-- 高级课程搜索 -->
+    <select id="searchCourses" resultType="com.re0hg.backend.pojo.Course">
+        SELECT
+        id, name, teachers, main_teacher_email,
+        course_group_chat_id, tag, note, term_id, user_id
+        FROM courses
+        <where>
+            <if test="termId != null">
+                AND term_id = #{termId}
+            </if>
+            <if test="name != null">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="teacher != null">
+                AND teachers LIKE CONCAT('%', #{teacher}, '%')
+            </if>
+            <if test="tag != null">
+                AND tag = #{tag}
+            </if>
+            <if test="dayOfWeek != null">
+                AND EXISTS (
+                SELECT 1
+                FROM schedule_entries
+                WHERE course_id = courses.id
+                AND day_of_week = #{dayOfWeek}
+                )
+            </if>
+        </where>
+        ORDER BY id DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="countSearchCourses" resultType="long">
+        SELECT COUNT(*)
+        FROM courses
+        <where>
+            <if test="termId != null">
+                AND term_id = #{termId}
+            </if>
+            <if test="name != null">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="teacher != null">
+                AND teachers LIKE CONCAT('%', #{teacher}, '%')
+            </if>
+            <if test="tag != null">
+                AND tag = #{tag}
+            </if>
+            <if test="dayOfWeek != null">
+                AND EXISTS (
+                SELECT 1
+                FROM schedule_entries
+                WHERE course_id = courses.id
+                AND day_of_week = #{dayOfWeek}
+                )
+            </if>
+        </where>
+    </select>
+
+</mapper>

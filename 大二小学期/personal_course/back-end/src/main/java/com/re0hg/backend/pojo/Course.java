@@ -57,7 +57,6 @@ public class Course {
     @JoinColumn(name = "term_id", nullable = false)
     private Term term;
 
-
     // 一门课程有多个上课安排。删除课程时，其所有排程也应被删除
     // cascade = CascadeType.ALL: 级联所有操作（增、删、改）
     // orphanRemoval = true: 当从 courses 的 scheduleEntries 集合中移除一个排程时，该排程也会从数据库中删除

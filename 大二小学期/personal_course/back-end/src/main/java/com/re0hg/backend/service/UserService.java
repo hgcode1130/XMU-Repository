@@ -1,5 +1,6 @@
 package com.re0hg.backend.service;
 
+import com.re0hg.backend.pojo.PageBean;
 import com.re0hg.backend.pojo.User;
 import org.springframework.stereotype.Service;
 
@@ -35,4 +36,17 @@ public interface UserService {
     * @return 用户对象，如果不存在则返回null
     */
    User findByUsername(String username);
+
+   /**
+    * h
+    * 获取所有用户列表
+    *
+    * @return 用户列表
+    */
+   PageBean<User> getUserWithPagination(String username, String email, String role, Boolean isEnabled, int page,
+         int size);
+
+   boolean isAdmin(Long userId);
+
+   void updateUserStatus(Long userId, Boolean isEnabled);
 }

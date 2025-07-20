@@ -1,14 +1,20 @@
 package com.re0hg.backend.pojo;
 
+import java.util.List;
+
 /**
  * @author re0hg
  * @version 1.0
  * @date 2025/6/22
  */
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "schedule_entries")
 public class ScheduleEntry {
@@ -35,6 +41,9 @@ public class ScheduleEntry {
     @Column(name = "end_week", nullable = false)
     private Integer endWeek;
 
+    @Transient
+    private List<Integer> weeks;
+    
     // --- 关系定义 ---
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", nullable = false)

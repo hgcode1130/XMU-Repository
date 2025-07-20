@@ -12,7 +12,7 @@ import request from "./request"; // 引入封装好的 Axios 实例
  */
 export function fetchUsers(params) {
   return request({
-    url: "/api/admin/users",
+    url: "admin/users",
     method: "get",
     params, // GET 请求的参数会附加到 URL 后面
   });
@@ -26,7 +26,7 @@ export function fetchUsers(params) {
  */
 export function updateUserStatus(userId, data) {
   return request({
-    url: `/api/admin/users/${userId}/status`,
+    url: `admin/users/${userId}/status`,
     method: "put",
     data, // PUT 请求的请求体
   });

@@ -1,6 +1,7 @@
 package com.re0hg.backend.service.impl;
 
 import com.re0hg.backend.mapper.UserMapper;
+import com.re0hg.backend.pojo.PageBean;
 import com.re0hg.backend.pojo.User;
 import com.re0hg.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,11 @@ public class UserServiceimpl implements UserService {
     private UserMapper userMapper;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;  // 加密器
+    private BCryptPasswordEncoder passwordEncoder; // 加密器
     /*
      * 获取所有用户
      */
+
     public List<User> list() {
         return userMapper.list();
     }
@@ -63,12 +65,75 @@ public class UserServiceimpl implements UserService {
         // 不返回密码
         return resultUser;
     }
-    
+
     /**
      * 根据用户名查找用户
      */
     @Override
     public User findByUsername(String username) {
         return userMapper.findByUsername(username);
+    }
+
+    /**
+     * 获取所有用户列表，支持分页和条件查询
+     *
+     * @param username  用户名（模糊匹配）
+     * @param email     邮箱（模糊匹配）
+     * @param role      角色（ADMIN, USER, TRIAL）
+     * @param isEnabled 账户状态（true/false）
+     * @param page      页码（默认0）
+     * @param pageSize  每页数量（默认20）
+     * @return 分页用户列表
+     */
+    @Override
+    public PageBean<User> getUserWithPagination(String username, String email, String role, Boolean isEnabled, int page,
+            int pageSize) {
+        // 处理分页参数
+        int offset = page * pageSize;
+        List<User> users;
+        try {
+            // 查询用户列表
+            users = userMapper.getUserWithPagination(username, email, role, isEnabled, offset, pageSize);
+
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("分页参数错误: " + e.getMessage());
+        }
+        Long total;
+        try {
+            // 查询总记录数
+            total = userMapper.countUsers(username, email, role, isEnabled);
+        } catch (Exception e) {
+            throw new RuntimeException("查询用户总数失败: " + e.getMessage());
+        }
+        // 构建分页结果
+        return new PageBean<>(users, page, pageSize, total);
+    }
+
+    // 判断用户是否是管理员
+
+    @Override
+    public boolean isAdmin(Long userId) {
+        User user = userMapper.findByuserId(userId);
+        if (user == null) {
+            throw new RuntimeException("用户不存在");
+        }
+        return "ADMIN".equals(user.getRole());
+    }
+
+    //  更新用户状态
+    @Override
+    public void updateUserStatus(Long userId, Boolean isEnabled) {
+        User user = userMapper.findByuserId(userId);
+        if (user == null) {
+            throw new RuntimeException("用户不存在");
+        }
+        if(user.getRole().equals("ADMIN")){
+            throw new RuntimeException("管理员账户状态不能被更新");
+        }
+        try {
+            userMapper.updateUserStatus(userId, isEnabled);
+        } catch (Exception e) {
+            throw new RuntimeException("更新用户状态失败: " + e.getMessage());
+        }
     }
 }

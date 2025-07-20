@@ -1,0 +1,96 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0" version="27.2.0">
+  <diagram name="Center-Out-Architecture" id="f7b1e4c0-2b88-5d1e-c39f-6a30g0f4e978">
+    <mxGraphModel dx="3052" dy="1053" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="后端分层架构图&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="320" y="120" width="440" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c-service" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;核心业务层 (Service Layer)&lt;/b&gt;&lt;br&gt;&lt;div style=&quot;text-align: left; margin-left: 10px;&quot;&gt;&lt;br&gt;CourseService&lt;br&gt;ExcelImportService&lt;br&gt;TermService&lt;br&gt;UserService&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;shadow=1;align=center;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="527" y="240" width="200" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="c-controller" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;表现层 (Controller)&lt;/b&gt;&lt;br&gt;&lt;div style=&quot;text-align: left; margin-left: 10px;&quot;&gt;&lt;br&gt;CourseController&lt;br&gt;LoginController&lt;br&gt;RegisterController&lt;br&gt;TermController&lt;br&gt;UploadController&lt;br&gt;UserController&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;shadow=1;align=center;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="267" y="220" width="200" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="c-mapper" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;数据访问层 (Mapper)&lt;/b&gt;&lt;br&gt;&lt;div style=&quot;text-align: left; margin-left: 10px;&quot;&gt;&lt;br&gt;CourseMapper&lt;br&gt;ScheduleEntryMapper&lt;br&gt;TermMapper&lt;br&gt;UserMapper&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;shadow=1;align=center;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="787" y="240" width="200" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="c-filters" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;过滤器/拦截器&lt;/b&gt;&lt;br&gt;&lt;div style=&quot;text-align: left; margin-left: 10px;&quot;&gt;&lt;br&gt;LoginCheckInterceptor&lt;br&gt;LoginCheckFilter&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;shadow=1;align=center;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="27" y="255" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="db-symbol" value="&lt;b&gt;Database&lt;/b&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f8cecc;strokeColor=#b85450;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="1047" y="267.5" width="80" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-flow-1" value="数据流" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;strokeWidth=2;" parent="1" source="c-filters" target="c-controller" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-flow-2" value="调用" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;strokeWidth=2;" parent="1" source="c-controller" target="c-service" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-flow-3" value="调用" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;strokeWidth=2;" parent="1" source="c-service" target="c-mapper" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-flow-4" value="读写" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;strokeWidth=2;" parent="1" source="c-mapper" target="db-symbol" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c-data-models" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;数据模型 (POJO &amp;amp; DTO)&lt;/b&gt;&lt;br&gt;&lt;div style=&quot;text-align: left; margin-left: 10px;&quot;&gt;&lt;br&gt;&lt;b&gt;POJO:&lt;/b&gt; User, Course, Term...&lt;br&gt;&lt;b&gt;DTO:&lt;/b&gt; CourseDTO, UpdateUserStatusDTO...&lt;br&gt;&lt;b&gt;Common:&lt;/b&gt; Result, PageBean...&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;shadow=1;align=center;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="517" y="500" width="220" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="c-support" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;支撑模块 (Cross-Cutting Concerns)&lt;/b&gt;&lt;br&gt;&lt;div style=&quot;text-align: left; margin-left: 10px;&quot;&gt;&lt;br&gt;&lt;b&gt;Utils:&lt;/b&gt; JwtUtils, AliOSSUtils...&lt;br&gt;&lt;b&gt;Config:&lt;/b&gt; WebConfig, application.yml...&lt;br&gt;&lt;b&gt;Exception:&lt;/b&gt; GlobalExceptionHandler&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;shadow=1;align=center;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="127" y="500" width="280" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-dep-1" value="依赖" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;strokeColor=#666666;dashed=1;" parent="1" source="c-controller" target="c-data-models" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="367" y="450" />
+              <mxPoint x="627" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-dep-2" value="依赖" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;strokeColor=#666666;dashed=1;" parent="1" source="c-service" target="c-data-models" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-dep-3" value="依赖" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;strokeColor=#666666;dashed=1;" parent="1" source="c-mapper" target="c-data-models" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="887" y="450" />
+              <mxPoint x="627" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-dep-4" value="依赖" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;strokeColor=#666666;dashed=1;" parent="1" source="c-service" target="c-support" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="627" y="420" />
+              <mxPoint x="267" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-dep-5" value="依赖" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;strokeColor=#666666;dashed=1;" parent="1" source="c-controller" target="c-support" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="367" y="410" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="367" y="480" />
+              <mxPoint x="267" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="req-label" value="HTTP Request" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="77" y="200" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-request-in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;strokeWidth=2;strokeColor=#FF0000;" parent="1" target="c-filters" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-73" y="315" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="main_flow_label" value="主数据流 (实线)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="847" y="500" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dep_flow_label" value="依赖调用 (虚线)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="847" y="530" width="150" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

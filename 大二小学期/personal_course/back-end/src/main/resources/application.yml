@@ -27,6 +27,21 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 100MB
+  mail:
+    host: smtp.qq.com
+    port: 465  #(SSL)
+    username: 1375803462@qq.com
+    password: zmddnwfatldzhgbh  # 授权码
+    protocol: smtp
+    properties:
+      mail.smtp:
+        auth: true
+        ssl.enable: true  # 必须开启SSL
+        starttls.enable: false  # 如果使用465端口则关闭STARTTLS
+      mail.smtp.connectiontimeout: 5000
+      mail.smtp.timeout: 5000
+      mail.smtp.writetimeout: 5000
+    default-encoding: UTF-8
 
 # Spring事务管理日志
 logging:

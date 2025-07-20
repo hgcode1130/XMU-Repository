@@ -39,6 +39,15 @@ service.interceptors.response.use(
    * 此函数会进一步检查响应体中的业务状态码 `code`
    */
   (response) => {
+    // 检查是否为文件下载请求或responseType为blob
+    if (
+      response.config.responseType === "blob" ||
+      response.config.skipResponseIntercept
+    ) {
+      // 对于文件下载，直接返回response，不进行JSON解析
+      return response;
+    }
+
     const res = response.data;
 
     // 根据新后端逻辑，业务成功码为 200, 201 等 (2xx 范围)
@@ -98,6 +107,5 @@ service.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
 
 export default service;

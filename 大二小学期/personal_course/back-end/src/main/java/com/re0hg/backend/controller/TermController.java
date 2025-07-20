@@ -3,11 +3,7 @@ package com.re0hg.backend.controller;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import com.re0hg.backend.pojo.PageBean;
 import com.re0hg.backend.pojo.Result;
 import com.re0hg.backend.pojo.Term;
@@ -117,4 +113,94 @@ public class TermController {
       return null;
     }
   }
+
+  // PUT /api/terms/{termId}
+  @PutMapping("/terms/{termId}")
+  public Result updateTerm(@PathVariable Long termId, @RequestBody Term term, HttpServletRequest request) {
+    try {
+      log.info("更新学期信息 - 学期ID: {}", termId);
+
+      // 1. 从JWT token中获取用户ID
+      Long userId = getCurrentUserId(request);
+
+      if (userId == null) {
+        return Result.error(401, "用户未认证");
+      }
+
+      // 2. 调用服务层更新学期
+      try {
+        Term updatedTerm = termService.updateTerm(termId, term, userId);
+        log.info("成功更新学期信息 - 学期ID: {}, 名称: {}", termId, updatedTerm.getName());
+        return Result.success(200, "学期更新成功", updatedTerm);
+      } catch (RuntimeException e) {
+        // 处理业务异常
+        if (e.getMessage().equals("学期不存在")) {
+          return Result.error(404, e.getMessage());
+        } else if (e.getMessage().equals("无权限修改此学期")) {
+          return Result.error(403, e.getMessage());
+        } else if (e.getMessage().equals("结束日期必须晚于开始日期")) {
+          return Result.error(400, e.getMessage());
+        } else {
+          throw e; // 重新抛出其他运行时异常
+        }
+      }
+    } catch (Exception e) {
+      log.error("更新学期信息失败: ", e);
+      return Result.error(500, "系统内部错误");
+    }
+  }
+
+  /// post api/terms
+  @PostMapping("/terms")
+  public Result createTerm(@RequestBody Term term, HttpServletRequest request) {
+    try{
+      log.info("创建学期 - 名称: {}", term.getName());
+
+      //从JWT获取用户信息
+      Long userId = getCurrentUserId(request);
+      if(userId == null){
+        return Result.error(401, "用户未认证");
+      }
+
+      // 调用服务层创建学期
+      try {
+        Term createdTerm = termService.createTerm(term, userId);
+        log.info("成功创建学期 - 学期ID: {}, 名称: {}", createdTerm.getId(), createdTerm.getName());
+        return Result.success(200, "学期创建成功", createdTerm);
+      } catch (RuntimeException e) {
+        // 处理业务异常
+        if (e.getMessage().equals("学期已存在")) {
+          return Result.error(400, e.getMessage());
+        }
+        return Result.error(500, "系统内部错误" + e.getMessage());
+      }
+    }catch(Exception e){
+      return Result.error(500, "系统内部错误" + e.getMessage());
+    }
+  }
+
+  @DeleteMapping("/terms/{termId}")
+    public Result deleteTerm(@PathVariable Long termId, HttpServletRequest request) {
+        try {
+        log.info("删除学期 - 学期ID: {}", termId);
+
+        // 从JWT token中获取用户ID
+        Long userId = getCurrentUserId(request);
+        if (userId == null) {
+            return Result.error(401, "用户未认证");
+        }
+
+        // 调用服务层删除学期
+        boolean deleted = termService.deleteTerm(termId, userId);
+        if (deleted) {
+            log.info("成功删除学期 - 学期ID: {}", termId);
+            return Result.success(200, "学期删除成功");
+        } else {
+            return Result.error(404, "学期不存在或无权限删除");
+        }
+        } catch (Exception e) {
+        log.error("删除学期失败: ", e);
+        return Result.error(500, "系统内部错误");
+        }
+    }
 }
