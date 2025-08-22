@@ -458,6 +458,3 @@ FodyWeavers.xsd
 *.idea/
 *.cph/
 *.vscode/
-
-# 排除大三上文件夹
-大三上/
