@@ -458,3 +458,19 @@ FodyWeavers.xsd
 *.idea/
 *.cph/
 *.vscode/
+
+# codex
+.codex/
+
+# claude
+.claude/
+CLAUDE.md
+
+# context_portal
+context_portal/
+
+# promptx
+.promptx
+
+WARP.md
+大三上/
