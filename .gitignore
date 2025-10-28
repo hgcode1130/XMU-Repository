@@ -471,6 +471,9 @@ context_portal/
 
 # promptx
 .promptx
+.augment/
 
 WARP.md
 大三上/
+
+temp
