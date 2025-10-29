@@ -1,3 +1,0 @@
-module mymodule {
-   requires mymodule;
-}
