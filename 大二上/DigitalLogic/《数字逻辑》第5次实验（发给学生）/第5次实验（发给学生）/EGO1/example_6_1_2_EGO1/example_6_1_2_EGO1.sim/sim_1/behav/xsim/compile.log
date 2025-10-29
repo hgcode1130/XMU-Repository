@@ -1,6 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/DigitalLogic/EGO1/example_6_1_2_EGO1.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module and_gate
-INFO: [VRFC 10-311] analyzing module jk_flip_flop
-INFO: [VRFC 10-311] analyzing module example_6_1_2
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/DigitalLogic/EGO1/example_6_1_2_sim_EGO1.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module example_6_1_2_sim
