@@ -1,0 +1,59 @@
+Microsoft (R) Macro Assembler Version 6.11		    10/17/24 22:09:44
+tempfile.asm						     Page 1 - 1
+
+
+				;数据段：
+ 0000				DATAS SEGMENT
+ 0000 F000				NUMW dw 0F000h ; 存放 16 位无符号数，范围 565535
+ 0002 0000				SHANG dw 0
+ 0004 0000				YUSHU dw 0
+ 0006				DATAS ENDS
+				;堆栈段：
+ 0000				STACKS SEGMENT
+ 0000  0064 [				db 100 dup (?) ; 堆栈段
+        00
+       ]
+ 0064				STACKS ENDS
+
+				;代码段实现 16 位无符号数除法运算：
+ 0000				CODES SEGMENT
+					ASSUME	CS:CODES,DS:DATAS,SS:STACKS
+ 0000				START:
+ 0000  B8 ---- R			mov AX,DATAS
+ 0003  8E D8				mov DS,AX
+ 0005  A1 0000 R			mov ax,NUMW
+ 0008  BA 0000				mov dx,0h
+ 000B  BB FFF6				mov bx,0FFF6H
+ 000E  F7 F3				div bx 	;bx 中存放除数
+ 0010  A3 0002 R			mov SHANG,ax
+ 0013  89 16 0004 R			mov YUSHU,dx
+ 0017  B4 4C				mov AH,4CH
+ 0019  CD 21				INT 21H
+ 001B				CODES ENDS	
+					END START	
+Microsoft (R) Macro Assembler Version 6.11		    10/17/24 22:09:44
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 001B	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 0006	  Para	  Private 
+STACKS . . . . . . . . . . . . .	16 Bit	 0064	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+NUMW . . . . . . . . . . . . . .	Word	 0000	  DATAS	
+SHANG  . . . . . . . . . . . . .	Word	 0002	  DATAS	
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+YUSHU  . . . . . . . . . . . . .	Word	 0004	  DATAS	
+
+	   0 Warnings
+	   0 Errors

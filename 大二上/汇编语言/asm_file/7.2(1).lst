@@ -1,0 +1,49 @@
+Microsoft (R) Macro Assembler Version 6.11		    12/13/24 14:14:19
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATA SEGMENT
+
+ 0000				DATA ENDS
+
+ 0000				CODE SEGMENT
+				    ASSUME CS:CODE, DS:DATA
+
+ 0000				START:
+ 0000  B8 ---- R		    MOV AX, DATA      ; 初始化数据段寄存器
+ 0003  8E D8			    MOV DS, AX
+ 0005  B8 0000			    mov ax, 0
+				    .while ax != 10
+ 000A  89 07			        MOV [BX], AX
+ 000C  43			        INC BX
+ 000D  43			        INC BX
+ 000E  40			        INC AX
+				    .endw
+ 0014  B4 4C			    MOV AH, 4CH       ; 正常结束程序
+ 0016  CD 21			    INT 21H
+ 0018				CODE ENDS
+				    END START
+
+
+Microsoft (R) Macro Assembler Version 6.11		    12/13/24 14:14:19
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODE . . . . . . . . . . . . . .	16 Bit	 0018	  Para	  Private 
+DATA . . . . . . . . . . . . . .	16 Bit	 0000	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+START  . . . . . . . . . . . . .	L Near	 0000	  CODE	
+
+	   0 Warnings
+	   0 Errors

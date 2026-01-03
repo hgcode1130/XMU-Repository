@@ -1,0 +1,82 @@
+Microsoft (R) Macro Assembler Version 6.11		    12/13/24 15:22:25
+tempfile.asm						     Page 1 - 1
+
+
+				MOVESTR MACRO strN, dstr, sstr
+				    MOV CX, strN          ; 设置字符传送的计数
+				    LEA SI, sstr          ; 将源字符串地址加载到 SI
+				    LEA DI, dstr          ; 将目标字符串地址加载到 DI
+				    CLD                   ; 确保方向标志位清零
+				    REP MOVSB             ; 使用 REP MOVSB 指令重复传送字符
+				ENDM
+
+ 0000				DATAS SEGMENT
+ 0000 48 45 4C 4C 4F 20		    SSTR DB 'HELLO WORLD!' 
+       57 4F 52 4C 44 21
+ 000C  0014 [			    DSTR DB 20 DUP(?)   
+        00
+       ]
+ 0020				DATAS ENDS
+
+ 0000				STACKS SEGMENT
+ 0000  0080 [			    DB 128 DUP(0)
+        00
+       ]
+ 0080				STACKS ENDS
+
+ 0000				CODES SEGMENT
+				    ASSUME CS:CODES, DS:DATAS, SS:STACKS
+
+ 0000				START:
+
+ 0000  B8 ---- R		    MOV AX, DATAS
+ 0003  8E D8			    MOV DS, AX
+ 0005  B8 ---- R		    MOV AX, DATAS
+ 0008  8E C0			    MOV ES, AX 
+
+				    MOVESTR 12, DSTR, SSTR ; 将 SSTR 中的 12 个字符传送到 DSTR
+ 000A  B9 000C		     1	    MOV CX, 12          ; 设置字符传送的计数
+ 000D  8D 36 0000 R	     1	    LEA SI, SSTR          ; 将源字符串地址加载到 SI
+ 0011  8D 3E 000C R	     1	    LEA DI, DSTR          ; 将目标字符串地址加载到 DI
+ 0015  FC		     1	    CLD                   ; 确保方向标志位清零
+ 0016  F3/ A4		     1	    REP MOVSB             ; 使用 REP MOVSB 指令重复传送字符
+
+				    ; 程序结束
+ 0018  B4 4C			    MOV AH, 4CH
+ 001A  CD 21			    INT 21H
+
+ 001C				CODES ENDS
+				    END START
+
+Microsoft (R) Macro Assembler Version 6.11		    12/13/24 15:22:25
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Macros:
+
+                N a m e                 Type
+
+MOVESTR  . . . . . . . . . . . .	Proc
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 001C	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 0020	  Para	  Private 
+STACKS . . . . . . . . . . . . .	16 Bit	 0080	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+DSTR . . . . . . . . . . . . . .	Byte	 000C	  DATAS	
+SSTR . . . . . . . . . . . . . .	Byte	 0000	  DATAS	
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+
+	   0 Warnings
+	   0 Errors

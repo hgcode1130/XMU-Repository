@@ -1,0 +1,109 @@
+Microsoft (R) Macro Assembler Version 6.11		    12/22/24 19:02:48
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATAS SEGMENT
+ 0000 03				W DB 3H
+ 0001 01 02 03 05 06 08			ARRAY DB 1h,2h,3h,5h,6h,8h,9h,10h,15h,20h
+       09 10 15 20
+ 000B				DATAS ENDS
+
+ 0000				STACK SEGMENT
+					
+ 0000				STACK ENDS
+					
+ 0000				CODES SEGMENT
+					ASSUME CS:CODES,DS:DATAS,SS:STACK
+ 0000				START:
+ 0000				MAIN:
+ 0000  B8 ---- R			MOV AX,DATAS
+ 0003  8E D8				MOV DS,AX
+ 0005  E8 0004				CALL FACT
+ 0008  B4 4C				MOV AH,4CH
+ 000A  CD 21				INT 21H
+ 000C				FACT PROC
+ 000C  50				push AX
+ 000D  53				push BX
+ 000E  51				push CX
+ 000F  56				push SI
+ 0010  B9 000A				MOV CX,10;设置循环次数
+ 0013  BE FFFF				MOV SI,-1
+ 0016				Looop:
+ 0016  46				INC SI
+ 0017  8A 84 0001 R			MOV AL,[ARRAY+SI]
+ 001B  3A 06 0000 R			CMP AL,W
+ 001F  74 06				JE case1;找到跳转
+ 0021  7F 0C				JG case2;大于说明不存在
+ 0023  E2 F1				LOOP Looop
+ 0025  EB 08				JMP case2
+ 0027				case1:
+ 0027  B4 02				MOV AH,02
+ 0029  B2 59				MOV DL,'Y'
+ 002B  CD 21				INT 21H
+ 002D  EB 18				JMP end_case
+ 002F				case2:
+ 002F  56				push SI
+ 0030  03 F1				ADD SI, CX
+ 0032				lop:;通过循环将数组元素后挪
+ 0032  83 EE 01				SUB SI,1h
+ 0035  8A 84 0001 R			MOV AL,[ARRAY+SI]
+ 0039  88 84 0002 R			MOV [ARRAY+SI+1],AL
+ 003D  E2 F3				LOOP lop
+ 003F  A0 0000 R			MOV AL,W
+ 0042  5E				pop SI
+ 0043  88 84 0001 R			MOV [ARRAY+SI], AL;存入
+ 0047				end_case:
+ 0047  59				pop cx
+ 0048  5B				pop bx
+ 0049  58				pop ax
+ 004A  5E				pop si
+ 004B  C3				RET
+ 004C				FACT ENDP
+ 004C				CODES ENDS
+					END START
+
+
+
+
+
+
+
+
+Microsoft (R) Macro Assembler Version 6.11		    12/22/24 19:02:48
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 004C	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 000B	  Para	  Private 
+STACK  . . . . . . . . . . . . .	16 Bit	 0000	  Para	  Private 
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+FACT . . . . . . . . . . . . . .	P Near	 000C	  CODES	Length= 0040 Public
+  Looop  . . . . . . . . . . . .	L Near	 0016	  CODES	
+  case1  . . . . . . . . . . . .	L Near	 0027	  CODES	
+  case2  . . . . . . . . . . . .	L Near	 002F	  CODES	
+  lop  . . . . . . . . . . . . .	L Near	 0032	  CODES	
+  end_case . . . . . . . . . . .	L Near	 0047	  CODES	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+ARRAY  . . . . . . . . . . . . .	Byte	 0001	  DATAS	
+MAIN . . . . . . . . . . . . . .	L Near	 0000	  CODES	
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+W  . . . . . . . . . . . . . . .	Byte	 0000	  DATAS	
+
+	   0 Warnings
+	   0 Errors

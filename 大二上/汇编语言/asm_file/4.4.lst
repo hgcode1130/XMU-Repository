@@ -1,0 +1,97 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/01/24 16:32:50
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATAS SEGMENT
+ 0000 52 10 52 10 52 10		    PACKED DB 52h, 10h, 52h, 10h, 52h, 10h, 52h, 10h, 52h, 10h ; 示例的20位压缩BCD数，可自行修改
+       52 10 52 10
+ 000A  0014 [			    UNPACKED DB 20 DUP(?)
+        00
+       ]
+ 001E 54 68 65 20 75 6E		    MSG DB 'The unpacked BCD numbers are: $'
+       70 61 63 6B 65 64
+       20 42 43 44 20 6E
+       75 6D 62 65 72 73
+       20 61 72 65 3A 20
+       24
+ 003D				DATAS ENDS
+
+ 0000				STACKS SEGMENT
+ 0000  0064 [			    DW 100 DUP(?)
+        0000
+       ]
+ 00C8				STACKS ENDS
+
+ 0000				CODES SEGMENT
+				    ASSUME CS:CODES,DS:DATAS,SS:STACKS
+ 0000				START:
+ 0000  B8 ---- R		    MOV AX,DATAS
+ 0003  8E D8			    MOV DS,AX
+
+ 0005  BA 000A			    MOV DX, 10 ; 循环次数，因为要处理10个字节单元的压缩BCD数
+ 0008  B1 04			    MOV CL, 4 ; 每次处理4位（压缩BCD数特性）
+ 000A  BE 0000			    MOV SI, 0
+ 000D  BF 0000			    MOV DI, 0
+
+ 0010				CONVERT:
+ 0010  8A 84 0000 R		    MOV AL, [SI + PACKED]
+ 0014  8A E0			    MOV AH, AL
+ 0016  24 0F			    AND AL, 0FH ; 取低4位作为非压缩BCD数的低位
+ 0018  88 85 000A R		    MOV [DI + UNPACKED], AL
+ 001C  83 C7 01			    ADD DI, 1 ; 结果存储单元偏移量增加1
+ 001F  D2 EC			    SHR AH, CL ; 将高4位移动到低4位
+ 0021  88 A5 000A R		    MOV [DI + UNPACKED], AH ; 存储高4位作为非压缩BCD数的高位
+ 0025  83 C7 01			    ADD DI, 1 ; 结果存储单元偏移量再增加1
+ 0028  83 C6 01			    ADD SI, 1 ; 源数据单元偏移量增加1
+ 002B  4A			    DEC DX
+ 002C  75 E2			    JNZ CONVERT
+
+ 002E  B4 09			    MOV AH, 9
+ 0030  BA 001E R		    MOV DX, OFFSET MSG
+ 0033  CD 21			    INT 21H
+
+ 0035  B9 0014			    MOV CX, 20
+ 0038  BE 0000			    MOV SI, 0
+ 003B				OUTPUT:
+ 003B  8A 94 000A R		    MOV DL, [SI + UNPACKED]
+ 003F  80 C2 30			    ADD DL, 30H 
+ 0042  B4 02			    MOV AH, 2
+ 0044  CD 21			    INT 21H
+ 0046  83 C6 01			    ADD SI, 1
+ 0049  49			    DEC CX
+ 004A  75 EF			    JNZ OUTPUT
+
+ 004C  B4 4C			    MOV AH, 4CH
+ 004E  CD 21			    INT 21H
+
+ 0050				CODES ENDS
+				    END START
+
+Microsoft (R) Macro Assembler Version 6.11		    11/01/24 16:32:50
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 0050	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 003D	  Para	  Private 
+STACKS . . . . . . . . . . . . .	16 Bit	 00C8	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+CONVERT  . . . . . . . . . . . .	L Near	 0010	  CODES	
+MSG  . . . . . . . . . . . . . .	Byte	 001E	  DATAS	
+OUTPUT . . . . . . . . . . . . .	L Near	 003B	  CODES	
+PACKED . . . . . . . . . . . . .	Byte	 0000	  DATAS	
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+UNPACKED . . . . . . . . . . . .	Byte	 000A	  DATAS	
+
+	   0 Warnings
+	   0 Errors

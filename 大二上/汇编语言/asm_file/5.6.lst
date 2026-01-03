@@ -1,0 +1,78 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/13/24 12:03:34
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATA SEGMENT
+ 0000 0004			     A DW 4
+ 0002 0004			     B DW 4
+ 0004				DATA ENDS
+ 0000				STACK SEGMENT
+ 0000  000A [			      DW 10 DUP(?)
+        0000
+       ]
+ 0014				TOP LABEL WORD
+ 0014				STACK ENDS	  
+ 0000				CODE SEGMENT
+				   ASSUME CS:CODE,SS:STACK,DS:DATA 
+ 0000				MAIN PROC FAR
+ 0000  B8 ---- R		     MOV AX,STACK
+ 0003  8E D0				 MOV SS,AX
+ 0005  8D 26 0014 R			 LEA SP,TOP
+ 0009  B8 ---- R			 MOV AX,DATA 
+ 000C  8E D8				 MOV DS,AX	 
+ 000E  A1 0000 R			 MOV AX,A
+ 0011  8B 1E 0002 R			 MOV BX,B
+ 0015  A9 0001				 TEST AX,1
+ 0018  74 11				 JZ L1 
+ 001A  F7 C3 0001			 TEST BX,1
+ 001E  74 19				 JZ L2 
+ 0020  40				 INC AX
+ 0021  43				 INC BX
+ 0022  A3 0000 R			 MOV A,AX
+ 0025  89 1E 0002 R			 MOV B,BX
+ 0029  EB 0E				 JMP L2  
+ 002B  F7 C3 0001		  L1:TEST BX,1
+ 002F  74 08			     JZ  L2 
+ 0031  93				 XCHG AX,BX
+ 0032  A3 0000 R			 MOV A,AX
+ 0035  89 1E 0002 R			 MOV B,BX
+ 0039  B4 4C			  L2:MOV AH,4CH
+ 003B  CD 21			     INT 21H
+ 003D				MAIN ENDP
+ 003D				CODE ENDS
+				     END MAIN 
+
+Microsoft (R) Macro Assembler Version 6.11		    11/13/24 12:03:34
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODE . . . . . . . . . . . . . .	16 Bit	 003D	  Para	  Private 
+DATA . . . . . . . . . . . . . .	16 Bit	 0004	  Para	  Private 
+STACK  . . . . . . . . . . . . .	16 Bit	 0014	  Para	  Private 
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+MAIN . . . . . . . . . . . . . .	P Far	 0000	  CODE	Length= 003D Public
+  L1 . . . . . . . . . . . . . .	L Near	 002B	  CODE	
+  L2 . . . . . . . . . . . . . .	L Near	 0039	  CODE	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+A  . . . . . . . . . . . . . . .	Word	 0000	  DATA	
+B  . . . . . . . . . . . . . . .	Word	 0002	  DATA	
+TOP  . . . . . . . . . . . . . .	Word	 0014	  STACK	
+
+	   0 Warnings
+	   0 Errors

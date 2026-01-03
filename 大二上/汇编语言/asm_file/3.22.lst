@@ -1,0 +1,60 @@
+Microsoft (R) Macro Assembler Version 6.11		    10/23/24 17:25:15
+tempfile.asm						     Page 1 - 1
+
+
+
+ 0000				DATA SEGMENT PARA 'DATA'
+ 0000  0064 [			    array DB 100 DUP(?)
+        00
+       ]
+ 0064				DATA ENDS
+
+ 0000				STACK SEGMENT PARA STACK 'STACK'
+ 0000  0064 [			    DB 100 DUP(?)
+        00
+       ]
+ 0064				STACK ENDS
+
+ 0000				CODE SEGMENT 'code'
+				    ASSUME CS:CODE, DS:DATA, ES:DATA, SS:STACK
+				ORG 100H
+ 0100				start:
+ 0100  B8 ---- R		    mov ax, DATA
+ 0103  8E D8			    mov ds, ax
+ 0105  8E C0			    mov es, ax
+ 0107  B9 0064			    mov cx, 100
+ 010A  BF 0000			    mov di, 0
+ 010D  B0 64			    mov al, 64H
+ 010F				    loop_set:
+ 010F  88 85 0000 R		        mov [array + di], al
+ 0113  47			        inc di
+ 0114  E2 F9			    loop loop_set
+ 0116  B4 4C			    mov ah, 4ch
+ 0118  CD 21			    int 21h
+ 011A				CODE ENDS
+				END start
+Microsoft (R) Macro Assembler Version 6.11		    10/23/24 17:25:15
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODE . . . . . . . . . . . . . .	16 Bit	 011A	  Para	  Private 'CODE'	
+DATA . . . . . . . . . . . . . .	16 Bit	 0064	  Para	  Private 'DATA'	
+STACK  . . . . . . . . . . . . .	16 Bit	 0064	  Para	  Stack	  'STACK'	 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+array  . . . . . . . . . . . . .	Byte	 0000	  DATA	
+loop_set . . . . . . . . . . . .	L Near	 010F	  CODE	
+start  . . . . . . . . . . . . .	L Near	 0100	  CODE	
+
+	   0 Warnings
+	   0 Errors

@@ -1,0 +1,94 @@
+Microsoft (R) Macro Assembler Version 6.11		    12/13/24 15:30:04
+tempfile.asm						     Page 1 - 1
+
+
+				Change      macro  buffer
+				            lea bx,buffer
+				again:      mov al,[bx]
+				            cmp al,'$'	;若到达字符串结尾，退出
+				            je done
+				            cmp al,'A'	;判断是否大于A
+				            jae next1
+				            jmp done1
+				next1:      cmp al,'Z'	;判断是否小于Z
+				            ja  done1
+				            add al,20h	;满足，大写转小写
+				            mov byte ptr [bx],al
+				done1:      inc bx	;进入下一个字符
+				            jmp again
+				done:
+				            endm
+ 0000				DATAS SEGMENT
+ 0000 48 65 6C 4C 6F 20		    S db 'HelLo WolRD!','$'
+       57 6F 6C 52 44 21
+       24
+ 000D				DATAS ENDS
+
+ 0000				STACKS SEGMENT
+				    ;此处输入堆栈段代码
+ 0000				STACKS ENDS
+
+ 0000				CODES SEGMENT
+				    ASSUME CS:CODES,DS:DATAS,SS:STACKS
+ 0000				START:
+ 0000  B8 ---- R		    MOV AX,DATAS
+ 0003  8E D8			    MOV DS,AX
+				    ;此处输入代码段代码
+				    Change S
+ 0005  8D 1E 0000 R	     1	            lea bx,S
+ 0009  8A 07		     1	again:      mov al,[bx]
+ 000B  3C 24		     1	            cmp al,'$'	;若到达字符串结尾，退出
+ 000D  74 11		     1	            je done
+ 000F  3C 41		     1	            cmp al,'A'	;判断是否大于A
+ 0011  73 02		     1	            jae next1
+ 0013  EB 08		     1	            jmp done1
+ 0015  3C 5A		     1	next1:      cmp al,'Z'	;判断是否小于Z
+ 0017  77 04		     1	            ja  done1
+ 0019  04 20		     1	            add al,20h	;满足，大写转小写
+ 001B  88 07		     1	            mov byte ptr [bx],al
+ 001D  43		     1	done1:      inc bx	;进入下一个字符
+ 001E  EB E9		     1	            jmp again
+ 0020			     1	done:
+ 0020  B4 4C			    MOV AH,4CH
+ 0022  CD 21			    INT 21H
+ 0024				CODES ENDS
+				    END START
+
+
+
+
+Microsoft (R) Macro Assembler Version 6.11		    12/13/24 15:30:04
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Macros:
+
+                N a m e                 Type
+
+Change . . . . . . . . . . . . .	Proc
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 0024	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 000D	  Para	  Private 
+STACKS . . . . . . . . . . . . .	16 Bit	 0000	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+S  . . . . . . . . . . . . . . .	Byte	 0000	  DATAS	
+again  . . . . . . . . . . . . .	L Near	 0009	  CODES	
+done1  . . . . . . . . . . . . .	L Near	 001D	  CODES	
+done . . . . . . . . . . . . . .	L Near	 0020	  CODES	
+next1  . . . . . . . . . . . . .	L Near	 0015	  CODES	
+
+	   0 Warnings
+	   0 Errors

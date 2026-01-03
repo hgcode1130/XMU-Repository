@@ -1,0 +1,64 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/13/24 11:02:37
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATAS SEGMENT
+				    ; 数据段可以在这里定义变量等，本程序不需要
+ 0000				DATAS ENDS
+
+ 0000				STACKS SEGMENT
+				    ; 堆栈段可以在这里定义堆栈空间，本程序不需要
+ 0000				STACKS ENDS
+
+ 0000				CODES SEGMENT
+				    ASSUME CS:CODES, DS:DATAS, SS:STACKS
+ 0000				START:
+ 0000  B8 ---- R		    MOV AX, DATAS
+ 0003  8E D8			    MOV DS, AX
+
+				    ; 此处输入代码段代码
+ 0005  B8 0000			    MOV AX, 0   ; 假设初始值为0，你可以根据需要修改
+				    ; 实现流程图功能
+ 0008  83 F8 FF			    CMP AX, -1       ; 比较AX是否小于等于 -1
+ 000B  7E 0A			    JLE SET_MINUS_1  ; 如果小于等于 -1，跳转到SET_MINUS_1
+ 000D  83 F8 01			    CMP AX, 1        ; 比较AX是否小于1
+ 0010  7C 0A			    JL SET_ZERO      ; 如果小于1，跳转到SET_ZERO
+				    ; 如果都不满足，设置AX为1
+ 0012  B8 0001			    MOV AX, 1
+ 0015  EB 08			    JMP END_PROGRAM  ; 跳转到程序结束
+ 0017				SET_MINUS_1:
+ 0017  B8 FFFF			    MOV AX, -1       ; 设置AX为 -1
+ 001A  EB 03			    JMP END_PROGRAM  ; 跳转到程序结束
+ 001C				SET_ZERO:
+ 001C  B8 0000			    MOV AX, 0        ; 设置AX为0
+ 001F				END_PROGRAM:
+ 001F  B4 4C			    MOV AH, 4CH
+ 0021  CD 21			    INT 21H
+ 0023				CODES ENDS
+				    END START
+Microsoft (R) Macro Assembler Version 6.11		    11/13/24 11:02:37
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 0023	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 0000	  Para	  Private 
+STACKS . . . . . . . . . . . . .	16 Bit	 0000	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+END_PROGRAM  . . . . . . . . . .	L Near	 001F	  CODES	
+SET_MINUS_1  . . . . . . . . . .	L Near	 0017	  CODES	
+SET_ZERO . . . . . . . . . . . .	L Near	 001C	  CODES	
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+
+	   0 Warnings
+	   0 Errors

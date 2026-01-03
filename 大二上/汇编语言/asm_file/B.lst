@@ -1,0 +1,96 @@
+Microsoft (R) Macro Assembler Version 6.11		    09/25/24 17:04:34
+tempfile.asm						     Page 1 - 1
+
+
+
+				; 数据段 (DATAS SEGMENT)
+ 0000				DATAS SEGMENT
+ 0000 05			X DB 5        ; 定义字节变量 X 并赋值为 5
+ 0001 04			Y DB 4        ; 定义字节变量 Y 并赋值为 4
+ 0002 00			Z DB ?        ; 定义字节变量 Z，未初始化
+ 0003 00			Z1 DB ?       ; 定义字节变量 Z1，未初始化
+ 0004 74 68 65 20 72 65		MSG DB 'the result is : $'  ; $ 是字符串结束符 
+       73 75 6C 74 20 69
+       73 20 3A 20 24
+ 0015				DATAS ENDS
+
+				;堆栈段 (STACKS SEGMENT)
+ 0000				STACKS SEGMENT
+ 0000				STACKS ENDS
+				;这个段是空的，没有定义具体的堆栈，但在 DOS 汇编程序中，通常需要为堆栈预留空间。
+				;代码段 (CODES SEGMENT)
+ 0000				CODES SEGMENT
+				ASSUME CS:CODES, DS:DATAS
+				;这行代码告诉汇编器假设 CS (代码段寄存器) 指向 CODES 段，而 DS (数据段寄存器) 指向 DATAS 段。
+				;主要代码逻辑：
+ 0000				START:
+ 0000  B8 ---- R		MOV AX, DATAS       ; 将数据段的地址加载到AX寄存器
+ 0003  8E D8			MOV DS, AX          ; 设置DS指向数据段
+				; 显示提示信息  
+ 0005  8D 16 0004 R		LEA DX, MSG        ; 加载提示信息的地址到 DX  
+ 0009  B4 09			MOV AH, 09h        ; 准备调用 DOS 功能 09h 显示字符串  
+ 000B  CD 21			INT 21h 
+
+ 000D  A0 0000 R		MOV AL, X           ; 将X的值(5)移动到AL寄存器
+ 0010  02 06 0001 R		ADD AL, Y           ; 将Y的值(4)加到AL中，结果是9
+
+ 0014  B3 08			MOV BL, 8
+ 0016  F6 EB			IMUL BL             ; 用AL中的9乘以8，结果存储在AX中，AX = 72
+
+ 0018  8A 1E 0000 R		MOV BL, X           ; 将X的值(5)移动到BL
+ 001C  B7 00			MOV BH, 0           ; 将BH清零，使BX = 0005
+ 001E  2B C3			SUB AX, BX          ; AX = AX - BX (72 - 5 = 67)，AX = 67
+
+ 0020  B3 02			MOV BL, 2
+ 0022  F6 FB			IDIV BL             ; 用AX中的值除以2，商存储在AL，余数存储在AH (67 / 2 = 33, 余数 1)
+ 0024  A2 0002 R		MOV Z, AL           ; 将商(33)存入Z
+ 0027  88 26 0003 R		MOV Z1, AH          ; 将余数(1)存入Z1
+
+ 002B  A0 0002 R		MOV AL, Z           ; 将Z的值(33)移动到AL
+ 002E  B4 00			MOV AH, 0           ; 清空AH，使AX仅有33
+ 0030  B3 0A			MOV BL, 10
+ 0032  F6 F3			DIV BL              ; 用10除以AX(33)，商存储在AL，余数存储在AH (33 / 10 = 3, 余数 3)
+
+ 0034  8B D0			MOV DX, AX          ; 将结果存入DX，DX = 0303h
+ 0036  81 C2 3036		ADD DX, 3036h       ; 处理ASCII码，将DX中的值转换为字符代码
+
+ 003A  B4 02			MOV AH, 2           ; 准备使用DOS中断服务 02h (显示字符)
+ 003C  CD 21			INT 21h             ; 显示AL中的字符（十位数）
+
+
+ 003E  8A D6			MOV DL, DH          ; 准备显示个位数
+ 0040  B4 02			MOV AH, 2           ; 再次调用中断服务显示
+ 0042  CD 21			INT 21H
+				 
+ 0044  B4 4C			MOV AH, 4CH         ; 正常终止程序
+ 0046  CD 21			INT 21H
+ 0048				CODES ENDS  
+				END START
+Microsoft (R) Macro Assembler Version 6.11		    09/25/24 17:04:34
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 0048	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 0015	  Para	  Private 
+STACKS . . . . . . . . . . . . .	16 Bit	 0000	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+MSG  . . . . . . . . . . . . . .	Byte	 0004	  DATAS	
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+X  . . . . . . . . . . . . . . .	Byte	 0000	  DATAS	
+Y  . . . . . . . . . . . . . . .	Byte	 0001	  DATAS	
+Z1 . . . . . . . . . . . . . . .	Byte	 0003	  DATAS	
+Z  . . . . . . . . . . . . . . .	Byte	 0002	  DATAS	
+
+	   0 Warnings
+	   0 Errors

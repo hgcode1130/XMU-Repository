@@ -1,0 +1,113 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/01/24 16:34:11
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATAS SEGMENT
+ 0000 02 07 0B 0F 13 1C		    array DB 02H, 07H, 0BH, 0FH, 13H, 1CH, 24H, 39H, 40H, 57H, 68H 
+       24 39 40 57 68
+ 000B 79			    target DB 79H
+ 000C = 000C			    len EQU $ - array 
+ 000C 46 6F 75 6E 64 20		    FOUND_MSG DB 'Found two numbers whose sum is the target value!$'
+       74 77 6F 20 6E 75
+       6D 62 65 72 73 20
+       77 68 6F 73 65 20
+       73 75 6D 20 69 73
+       20 74 68 65 20 74
+       61 72 67 65 74 20
+       76 61 6C 75 65 21
+       24
+ 003D 4E 6F 20 74 77 6F		    NOT_FOUND_MSG DB 'No two numbers in the array sum to the target value!$'
+       20 6E 75 6D 62 65
+       72 73 20 69 6E 20
+       74 68 65 20 61 72
+       72 61 79 20 73 75
+       6D 20 74 6F 20 74
+       68 65 20 74 61 72
+       67 65 74 20 76 61
+       6C 75 65 21 24
+ 0072				DATAS ENDS
+
+ 0000				STACKS SEGMENT
+ 0000  0064 [			    DW 100 DUP(?)
+        0000
+       ]
+ 00C8				STACKS ENDS
+
+ 0000				CODES SEGMENT
+				    ASSUME CS:CODES,DS:DATAS,SS:STACKS
+ 0000				START:
+ 0000  B8 ---- R		    MOV AX,DATAS
+ 0003  8E D8			    MOV DS,AX
+
+ 0005  BE 0000			    MOV SI, 0 ; 头指针，指向数组起始位置
+ 0008  BF 000B			    MOV DI, len - 1 ; 尾指针，指向数组末尾位置
+
+ 000B				FIND_SUM:
+ 000B  8A 84 0000 R		    MOV AL, array[SI]
+ 000F  8A A5 0000 R		    MOV AH, array[DI]
+ 0013  02 C4			    ADD AL, AH ; 计算两数之和
+
+ 0015  3A 06 000B R		    CMP AL, target ; 比较两数之和与目标值
+ 0019  74 0A			    JE FOUND ; 如果相等，说明找到了
+ 001B  7C 02			    JL INCREMENT_START ; 如果小于目标值，头指针向后移动
+ 001D  7F 03			    JG DECREMENT_END 
+
+ 001F				INCREMENT_START:
+ 001F  46			    INC SI
+ 0020  EB E9			    JMP FIND_SUM
+
+ 0022				DECREMENT_END:
+ 0022  4F			    DEC DI
+ 0023  EB E6			    JMP FIND_SUM
+
+ 0025				FOUND:
+ 0025  B4 09			    MOV AH, 9
+ 0027  BA 000C R		    MOV DX, OFFSET FOUND_MSG
+ 002A  CD 21			    INT 21H
+ 002C  EB 07			    JMP EXIT
+
+ 002E				NOT_FOUND:
+ 002E  B4 09			    MOV AH, 9
+ 0030  BA 003D R		    MOV DX, OFFSET NOT_FOUND_MSG
+ 0033  CD 21			    INT 21H
+
+ 0035				EXIT:
+ 0035  B4 4C			    MOV AH, 4CH
+ 0037  CD 21			    INT 21H
+
+ 0039				CODES ENDS
+				    END START
+Microsoft (R) Macro Assembler Version 6.11		    11/01/24 16:34:11
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 0039	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 0072	  Para	  Private 
+STACKS . . . . . . . . . . . . .	16 Bit	 00C8	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+DECREMENT_END  . . . . . . . . .	L Near	 0022	  CODES	
+EXIT . . . . . . . . . . . . . .	L Near	 0035	  CODES	
+FIND_SUM . . . . . . . . . . . .	L Near	 000B	  CODES	
+FOUND_MSG  . . . . . . . . . . .	Byte	 000C	  DATAS	
+FOUND  . . . . . . . . . . . . .	L Near	 0025	  CODES	
+INCREMENT_START  . . . . . . . .	L Near	 001F	  CODES	
+NOT_FOUND_MSG  . . . . . . . . .	Byte	 003D	  DATAS	
+NOT_FOUND  . . . . . . . . . . .	L Near	 002E	  CODES	
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+array  . . . . . . . . . . . . .	Byte	 0000	  DATAS	
+len  . . . . . . . . . . . . . .	Number	 000Ch	 
+target . . . . . . . . . . . . .	Byte	 000B	  DATAS	
+
+	   0 Warnings
+	   0 Errors

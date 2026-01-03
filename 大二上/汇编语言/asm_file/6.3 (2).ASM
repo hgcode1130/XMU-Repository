@@ -1,0 +1,66 @@
+DATAS SEGMENT
+	W DB 3H
+	ARRAY DB 1h,2h,3h,5h,6h,8h,9h,10h,15h,20h
+DATAS ENDS
+
+STACK SEGMENT
+	
+STACK ENDS
+	
+CODES SEGMENT
+	ASSUME CS:CODES,DS:DATAS,SS:STACK
+START:
+MAIN:
+	MOV AX,DATAS
+	MOV DS,AX
+	CALL FACT
+	MOV AH,4CH
+	INT 21H
+FACT PROC
+	push AX
+	push BX
+	push CX
+	push SI
+	MOV CX,10;设置循环次数
+	MOV SI,-1
+Looop:
+	INC SI
+	MOV AL,[ARRAY+SI]
+	CMP AL,W
+	JE case1;找到跳转
+	JG case2;大于说明不存在
+	LOOP Looop
+	JMP case2
+case1:
+	MOV AH,02
+	MOV DL,'Y'
+	INT 21H
+	JMP END_CASE
+case2:
+	push SI
+	ADD SI, CX
+lop:;通过循环将数组元素后挪
+	SUB SI,1h
+	MOV AL,[ARRAY+SI]
+	MOV [ARRAY+SI+1],AL
+	LOOP lop
+	MOV AL,W
+	pop SI
+	MOV [ARRAY+SI], AL;存入
+EDN_CASE:
+	pop cx
+	pop bx
+	pop ax
+	pop si
+	RET
+FACT ENDP
+CODES ENDS
+	END START
+
+
+
+
+
+
+
+

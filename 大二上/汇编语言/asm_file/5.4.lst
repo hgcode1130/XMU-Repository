@@ -1,0 +1,53 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/13/24 11:37:33
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				stack     segment stack 
+ 0000  0100 [			          db 100h dup(?) 
+        00
+       ]
+ 0100				stack     ends 
+ 0000				data      segment 
+ 0000 C0 F9 A4 B0 99 92		ledtable  db 0c0h,0f9h,0a4h,0b0h,99h,92h,82h,0f8h 
+       82 F8
+ 0008  80 90 88 83 C6 C1	          db 80h,90h,88h,83h,0c6h,0c1h,86h,8eh 
+       86 8E
+ 0010 03			lednum    db 3 
+ 0011				data      ends 
+ 0000				code      segment 'code' 
+				assume    cs:code,ss:stack,ds:data 
+ 0000  B8 ---- R		start:    mov ax,data 
+ 0003  8E D8			          mov ds,ax 
+ 0005  8D 1E 0000 R		          lea bx,ledtable 
+ 0009  A0 0010 R		          mov al,lednum 
+ 000C  D7			          xlat 
+ 000D  B8 4C00			          mov ax,4c00h 
+ 0010  CD 21			          int 21h 
+ 0012				code      ends 
+				          end start
+
+Microsoft (R) Macro Assembler Version 6.11		    11/13/24 11:37:33
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+code . . . . . . . . . . . . . .	16 Bit	 0012	  Para	  Private 'CODE'	
+data . . . . . . . . . . . . . .	16 Bit	 0011	  Para	  Private 
+stack  . . . . . . . . . . . . .	16 Bit	 0100	  Para	  Stack	  
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+lednum . . . . . . . . . . . . .	Byte	 0010	  data	
+ledtable . . . . . . . . . . . .	Byte	 0000	  data	
+start  . . . . . . . . . . . . .	L Near	 0000	  code	
+
+	   0 Warnings
+	   0 Errors

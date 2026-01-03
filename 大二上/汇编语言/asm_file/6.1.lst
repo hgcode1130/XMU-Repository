@@ -1,0 +1,90 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/27/24 12:27:32
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				data segment
+					org 3000h
+ 3000 0000				result dw 0000h
+					org 3100h
+ 3100 03				n	db 3
+ 3101				data ends
+
+ 0000				code segment
+					assume cs:code 
+ 0000				MAIN:
+ 0000  B8 ---- R			mov ax,data
+ 0003  8E D8				mov ds,ax
+					
+ 0005  BE 3100				mov si,3100h
+ 0008  8B 04				mov ax,[si]
+ 000A  E8 000A				call fact
+ 000D  BE 3000 R			mov si,offset result
+ 0010  89 14				mov [si],dx
+					
+ 0012  B8 4C00				mov ax,4c00h
+ 0015  CD 21				int 21h
+				;阶乘子程序
+				;入口参数： al中存放n
+				;出口参数：	dx中存放n!
+ 0017				fact proc near
+ 0017  83 F8 00				cmp ax,0
+ 001A  75 04				jne IIA
+ 001C  BB 0001				mov bx,1
+ 001F  C3				ret
+ 0020				IIA:
+ 0020  50				push ax
+ 0021  48				dec ax
+ 0022  E8 FFF2				call fact
+ 0025				X2:
+ 0025  59				pop cx
+ 0026  E8 0003				call mult
+ 0029				X3:
+ 0029  8B D8				mov bx,ax
+ 002B  C3				ret
+ 002C				fact endp
+				;无符号字节数乘法子程序
+				;入口参数:cx,dx中的各为一个乘数
+				;出口参数：ax中的为乘积
+ 002C				mult proc near
+ 002C  8B C3				mov ax,bx
+ 002E  F7 E1				mul cx
+ 0030  C3				ret
+ 0031				mult endp
+ 0031				code ends
+				end MAIN
+
+Microsoft (R) Macro Assembler Version 6.11		    11/27/24 12:27:32
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+code . . . . . . . . . . . . . .	16 Bit	 0031	  Para	  Private 
+data . . . . . . . . . . . . . .	16 Bit	 3101	  Para	  Private 
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+fact . . . . . . . . . . . . . .	P Near	 0017	  code	Length= 0015 Public
+  IIA  . . . . . . . . . . . . .	L Near	 0020	  code	
+  X2 . . . . . . . . . . . . . .	L Near	 0025	  code	
+  X3 . . . . . . . . . . . . . .	L Near	 0029	  code	
+mult . . . . . . . . . . . . . .	P Near	 002C	  code	Length= 0005 Public
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+MAIN . . . . . . . . . . . . . .	L Near	 0000	  code	
+n  . . . . . . . . . . . . . . .	Byte	 3100	  data	
+result . . . . . . . . . . . . .	Word	 3000	  data	
+
+	   0 Warnings
+	   0 Errors

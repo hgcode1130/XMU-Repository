@@ -1,0 +1,64 @@
+Microsoft (R) Macro Assembler Version 6.11		    10/23/24 16:38:23
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATAS SEGMENT 
+ 0000 50 65 72 73 6F 6E			my1b DB 'Personal Computer'
+       61 6C 20 43 6F 6D
+       70 75 74 65 72
+ 0011 14				my2b DB 20
+ 0012 14				my3b DB 14H ;十六进制的 20 为 14H
+ 0013 14				my4b DB 00010100B ;二进制的 20
+ 0014  0014 [				my5w DW 20 DUP(?)
+        0000
+       ]
+ = 0064					my6c EQU 100
+ 003C 50 65 72 73 6F 6E			my7c DB 'Personal Computer'
+       61 6C 20 43 6F 6D
+       70 75 74 65 72
+ 004D				DATAS ENDS
+
+ 0000				STACKS SEGMENT
+				    ;此处输入堆栈段代码
+ 0000				STACKS ENDS
+
+ 0000				CODES SEGMENT
+				    ASSUME CS:CODES,DS:DATAS,SS:STACKS
+ 0000				START:
+ 0000  B8 ---- R		    MOV AX,DATAS
+ 0003  8E D8			    MOV DS,AX
+				    ;此处输入代码段代码
+ 0005  B4 4C			    MOV AH,4CH
+ 0007  CD 21			    INT 21H
+ 0009				CODES ENDS
+				    END START
+Microsoft (R) Macro Assembler Version 6.11		    10/23/24 16:38:23
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 0009	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 004D	  Para	  Private 
+STACKS . . . . . . . . . . . . .	16 Bit	 0000	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+my1b . . . . . . . . . . . . . .	Byte	 0000	  DATAS	
+my2b . . . . . . . . . . . . . .	Byte	 0011	  DATAS	
+my3b . . . . . . . . . . . . . .	Byte	 0012	  DATAS	
+my4b . . . . . . . . . . . . . .	Byte	 0013	  DATAS	
+my5w . . . . . . . . . . . . . .	Word	 0014	  DATAS	
+my6c . . . . . . . . . . . . . .	Number	 0064h	 
+my7c . . . . . . . . . . . . . .	Byte	 003C	  DATAS	
+
+	   0 Warnings
+	   0 Errors

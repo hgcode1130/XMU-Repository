@@ -1,0 +1,108 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/27/24 16:47:59
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATAS SEGMENT
+ 0000 44 45 42 55 47 44			BUFFER DB 'DEBUGDEBUGDE'
+       45 42 55 47 44 45
+ 000C 4E 4F 20 46 49 4E			STRING1 DB 'NO FINDING!','$'
+       44 49 4E 47 21 24
+ 0018 0000 0024				STRING2 DW 0000H,'$'
+ 001C				DATAS ENDS
+
+ 0000				STACK SEGMENT
+					
+ 0000				STACK ENDS
+					
+ 0000				CODES SEGMENT
+					ASSUME CS:CODES,DS:DATAS,SS:STACK
+ 0000				START:
+ 0000				MAIN:
+ 0000  B8 ---- R			MOV AX,DATAS
+ 0003  8E D8				MOV DS,AX
+ 0005  B9 000C				MOV CX,12;循环次数为buffer长度
+ 0008  BE FFFF				MOV SI,-1
+ 000B				looop:
+ 000B  B8 0000				MOV AX,0
+ 000E  46				INC SI;每次前进1字节
+ 000F  E8 0020				CALL FACT
+ 0012  83 F8 01				CMP AX,1; 存在跳转
+ 0015  74 0B				JE NEXT
+ 0017  E2 F2				LOOP looop
+ 0019  B4 09				MOV AH,09H;不存在输出字符串
+ 001B  BA 000C R			MOV DX,OFFSET STRING1
+ 001E  CD 21				INT 21H
+ 0020  EB 0C				JMP OUT1
+ 0022				NEXT:
+ 0022  8B C6				MOV AX,SI
+ 0024  A3 0018 R			MOV STRING2,AX;存入‘D’的下标
+ 0027  B4 09				MOV AH,09H
+ 0029  BA 0018 R			MOV DX,OFFSET STRING2
+ 002C  CD 21				INT 21H
+ 002E				OUT1:
+ 002E  B4 4C				MOV AH,4CH
+ 0030  CD 21				INT 21H
+ 0032				FACT PROC
+ 0032  8A 9C 0000 R			MOV BL,[BUFFER+SI];检查字符是否相同
+ 0036  80 FB 44				CMP BL,'D';相同继续检查下一个，不同退出
+ 0039  75 28				JNE case
+ 003B  8A 9C 0001 R			MOV BL,[BUFFER+SI+1];同上
+ 003F  80 FB 45				CMP BL,'E'
+ 0042  75 1F				JNE case
+ 0044  8A 9C 0002 R			MOV BL,[BUFFER+SI+2];同上
+ 0048  80 FB 42				CMP BL,'B'
+ 004B  75 16				JNE case
+ 004D  8A 9C 0003 R			MOV BL,[BUFFER+SI+3];同上
+ 0051  80 FB 55				CMP BL,'U'
+ 0054  75 0D				JNE case
+ 0056  8A 9C 0004 R			MOV BL,[BUFFER+SI+4];同上
+ 005A  80 FB 47				CMP BL,'G'
+ 005D  75 04				JNE case
+ 005F  B8 0001				MOV AX,1;无中途退出，存在
+ 0062  C3				RET
+ 0063				case:
+ 0063  B8 0000				MOV AX,0
+ 0066  C3				RET
+ 0067				FACT ENDP
+ 0067				CODES ENDS
+					END START
+
+
+Microsoft (R) Macro Assembler Version 6.11		    11/27/24 16:47:59
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 0067	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 001C	  Para	  Private 
+STACK  . . . . . . . . . . . . .	16 Bit	 0000	  Para	  Private 
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+FACT . . . . . . . . . . . . . .	P Near	 0032	  CODES	Length= 0035 Public
+  case . . . . . . . . . . . . .	L Near	 0063	  CODES	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+BUFFER . . . . . . . . . . . . .	Byte	 0000	  DATAS	
+MAIN . . . . . . . . . . . . . .	L Near	 0000	  CODES	
+NEXT . . . . . . . . . . . . . .	L Near	 0022	  CODES	
+OUT1 . . . . . . . . . . . . . .	L Near	 002E	  CODES	
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+STRING1  . . . . . . . . . . . .	Byte	 000C	  DATAS	
+STRING2  . . . . . . . . . . . .	Word	 0018	  DATAS	
+looop  . . . . . . . . . . . . .	L Near	 000B	  CODES	
+
+	   0 Warnings
+	   0 Errors

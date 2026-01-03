@@ -1,0 +1,76 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/01/24 15:25:19
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATAS SEGMENT
+				    ;此处输入数据段代码
+ 0000 10			    bvar db 16
+ 0001 000C			    wvar dw 4*3
+ 0003 FFFFFFFF			    dvar dd 4294967295
+ 0007				    qvar dq ?
+       0000000000000000
+ 000F  01 02 03 04 05		    	 db 1,2,3,4,5
+ 0014				    tvar dt 2345
+       00000000000000002345
+ 001E 61 62 63			     abc db 'a', 'b', 'c'
+ 0021 68 65 6C 6C 6F 0D		    msg db 'hello', 13, 10,'s','$'
+       0A 73 24
+ 002A  000C [			    bbuf db 12 dup('month')
+        6D 6F 6E 74 68
+       ]
+ 0066  0019 [			    dbuf dd 25 dup(?)  
+        00000000
+       ]
+ 00CA				DATAS ENDS
+
+ 0000				STACKS SEGMENT
+				    ;此处输入堆栈段代码
+ 0000				STACKS ENDS
+
+ 0000				CODES SEGMENT
+				    ASSUME CS:CODES,DS:DATAS,SS:STACKS
+ 0000				START:
+ 0000  B8 ---- R		    MOV AX,DATAS
+ 0003  8E D8			    MOV DS,AX
+				    ;此处输入代码段代码
+ 0005  B8 ---- R		    MOV AX, SEG msg
+ 0008  8E D8				MOV DS, AX
+ 000A  BA 0021 R			MOV DX, OFFSET msg
+ 000D  B4 09				MOV AH, 9
+ 000F  CD 21				INT 21H
+ 0011  B4 4C			    MOV AH,4CH
+ 0013  CD 21			    INT 21H
+ 0015				CODES ENDS
+				    END START
+Microsoft (R) Macro Assembler Version 6.11		    11/01/24 15:25:19
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 0015	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 00CA	  Para	  Private 
+STACKS . . . . . . . . . . . . .	16 Bit	 0000	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+abc  . . . . . . . . . . . . . .	Byte	 001E	  DATAS	
+bbuf . . . . . . . . . . . . . .	Byte	 002A	  DATAS	
+bvar . . . . . . . . . . . . . .	Byte	 0000	  DATAS	
+dbuf . . . . . . . . . . . . . .	DWord	 0066	  DATAS	
+dvar . . . . . . . . . . . . . .	DWord	 0003	  DATAS	
+msg  . . . . . . . . . . . . . .	Byte	 0021	  DATAS	
+qvar . . . . . . . . . . . . . .	QWord	 0007	  DATAS	
+tvar . . . . . . . . . . . . . .	TWord	 0014	  DATAS	
+wvar . . . . . . . . . . . . . .	Word	 0001	  DATAS	
+
+	   0 Warnings
+	   0 Errors

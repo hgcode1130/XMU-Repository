@@ -1,0 +1,57 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/01/24 16:18:15
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATAS SEGMENT
+ 0000 54 68 69 73 20 69		    string DB 'This is a sample string', 0 ; 示例字符串，可替换为任意长度大于6的字符串
+       73 20 61 20 73 61
+       6D 70 6C 65 20 73
+       74 72 69 6E 67 00
+ 0018 = 0018			    len EQU $ - string ; 计算字符串长度
+ 0018				DATAS ENDS
+
+ 0000				STACKS SEGMENT
+ 0000  0064 [			    DW 100 DUP(?)
+        0000
+       ]
+ 00C8				STACKS ENDS
+
+ 0000				CODES SEGMENT
+				    ASSUME CS:CODES,DS:DATAS,SS:STACKS
+ 0000				START:
+ 0000  B8 ---- R		    MOV AX,DATAS
+ 0003  8E D8			    MOV DS,AX
+
+ 0005  8A 16 0000 R		    MOV DL, string ; 传送第1个字符到DL
+ 0009  8A 36 0005 R		    MOV DH, string + 5 ; 传送第6个字符到DH
+
+ 000D  B4 4C			    MOV AH, 4CH
+ 000F  CD 21			    INT 21H
+
+ 0011				CODES ENDS
+				    END START
+Microsoft (R) Macro Assembler Version 6.11		    11/01/24 16:18:15
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 0011	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 0018	  Para	  Private 
+STACKS . . . . . . . . . . . . .	16 Bit	 00C8	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+len  . . . . . . . . . . . . . .	Number	 0018h	 
+string . . . . . . . . . . . . .	Byte	 0000	  DATAS	
+
+	   0 Warnings
+	   0 Errors

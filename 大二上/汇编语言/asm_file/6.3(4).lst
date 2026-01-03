@@ -1,0 +1,145 @@
+Microsoft (R) Macro Assembler Version 6.11		    12/22/24 18:58:16
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATAS SEGMENT
+ 0000 01 02 03 05 06 08		    ARRAY DB 1h,2h,3h,5h,6h,8h,9h,10h,15h,20h ; 定义一个长度为10的数组
+       09 10 15 20
+ 000A				DATAS ENDS
+
+ 0000				STACK SEGMENT
+ 0000  0100 [			    DW 256 DUP(0) ; 定义堆栈空间，大小为256个字
+        0000
+       ]
+ 0200				STACK ENDS
+
+ 0000				CODES SEGMENT
+				    ASSUME CS:CODES, DS:DATAS, SS:STACK
+
+ 0000				START:
+ 0000				MAIN:
+				    ; 初始化数据段
+ 0000  B8 ---- R		    MOV AX, DATAS       ; 加载数据段基址
+ 0003  8E D8			    MOV DS, AX          ; 将数据段基址加载到DS
+
+				    ; 初始化堆栈段
+ 0005  B8 ---- R		    MOV AX, STACK       ; 加载堆栈段基址
+ 0008  8E D0			    MOV SS, AX          ; 设置堆栈段寄存器
+ 000A  BC 0100			    MOV SP, 256         ; 设置堆栈顶指针
+
+				    ; 设置参数并通过堆栈传递给子程序
+ 000D  B8 0002			    MOV AX, 2H         ; 将要查找的值 W 设置为 14H
+ 0010  50			    PUSH AX             ; 压入 W 到堆栈
+ 0011  8D 1E 0000 R		    LEA BX, ARRAY       ; 加载数组的起始地址到 BX
+ 0015  53			    PUSH BX             ; 压入数组地址到堆栈
+
+ 0016  E8 0004			    CALL FACT           ; 调用子程序 FACT
+
+				    ; 程序结束
+ 0019  B4 4C			    MOV AH, 4CH         ; DOS 中断：程序终止
+ 001B  CD 21			    INT 21H
+
+ 001D				FACT PROC
+				    ; 保存调用者的栈帧信息
+ 001D  55			    PUSH BP             ; 保存 BP 寄存器
+ 001E  8B EC			    MOV BP, SP          ; 将 SP 保存到 BP（建立栈帧）
+
+				    ; 保存调用者现场
+ 0020  52			    PUSH DX             ; 保存 DX 寄存器
+ 0021  53			    PUSH BX             ; 保存 BX 寄存器
+
+				    ; 从栈帧中提取参数
+ 0022  8B 5E 04			    MOV BX, [BP + 4]    ; 从栈帧获取数组地址，存到 BX
+ 0025  8B 56 06			    MOV DX, [BP + 6]    ; 从栈帧获取要查找的值 W，存到 DX
+
+				    ; 保存剩余的调用者现场
+ 0028  50			    PUSH AX             ; 保存 AX
+ 0029  56			    PUSH SI             ; 保存 SI
+ 002A  51			    PUSH CX             ; 保存 CX
+
+				    ; 初始化循环
+ 002B  B9 000A			    MOV CX, 10          ; 数组长度为10，设置循环计数器
+ 002E  BE FFFF			    MOV SI, -1          ; 初始化 SI（变址寄存器）
+
+ 0031				Looop:
+ 0031  46			    INC SI              ; SI 指向下一个数组元素
+ 0032  8A 00			    MOV AL, [BX + SI]   ; 读取数组中当前元素到 AL
+ 0034  38 D0			    CMP AL, DL          ; 比较当前数组元素 AL 和 W
+ 0036  74 06			    JE case1            ; 如果 AL == W，跳转到 case1
+ 0038  7F 0C			    JG case2            ; 如果 AL > W，跳转到 case2
+ 003A  E2 F5			    LOOP Looop          ; 否则继续下一次循环
+ 003C  EB 08			    JMP case2           ; 如果遍历结束，跳转到 case2
+
+ 003E				case1:
+				    ; 如果找到 W，输出 'Y'
+ 003E  B4 02			    MOV AH, 02          ; 设置 DOS 输出服务号
+ 0040  B2 59			    MOV DL, 'Y'         ; 设置输出字符 'Y'
+ 0042  CD 21			    INT 21H             ; 调用中断
+ 0044  EB 10			    JMP end_case        ; 跳转到结束处理
+
+ 0046				case2:
+				    ; 如果未找到 W，将其插入到合适的位置
+ 0046  56			    PUSH SI             ; 将当前 SI 压栈保存
+ 0047  03 F1			    ADD SI, CX          ; 将 SI 移动到数组末尾位置
+ 0049				lop:
+ 0049  83 EE 01			    SUB SI, 1H          ; 从数组末尾向前遍历
+ 004C  8B 00			    MOV AX, [SI + BX]   ; 获取当前元素
+ 004E  89 40 01			    MOV [SI + BX + 1], AX ; 将当前元素后移一位
+ 0051  E2 F6			    LOOP lop            ; 循环直到插入点
+				    ; 将 W 插入到数组中
+ 0053  5E			    POP SI              ; 恢复插入点的 SI
+ 0054  88 10			    MOV [SI + BX], DL   ; 将 W 写入插入点
+
+ 0056				end_case:
+				    ; 恢复调用者现场
+ 0056  59			    POP CX              ; 恢复 CX
+ 0057  5E			    POP SI              ; 恢复 SI
+ 0058  58			    POP AX              ; 恢复 AX
+ 0059  5B			    POP BX              ; 恢复 BX
+ 005A  5A			    POP DX              ; 恢复 DX
+ 005B  5D			    POP BP              ; 恢复 BP
+ 005C  C2 0004			    RET 4               ; 返回，并清理栈上两个参数（数组地址和 W）
+
+ 005F				FACT ENDP
+
+ 005F				CODES ENDS
+				    END START
+
+
+Microsoft (R) Macro Assembler Version 6.11		    12/22/24 18:58:16
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 005F	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 000A	  Para	  Private 
+STACK  . . . . . . . . . . . . .	16 Bit	 0200	  Para	  Private 
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+FACT . . . . . . . . . . . . . .	P Near	 001D	  CODES	Length= 0042 Public
+  Looop  . . . . . . . . . . . .	L Near	 0031	  CODES	
+  case1  . . . . . . . . . . . .	L Near	 003E	  CODES	
+  case2  . . . . . . . . . . . .	L Near	 0046	  CODES	
+  lop  . . . . . . . . . . . . .	L Near	 0049	  CODES	
+  end_case . . . . . . . . . . .	L Near	 0056	  CODES	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+ARRAY  . . . . . . . . . . . . .	Byte	 0000	  DATAS	
+MAIN . . . . . . . . . . . . . .	L Near	 0000	  CODES	
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+
+	   0 Warnings
+	   0 Errors

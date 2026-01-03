@@ -1,0 +1,76 @@
+Microsoft (R) Macro Assembler Version 6.11		    12/13/24 15:10:09
+tempfile.asm						     Page 1 - 1
+
+
+				CHECK MACRO VAR
+				    CMP VAR, 5         ; 比较 VAR 和 5
+				    JBE SKIP            ; 如果 VAR <= 5，跳过汇编 ADD 指令
+				    REPT 10                 ; 重复执行 10 次
+				        ADD AX, AX          ; 指令 ADD AX, AX
+				    ENDM
+				SKIP:
+				ENDM
+
+ 0000				DATA SEGMENT
+ 0000 06			    byteX DB 6          
+ 0001				DATA ENDS
+
+ 0000				CODE SEGMENT
+				    ASSUME CS:CODE, DS:DATA
+
+ 0000				START:
+ 0000  B8 ---- R		    MOV AX, DATA
+ 0003  8E D8			    MOV DS, AX
+ 0005  A0 0000 R		    MOV AL, byteX
+				    CHECK AL
+ 0008  3C 05		     1	    CMP AL, 5         ; 比较 VAR 和 5
+ 000A  76 14		     1	    JBE SKIP            ; 如果 VAR <= 5，跳过汇编 ADD 指令
+ 000C  03 C0		     2	        ADD AX, AX          ; 指令 ADD AX, AX
+ 000E  03 C0		     2	        ADD AX, AX          ; 指令 ADD AX, AX
+ 0010  03 C0		     2	        ADD AX, AX          ; 指令 ADD AX, AX
+ 0012  03 C0		     2	        ADD AX, AX          ; 指令 ADD AX, AX
+ 0014  03 C0		     2	        ADD AX, AX          ; 指令 ADD AX, AX
+ 0016  03 C0		     2	        ADD AX, AX          ; 指令 ADD AX, AX
+ 0018  03 C0		     2	        ADD AX, AX          ; 指令 ADD AX, AX
+ 001A  03 C0		     2	        ADD AX, AX          ; 指令 ADD AX, AX
+ 001C  03 C0		     2	        ADD AX, AX          ; 指令 ADD AX, AX
+ 001E  03 C0		     2	        ADD AX, AX          ; 指令 ADD AX, AX
+ 0020			     1	SKIP:
+				    ; 程序结束
+ 0020  B4 4C			    MOV AH, 4CH
+ 0022  CD 21			    INT 21H
+
+ 0024				CODE ENDS
+				    END START
+
+Microsoft (R) Macro Assembler Version 6.11		    12/13/24 15:10:09
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Macros:
+
+                N a m e                 Type
+
+CHECK  . . . . . . . . . . . . .	Proc
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODE . . . . . . . . . . . . . .	16 Bit	 0024	  Para	  Private 
+DATA . . . . . . . . . . . . . .	16 Bit	 0001	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+SKIP . . . . . . . . . . . . . .	L Near	 0020	  CODE	
+START  . . . . . . . . . . . . .	L Near	 0000	  CODE	
+byteX  . . . . . . . . . . . . .	Byte	 0000	  DATA	
+
+	   0 Warnings
+	   0 Errors

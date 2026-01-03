@@ -1,0 +1,58 @@
+Microsoft (R) Macro Assembler Version 6.11		    10/23/24 17:16:04
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATAS SEGMENT
+				    ;此处输入数据段代码
+ = 0005				    NUM EQU 5
+ 0000 FFFF 0000 0002 0005		DATALIST DW -1, 0, 2, 5, 4,?  
+       0004 0000
+ 000C				DATAS ENDS
+
+ 0000				STACKS SEGMENT
+				    ;此处输入堆栈段代码
+ 0000				STACKS ENDS
+
+ 0000				CODES SEGMENT
+				    ASSUME CS:CODES,DS:DATAS,SS:STACKS
+ 0000				START:
+ 0000  B8 ---- R		    MOV AX,DATAS
+ 0003  8E D8			    MOV DS,AX
+ 0005  B9 0005			    mov cx, NUM
+ 0008  BB 0000			    mov bx, 0
+ 000B  B8 0000			    mov ax, 0
+ 000E				    loop_sum:
+ 000E  03 87 0000 R		        add ax, DATALIST[bx]
+ 0012  83 C3 02			        add bx, 2
+ 0015  E2 F7			    loop loop_sum
+ 0017  89 87 FFFE R		    mov DATALIST[bx - 2], ax
+ 001B  B4 4C			    MOV AH,4CH
+ 001D  CD 21			    INT 21H
+ 001F				CODES ENDS
+				    END START
+Microsoft (R) Macro Assembler Version 6.11		    10/23/24 17:16:04
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 001F	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 000C	  Para	  Private 
+STACKS . . . . . . . . . . . . .	16 Bit	 0000	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+DATALIST . . . . . . . . . . . .	Word	 0000	  DATAS	
+NUM  . . . . . . . . . . . . . .	Number	 0005h	 
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+loop_sum . . . . . . . . . . . .	L Near	 000E	  CODES	
+
+	   0 Warnings
+	   0 Errors

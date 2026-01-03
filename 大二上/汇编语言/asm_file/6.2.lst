@@ -1,0 +1,143 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/27/24 13:04:29
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				data segment
+				    ; 定义数组存放学生成绩
+ 0000 5F 43 55 2D 4A 58		    scores db 95, 67, 85, 45, 74, 88, 56, 92, 67, 99
+       38 5C 43 63
+				    ; 定义存放统计结果的单元
+ 000A 00			    scoreA db 0   ; 90~100分
+ 000B 00			    scoreB db 0   ; 80~89分
+ 000C 00			    scoreC db 0   ; 70~79分
+ 000D 00			    scoreD db 0   ; 60~69分
+ 000E 00			    scoreE db 0   ; 0~59分
+ 000F				data ends
+
+ 0000				code segment
+				    assume cs:code, ds:data
+ 0000				start:
+				    ; 初始化数据段
+ 0000  B8 ---- R		    mov ax, data
+ 0003  8E D8			    mov ds, ax
+
+				    ; 初始化计数器为0
+ 0005  C6 06 000A R 00		    mov byte ptr scoreA, 0
+ 000A  C6 06 000B R 00		    mov byte ptr scoreB, 0
+ 000F  C6 06 000C R 00		    mov byte ptr scoreC, 0
+ 0014  C6 06 000D R 00		    mov byte ptr scoreD, 0
+ 0019  C6 06 000E R 00		    mov byte ptr scoreE, 0
+
+				    ; 设置数组指针指向成绩数组的起始位置
+ 001E  8D 36 0000 R		    lea si, scores
+
+				    ; 设置数组长度（在本例中为10）
+ 0022  B9 000A			    mov cx, 10
+
+				    ; 调用统计子程序
+ 0025  E8 0005			    call countScores
+
+				    ; 退出程序
+ 0028  B8 4C00			    mov ax, 4C00h
+ 002B  CD 21			    int 21h
+
+				; 统计成绩分布的子程序
+				; 入口参数：学生成绩数组的地址，长度（cx）
+				; 入口：si - 数组指针，cx - 数组长度
+ 002D				countScores proc near
+				    ; 遍历数组中的成绩
+ 002D				loop_start:
+				        ; 读取当前成绩
+ 002D  8A 04			        mov al, [si]
+				        
+				        ; 判断成绩的区间
+				        ; 0~59分区
+ 002F  3C 3C			        cmp al, 60
+ 0031  7C 26			        jl scoreE_inc
+
+				        ; 60~69分区
+ 0033  3C 46			        cmp al, 70
+ 0035  7C 1C			        jl scoreD_inc
+
+				        ; 70~79分区
+ 0037  3C 50			        cmp al, 80
+ 0039  7C 12			        jl scoreC_inc
+
+				        ; 80~89分区
+ 003B  3C 5A			        cmp al, 90
+ 003D  7C 08			        jl scoreB_inc
+
+				        ; 90~100分区
+ 003F  EB 00			        jmp scoreA_inc
+
+ 0041				    scoreA_inc:
+ 0041  FE 06 000A R		        inc byte ptr scoreA
+ 0045  EB 16			        jmp next_score
+
+ 0047				    scoreB_inc:
+ 0047  FE 06 000B R		        inc byte ptr scoreB
+ 004B  EB 10			        jmp next_score
+
+ 004D				    scoreC_inc:
+ 004D  FE 06 000C R		        inc byte ptr scoreC
+ 0051  EB 0A			        jmp next_score
+
+ 0053				    scoreD_inc:
+ 0053  FE 06 000D R		        inc byte ptr scoreD
+ 0057  EB 04			        jmp next_score
+
+ 0059				    scoreE_inc:
+ 0059  FE 06 000E R		        inc byte ptr scoreE
+
+ 005D				    next_score:
+				        ; 移动到下一个成绩
+ 005D  46			        inc si
+ 005E  E2 CD			        loop loop_start
+ 0060  C3			    ret
+ 0061				countScores endp
+
+ 0061				code ends
+				end start
+
+Microsoft (R) Macro Assembler Version 6.11		    11/27/24 13:04:29
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+code . . . . . . . . . . . . . .	16 Bit	 0061	  Para	  Private 
+data . . . . . . . . . . . . . .	16 Bit	 000F	  Para	  Private 
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+countScores  . . . . . . . . . .	P Near	 002D	  code	Length= 0034 Public
+  loop_start . . . . . . . . . .	L Near	 002D	  code	
+  scoreA_inc . . . . . . . . . .	L Near	 0041	  code	
+  scoreB_inc . . . . . . . . . .	L Near	 0047	  code	
+  scoreC_inc . . . . . . . . . .	L Near	 004D	  code	
+  scoreD_inc . . . . . . . . . .	L Near	 0053	  code	
+  scoreE_inc . . . . . . . . . .	L Near	 0059	  code	
+  next_score . . . . . . . . . .	L Near	 005D	  code	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+scoreA . . . . . . . . . . . . .	Byte	 000A	  data	
+scoreB . . . . . . . . . . . . .	Byte	 000B	  data	
+scoreC . . . . . . . . . . . . .	Byte	 000C	  data	
+scoreD . . . . . . . . . . . . .	Byte	 000D	  data	
+scoreE . . . . . . . . . . . . .	Byte	 000E	  data	
+scores . . . . . . . . . . . . .	Byte	 0000	  data	
+start  . . . . . . . . . . . . .	L Near	 0000	  code	
+
+	   0 Warnings
+	   0 Errors

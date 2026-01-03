@@ -1,0 +1,144 @@
+Microsoft (R) Macro Assembler Version 6.11		    12/22/24 17:51:13
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATAS SEGMENT
+ 0000 01 02 03 05 06 08		    ARRAY DB 1h,2h,3h,5h,6h,8h,9h,10h,15h,20h
+       09 10 15 20
+ 000A				DATAS ENDS
+
+ 0000				STACK SEGMENT
+ 0000  0100 [			    DW 256 DUP(0) ; 定义堆栈空间
+        0000
+       ]
+ 0200				STACK ENDS
+
+ 0000				CODES SEGMENT
+				    ASSUME CS:CODES, DS:DATAS, SS:STACK
+
+ 0000				START:
+ 0000				MAIN:
+ 0000  B8 ---- R		    MOV AX, DATAS
+ 0003  8E D8			    MOV DS, AX          ; 初始化数据段
+
+ 0005  B8 ---- R		    MOV AX, STACK       ; 初始化堆栈段
+ 0008  8E D0			    MOV SS, AX
+ 000A  BC 0100			    MOV SP, 256         ; 设置堆栈指针
+
+				    ; 设置参数（通过堆栈传递）
+ 000D  B8 0014			    MOV AX, 14H         ; 要查找的值 W
+ 0010  50			    PUSH AX             ; 压入 W 到堆栈
+
+ 0011  8D 1E 0000 R		    LEA BX, ARRAY       ; 获取数组的地址（存入 BX）
+ 0015  53			    PUSH BX             ; 压入数组地址到堆栈
+
+ 0016  E8 0004			    CALL FACT           ; 调用子程序
+
+				    ; 程序结束
+ 0019  B4 4C			    MOV AH, 4CH
+ 001B  CD 21			    INT 21H
+
+ 001D				FACT PROC
+ 001D  55				PUSH BP
+ 001E  8B EC				MOV BP,SP
+ 0020  52				PUSH DX
+ 0021  56			    PUSH SI
+					 ; 从堆栈中弹出参数
+ 0022  8B 76 04			    MOV SI,[BP + 4]              ; 弹出数组地址到 SI
+ 0025  8B 56 06			    MOV DX,[BP + 6]              ; 弹出要查找的值 W 到 DX
+				    ; 保存调用者现场
+ 0028  50			    PUSH AX
+ 0029  53			    PUSH BX
+ 002A  51			    PUSH CX
+				    
+ 002B  B9 000A			    MOV CX, 10          ; 设置循环次数
+ 002E  BB 0000			    MOV BX, 0
+ 0031  B8 FFFF			    MOV AX, -1
+
+ 0034				Looop:
+ 0034  40			    INC AX
+ 0035  8B D8			    MOV BX, AX          ; 使用 BX 存储偏移值
+ 0037  8A 18			    MOV BL, [SI + BX]   ; 合法的寻址方式
+ 0039  38 D3			    CMP BL, DL          ; 比较 BL 和 W（存储在 DL 中）
+ 003B  74 06			    JE case1            ; 如果找到，跳转到 case1
+ 003D  7F 0C			    JG case2            ; 如果大于 W，跳转到 case2
+ 003F  E2 F3			    LOOP Looop
+ 0041  EB 08			    JMP case2           ; 如果遍历结束没有找到，跳转到 case2
+
+ 0043				case1:
+ 0043  B4 02			    MOV AH, 02
+ 0045  B2 59			    MOV DL, 'Y'         ; 输出 'Y'
+ 0047  CD 21			    INT 21H
+ 0049  EB 18			    JMP end_case
+
+ 004B				case2: 
+				    ; 将 W 插入数组并后移元素
+ 004B  50			    PUSH AX
+ 004C  03 C1			    ADD AX, CX
+ 004E				lop:
+ 004E  83 E8 01			    SUB AX, 1H
+ 0051  8B D8			    MOV BX, AX          ; 使用 BX 存储偏移值
+ 0053  52			    PUSH DX
+ 0054  8B 10			    MOV DX, [SI + BX]
+ 0056  89 50 01			    MOV [SI + BX + 1], DX
+ 0059  5A			    POP DX
+ 005A  E2 F2			    LOOP lop
+				    ; 将 W 的值存入数组
+ 005C  58			    POP AX
+ 005D  8B D8			    MOV BX, AX
+ 005F  8A C2			    MOV AL, DL
+ 0061  88 00			    MOV [SI + BX], AL
+
+ 0063				end_case:
+				    ; 恢复调用者现场
+ 0063  59			    POP CX
+ 0064  5B			    POP BX
+ 0065  58			    POP AX
+ 0066  5E				POP SI
+ 0067  5A			    POP DX
+ 0068  5D			    POP BP
+ 0069  C2 0004			    RET 4
+ 006C				FACT ENDP
+
+ 006C				CODES ENDS
+				    END START
+
+
+
+Microsoft (R) Macro Assembler Version 6.11		    12/22/24 17:51:13
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 006C	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 000A	  Para	  Private 
+STACK  . . . . . . . . . . . . .	16 Bit	 0200	  Para	  Private 
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+FACT . . . . . . . . . . . . . .	P Near	 001D	  CODES	Length= 004F Public
+  Looop  . . . . . . . . . . . .	L Near	 0034	  CODES	
+  case1  . . . . . . . . . . . .	L Near	 0043	  CODES	
+  case2  . . . . . . . . . . . .	L Near	 004B	  CODES	
+  lop  . . . . . . . . . . . . .	L Near	 004E	  CODES	
+  end_case . . . . . . . . . . .	L Near	 0063	  CODES	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+ARRAY  . . . . . . . . . . . . .	Byte	 0000	  DATAS	
+MAIN . . . . . . . . . . . . . .	L Near	 0000	  CODES	
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+
+	   0 Warnings
+	   0 Errors

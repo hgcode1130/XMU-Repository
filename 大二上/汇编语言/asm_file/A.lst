@@ -1,0 +1,49 @@
+Microsoft (R) Macro Assembler Version 6.11		    09/25/24 11:18:44
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DSEG	SEGMENT
+ 0000 48 65 6C 6C 6F 20		MESS    DB      'Hello World!' , 0DH,0AH,24H
+       57 6F 72 6C 64 21
+       0D 0A 24
+ 000F				DSEG	ENDS
+
+
+
+ 0000				CSEG	SEGMENT
+					ASSUME	CS:CSEG,DS:DSEG
+ 0000  B8 ---- R		BEGIN:	MOV AX,DSEG
+ 0003  8E D8				MOV DS,AX
+ 0005  BA 0000 R			MOV DX,OFFSET MESS
+ 0008  B4 09				MOV AH,9
+
+ 000A  CD 21				INT 21H
+ 000C  B4 4C				MOV AH,4CH
+ 000E  CD 21				INT 21H
+ 0010				CSEG	ENDS
+					END BEGIN
+
+
+Microsoft (R) Macro Assembler Version 6.11		    09/25/24 11:18:44
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CSEG . . . . . . . . . . . . . .	16 Bit	 0010	  Para	  Private 
+DSEG . . . . . . . . . . . . . .	16 Bit	 000F	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+BEGIN  . . . . . . . . . . . . .	L Near	 0000	  CSEG	
+MESS . . . . . . . . . . . . . .	Byte	 0000	  DSEG	
+
+	   0 Warnings
+	   0 Errors

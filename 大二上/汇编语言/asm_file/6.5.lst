@@ -1,0 +1,82 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/27/24 16:51:13
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATAS SEGMENT
+ 0000 05				X DB 5
+ 0001				DATAS ENDS
+ 0000				STACK SEGMENT
+					
+ 0000				STACK ENDS
+					
+ 0000				CODES SEGMENT
+					ASSUME CS:CODES,DS:DATAS,SS:STACK
+ 0000				START:
+ 0000				MAIN:
+ 0000  B8 ---- R			MOV AX,DATAS
+ 0003  8E D8				MOV DS,AX
+ 0005  B8 0002				MOV AX,2;计算5的平方
+ 0008  E8 0006				CALL FACT
+ 000B  8B DA				MOV BX,DX
+					
+ 000D  B4 4C				MOV AH,4CH
+ 000F  CD 21				INT 21H
+ 0011				FACT PROC
+ 0011  3C 00				CMP AL,0;AL来计数
+ 0013  75 03				JNE IIA
+ 0015  B2 01				MOV DL,1
+ 0017  C3				RET
+ 0018				IIA:
+ 0018  FE C8				DEC AL
+ 001A  E8 FFF4				CALL FACT
+ 001D				X2:
+ 001D  E8 0003				CALL MULT
+ 0020				X3:
+ 0020  8B D0				MOV DX,AX
+ 0022  C3				RET
+ 0023				FACT ENDP
+
+ 0023				MULT PROC
+ 0023  8A C2				MOV AL,DL;乘X
+ 0025  F6 26 0000 R			MUL X
+ 0029  C3				RET
+ 002A				MULT ENDP
+ 002A				CODES ENDS
+					END START
+
+Microsoft (R) Macro Assembler Version 6.11		    11/27/24 16:51:13
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 002A	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 0001	  Para	  Private 
+STACK  . . . . . . . . . . . . .	16 Bit	 0000	  Para	  Private 
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+FACT . . . . . . . . . . . . . .	P Near	 0011	  CODES	Length= 0012 Public
+  IIA  . . . . . . . . . . . . .	L Near	 0018	  CODES	
+  X2 . . . . . . . . . . . . . .	L Near	 001D	  CODES	
+  X3 . . . . . . . . . . . . . .	L Near	 0020	  CODES	
+MULT . . . . . . . . . . . . . .	P Near	 0023	  CODES	Length= 0007 Public
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+MAIN . . . . . . . . . . . . . .	L Near	 0000	  CODES	
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+X  . . . . . . . . . . . . . . .	Byte	 0000	  DATAS	
+
+	   0 Warnings
+	   0 Errors

@@ -1,0 +1,70 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/13/24 11:24:52
+tempfile.asm						     Page 1 - 1
+
+
+				;该程序将一个字节数据以十六进制形式显示（以查表方法）
+				 
+				.model small
+				.stack
+ 0000				.data
+ 0000 4B			hex db 4bh
+ 0001 30 31 32 33 34 35		ascii db 30h,31h,32h,33h,34h,35h,36h,37h,38h,39h
+       36 37 38 39
+ 000B  41 42 43 44 45 46	      db 41h,42h,43h,44h,45h,46h
+				 
+ 0000				.code
+				.startup
+ 0017  BB 0001 R		    mov bx,offset ascii ;取得表的偏移地址，为换码做准备
+				    ;显示高位
+ 001A  A0 0000 R		    mov al,hex
+ 001D  B1 04			    mov cl,4
+ 001F  D2 F8			    sar al,cl
+ 0021  D7			    xlat      ;al<--ds:[bx+al]
+ 0022  8A D0			    mov dl,al
+ 0024  B4 02			    mov ah,02h
+ 0026  CD 21			    int 21h
+				    ;显示低位
+ 0028  A0 0000 R		    mov al,hex
+ 002B  24 0F			    and al,0fh ;高位为0
+ 002D  D7			    xlat 
+ 002E  8A D0			    mov dl,al
+ 0030  B4 02			    mov ah,02h
+ 0032  CD 21			    int 21h
+				 
+				    .exit 0
+				end
+Microsoft (R) Macro Assembler Version 6.11		    11/13/24 11:24:52
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 0011	  Word	  Public  'DATA'	
+STACK  . . . . . . . . . . . . .	16 Bit	 0400	  Para	  Stack	  'STACK'	 
+_TEXT  . . . . . . . . . . . . .	16 Bit	 0039	  Word	  Public  'CODE'	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0000h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0002h	 
+@Startup . . . . . . . . . . . .	L Near	 0000	  _TEXT	
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+ascii  . . . . . . . . . . . . .	Byte	 0001	  _DATA	
+hex  . . . . . . . . . . . . . .	Byte	 0000	  _DATA	
+
+	   0 Warnings
+	   0 Errors

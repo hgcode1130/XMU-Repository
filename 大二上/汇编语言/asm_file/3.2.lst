@@ -1,0 +1,75 @@
+Microsoft (R) Macro Assembler Version 6.11		    10/17/24 21:26:34
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATAS SEGMENT
+				    ;此处输入数据段代码 
+ 0000 0200				X DW 200h ; X 初始值为 200
+ 0002 0300			    Y DW 300h ; Y 初始值为 300
+ 0004 0400			    Z DW 400h ; Z 初始值为 400
+ 0006 0500			    V DW 500h ; V 初始值为 500
+ 0008				DATAS ENDS
+
+ 0000				STACKS SEGMENT
+				    ;此处输入堆栈段代码
+ 0000				STACKS ENDS
+
+ 0000				CODES SEGMENT
+				    ASSUME CS:CODES,DS:DATAS,SS:STACKS
+ 0000				START:
+ 0000  B8 ---- R		    MOV AX,DATAS
+ 0003  8E D8			    MOV DS,AX
+				    ;此处输入代码段代码
+				    
+ 0005  B8 ---- R		    MOV AX,DATAS
+ 0008  8E D8				MOV DS,AX
+ 000A  A1 0000 R			MOV AX,WORD PTR X
+ 000D  8B 1E 0002 R			MOV BX,WORD PTR Y
+ 0011  F7 EB				IMUL BX
+ 0013  8B C8				MOV CX,AX
+ 0015  8B DA				MOV BX,DX
+ 0017  A1 0004 R			MOV AX,WORD PTR Z
+ 001A  99				CWD
+ 001B  03 C8				ADD CX,AX
+ 001D  13 DA				ADC BX,DX
+ 001F  81 E9 0540			SUB CX,0540H
+ 0023  83 DB 00				SBB BX,0
+ 0026  A1 0006 R			MOV AX,WORD PTR V
+ 0029  99				CWD
+ 002A  2B C1				SUB AX,CX
+ 002C  1B D3				SBB DX,BX
+ 002E  8B 1E 0000 R			MOV BX,WORD PTR X
+ 0032  F7 FB				IDIV BX
+
+ 0034  B4 4C			    MOV AH,4CH
+ 0036  CD 21			    INT 21H
+ 0038				CODES ENDS
+				    END START
+
+Microsoft (R) Macro Assembler Version 6.11		    10/17/24 21:26:34
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 0038	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 0008	  Para	  Private 
+STACKS . . . . . . . . . . . . .	16 Bit	 0000	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+V  . . . . . . . . . . . . . . .	Word	 0006	  DATAS	
+X  . . . . . . . . . . . . . . .	Word	 0000	  DATAS	
+Y  . . . . . . . . . . . . . . .	Word	 0002	  DATAS	
+Z  . . . . . . . . . . . . . . .	Word	 0004	  DATAS	
+
+	   0 Warnings
+	   0 Errors

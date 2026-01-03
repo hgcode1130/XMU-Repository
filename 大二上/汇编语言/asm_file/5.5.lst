@@ -1,0 +1,138 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/13/24 11:46:47
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATAS SEGMENT
+ 0000  0003 [				D DB 3 DUP(?); 将数据首先保存到D数组
+        00
+       ]
+ 0003 0000				D1 DW ?
+ 0005 0000				D2 DW ?
+ 0007 0000				D3 DW ?
+ 0009 30				D4 DB 30h
+ 000A 70 6C 65 61 73 65			MESSAGE DB 'please input three number(hex，1Byte):',13,10,'$' 
+       20 69 6E 70 75 74
+       20 74 68 72 65 65
+       20 6E 75 6D 62 65
+       72 28 68 65 78 A3
+       AC 31 42 79 74 65
+       29 3A 0D 0A 24
+				    ;此处输入数据段代码  
+ 0033				DATAS ENDS
+
+ 0000				STACKS SEGMENT
+				    ;此处输入堆栈段代码
+ 0000				STACKS ENDS
+
+ 0000				CODES SEGMENT
+				    ASSUME CS:CODES,DS:DATAS,SS:STACKS
+ 0000				START:
+ 0000  B8 ---- R		    MOV AX,DATAS
+ 0003  8E D8			    MOV DS,AX
+ 0005  8D 16 000A R		    LEA DX,MESSAGE
+ 0009  B4 09			    MOV AH,09H ;dos 9号功能调用输出字符串，以$结尾
+ 000B  CD 21			    INT 21H   ; 输出提示
+ 000D  B9 0003			    MOV CX, 3H        ;控制输入3个数
+ 0010  BE 0000 R		    MOV SI,OFFSET D;利用寄存器间接寻址
+ 0013  BB 0000			INPUT: MOV BX ,0; 将输入的数据暂时保留BX,初始化位0
+ 0016  B4 01				MOV AH,01H  ; dos 1号功能调用输入1个字符到AL
+ 0018  CD 21				INT 21H  	; 读入字节高位
+ 001A  3C 61				CMP Al, 'a' ; 输入的是a..f
+ 001C  72 02				JB C1
+ 001E  2C 20				SUB AL,20H; 变成小写字母
+ 0020  3C 41			C1: CMP AL,'A' ;   
+ 0022  72 02			    JB C2
+ 0024  2C 07			    SUB AL,7H; 与数字‘9’隔7
+ 0026  2C 30			C2: SUB AL,30H
+ 0028  8A D8				MOV BL,AL
+ 002A  D0 E3				SHL BL,1
+ 002C  D0 E3				SHL BL,1
+ 002E  D0 E3				SHL BL,1
+ 0030  D0 E3				SHL BL,1; 循环左移4位，移到高位
+ 0032  CD 21				INT 21H
+ 0034  3C 61				CMP Al, 'a' ; 输入的是a..f
+ 0036  72 02				JB C3
+ 0038  2C 20				SUB AL,20H; 变成小写字母
+ 003A  3C 41			C3: CMP AL, 'A' ;  
+ 003C  72 02			    JB C4
+ 003E  2C 07			    SUB AL,7H; 与数字‘9’隔7
+ 0040  2C 30			C4: SUB AL,30H
+ 0042  02 D8				ADD BL,AL
+ 0044  88 1C				MOV [SI], BL;将数据送往内存D的位置
+ 0046  46				INC SI ; si+1
+ 0047  B4 02				MOV AH,02H ; dos 2号功能输出1个字符
+ 0049  B2 0D				MOV DL,13 ;输出字符
+ 004B  CD 21				INT 21H  ; 输出\r使得表示将光标移至行首,dos系统下需要这样做
+ 004D  B2 0A				MOV DL,10
+ 004F  CD 21				INT 21H ; 输入\n 换行
+ 0051  E2 C0				LOOP INPUT ;循环
+ 0053  BE 0000 R			MOV SI,OFFSET D
+ 0056  B8 0000				MOV AX,0H; 因为AX16,D8位，用Al,所以ax初始化为0
+ 0059  8A 04			    MOV AL,BYTE PTR [SI]
+ 005B  A3 0003 R		    MOV D1,AX
+ 005E  8A 44 01			    MOV AL,BYTE PTR [SI+1]
+ 0061  A3 0005 R		    MOV D2,AX
+ 0064  8A 44 02			    MOV AL,BYTE PTR [SI+2]
+ 0067  A3 0007 R		    MOV D3,AX ; 将数据分别送往D1,D2,D3
+ 006A  A1 0003 R		    MOV AX,D1
+ 006D  3B 06 0005 R		    CMP AX,D2
+ 0071  74 11			    JE L1 ; D1，D2相等跳转L1位置
+ 0073  3B 06 0007 R		    CMP AX,D3
+ 0077  74 1D			    JE L2
+ 0079  A1 0005 R		    MOV AX,D2
+ 007C  3B 06 0007 R		    CMP AX,D3
+ 0080  74 14			    JE L2
+ 0082  EB 19			    JMP L
+ 0084  C6 06 0009 R 31		L1: MOV D4,31H
+ 0089  3B 06 0007 R			CMP AX,D3
+ 008D  75 0E				JNE L
+ 008F  C6 06 0009 R 32			MOV D4,32H
+ 0094  EB 07				JMP L
+ 0096  C6 06 0009 R 31		L2: MOV D4,31H
+ 009B  EB 00				JMP L
+ 009D  B4 02			L:	MOV AH,02H ; dos 2号功能输出1个字符
+ 009F  8A 16 0009 R			MOV DL,D4
+ 00A3  CD 21				INT 21H
+ 00A5  B4 4C				MOV AH,4CH  ; 随机输入一个字符，用来暂停程序，观看结果
+ 00A7  CD 21				INT 21H
+ 00A9				CODES ENDS
+				    END START
+
+
+Microsoft (R) Macro Assembler Version 6.11		    11/13/24 11:46:47
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODES  . . . . . . . . . . . . .	16 Bit	 00A9	  Para	  Private 
+DATAS  . . . . . . . . . . . . .	16 Bit	 0033	  Para	  Private 
+STACKS . . . . . . . . . . . . .	16 Bit	 0000	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+C1 . . . . . . . . . . . . . . .	L Near	 0020	  CODES	
+C2 . . . . . . . . . . . . . . .	L Near	 0026	  CODES	
+C3 . . . . . . . . . . . . . . .	L Near	 003A	  CODES	
+C4 . . . . . . . . . . . . . . .	L Near	 0040	  CODES	
+D1 . . . . . . . . . . . . . . .	Word	 0003	  DATAS	
+D2 . . . . . . . . . . . . . . .	Word	 0005	  DATAS	
+D3 . . . . . . . . . . . . . . .	Word	 0007	  DATAS	
+D4 . . . . . . . . . . . . . . .	Byte	 0009	  DATAS	
+D  . . . . . . . . . . . . . . .	Byte	 0000	  DATAS	
+INPUT  . . . . . . . . . . . . .	L Near	 0013	  CODES	
+L1 . . . . . . . . . . . . . . .	L Near	 0084	  CODES	
+L2 . . . . . . . . . . . . . . .	L Near	 0096	  CODES	
+L  . . . . . . . . . . . . . . .	L Near	 009D	  CODES	
+MESSAGE  . . . . . . . . . . . .	Byte	 000A	  DATAS	
+START  . . . . . . . . . . . . .	L Near	 0000	  CODES	
+
+	   0 Warnings
+	   0 Errors

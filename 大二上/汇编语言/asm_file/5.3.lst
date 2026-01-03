@@ -1,0 +1,82 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/13/24 11:23:52
+tempfile.asm						     Page 1 - 1
+
+
+				;不换行的版本
+				.model small
+				.stack
+ 0000				.data
+ 0000 4B			hex db 4bh
+				 
+ 0000				.code
+				.startup
+				    ;显示高位
+ 0017  A0 0000 R		    mov al,hex
+ 001A  B1 04			    mov cl,4
+ 001C  D2 E8			    shr al,cl
+ 001E  8A D0			    mov dl,al 
+ 0020  E8 000F			    call disp
+				    ;显示低位
+ 0023  8A 16 0000 R		    mov dl,hex
+ 0027  80 E2 0F			    and dl,0fh ;将高位置0
+ 002A  E8 0005			    call disp
+				    .exit 0
+				 
+				;显示字符的子程序
+ 0032				disp PROC
+ 0032  80 FA 09			    cmp dl,9
+ 0035  76 03			    jbe next ;如果小于等于9，就直接加30h，如果是字母，就需要另外加7
+ 0037				zimu:
+ 0037  80 C2 07			    add dl,7h
+ 003A				next:
+ 003A  80 C2 30			    add dl,30h
+				    ;显示
+ 003D  B4 02			    mov ah,02h
+ 003F  CD 21			    int 21h
+ 0041  C3			    ret
+ 0042				disp ENDP   
+				 
+				end
+Microsoft (R) Macro Assembler Version 6.11		    11/13/24 11:23:52
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 0001	  Word	  Public  'DATA'	
+STACK  . . . . . . . . . . . . .	16 Bit	 0400	  Para	  Stack	  'STACK'	 
+_TEXT  . . . . . . . . . . . . .	16 Bit	 0042	  Word	  Public  'CODE'	
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+disp . . . . . . . . . . . . . .	P Near	 0032	  _TEXT	Length= 0010 Public
+  zimu . . . . . . . . . . . . .	L Near	 0037	  _TEXT	
+  next . . . . . . . . . . . . .	L Near	 003A	  _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0000h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0002h	 
+@Startup . . . . . . . . . . . .	L Near	 0000	  _TEXT	
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+hex  . . . . . . . . . . . . . .	Byte	 0000	  _DATA	
+
+	   0 Warnings
+	   0 Errors

@@ -1,0 +1,70 @@
+Microsoft (R) Macro Assembler Version 6.11		    10/23/24 16:56:35
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATA SEGMENT 
+					 org 100h
+ 0100 1234 5678			varw dw 1234h, 5678h
+ 0104 03 04			varb db 3,4
+					align 4
+ 0108 12345678			vard dd 12345678h
+					even
+ 010C  000A [			buff db 10 dup(?)
+        00
+       ]
+ 0116 48 65 6C 6C 6F		mess db 'Hello'
+ 011B				DATA ENDS
+
+ 0000				CODE SEGMENT
+				ASSUME CS:CODE, DS:DATA
+ 0000				start:
+ 0000  B8 ---- R		    mov ax, DATA
+ 0003  8E D8			    mov ds, ax
+				  
+ 0005				    begin:
+ 0005  B8 0116 R		    mov ax, offset mess
+				      
+ 0008  B8 0006			    mov ax, type buff + type mess + type vard
+				 
+ 000B  B8 0013			    mov ax, sizeof varw + sizeof buff + sizeof mess
+				        
+ 000E  B8 0003			    mov ax, lengthof varw + lengthof vard
+				       
+ 0011  B8 000E			    mov ax, lengthof buff + sizeof varw
+				     
+ 0014  B8 FF02			    mov ax, type begin
+				       
+ 0017  B8 0005 R		    mov ax, offset begin
+				      
+ 001A  B4 4C			    mov ah, 4ch
+ 001C  CD 21			    int 21h
+ 001E				CODE ENDS
+				END start
+Microsoft (R) Macro Assembler Version 6.11		    10/23/24 16:56:35
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODE . . . . . . . . . . . . . .	16 Bit	 001E	  Para	  Private 
+DATA . . . . . . . . . . . . . .	16 Bit	 011B	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+begin  . . . . . . . . . . . . .	L Near	 0005	  CODE	
+buff . . . . . . . . . . . . . .	Byte	 010C	  DATA	
+mess . . . . . . . . . . . . . .	Byte	 0116	  DATA	
+start  . . . . . . . . . . . . .	L Near	 0000	  CODE	
+varb . . . . . . . . . . . . . .	Byte	 0104	  DATA	
+vard . . . . . . . . . . . . . .	DWord	 0108	  DATA	
+varw . . . . . . . . . . . . . .	Word	 0100	  DATA	
+
+	   0 Warnings
+	   0 Errors
