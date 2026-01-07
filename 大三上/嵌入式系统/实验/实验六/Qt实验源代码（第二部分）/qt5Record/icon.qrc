@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>icon/over.png</file>
+        <file>icon/play.png</file>
+        <file>icon/stop.png</file>
+        <file>icon/down_list.png</file>
+        <file>icon/down_list_clicked.png</file>
+        <file>icon/record.png</file>
+        <file>icon/exit.png</file>
+        <file>icon/delete.png</file>
+        <file>icon/deleteclicked.png</file>
+    </qresource>
+</RCC>

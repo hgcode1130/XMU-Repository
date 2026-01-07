@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ServiceContract.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">service</a> &gt; <a href="index.source.html" class="el_package">cn.edu.xmu.oomall.service.dao.bo</a> &gt; <span class="el_source">ServiceContract.java</span></div><h1>ServiceContract.java</h1><pre class="source lang-java linenums">package cn.edu.xmu.oomall.service.dao.bo;
+
+import cn.edu.xmu.javaee.core.exception.BusinessException;
+import cn.edu.xmu.javaee.core.model.ReturnNo;
+import cn.edu.xmu.javaee.core.model.UserToken;
+import cn.edu.xmu.oomall.service.model.ServiceBizConstants;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.util.StringUtils;
+
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+/**
+ * 服务合同实体，负责状态校验与取消逻辑
+ */
+@Entity
+@Table(name = &quot;service_contract&quot;)
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class ServiceContract {
+
+    public static final int STATUS_APPLY = ServiceBizConstants.ContractStatus.APPLY;
+    public static final int STATUS_ACTIVE = ServiceBizConstants.ContractStatus.ACTIVE;
+    public static final int STATUS_PAUSED = ServiceBizConstants.ContractStatus.PAUSED;
+    public static final int STATUS_CANCELED = ServiceBizConstants.ContractStatus.CANCELED;
+    public static final int STATUS_REJECTED = ServiceBizConstants.ContractStatus.REJECTED;
+    public static final int STATUS_EXPIRED = ServiceBizConstants.ContractStatus.EXPIRED;
+
+    private static final int OPERATOR_TYPE_PROVIDER = ServiceBizConstants.OperatorType.PROVIDER;
+    private static final int OPERATION_TYPE_CANCEL = ServiceBizConstants.ContractOperationType.CANCEL;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = &quot;service_id&quot;)
+    private Long serviceId;
+
+    @Column(name = &quot;service_provider_id&quot;)
+    private Long serviceProviderId;
+
+    private Integer status;
+
+    @Column(name = &quot;region_id&quot;)
+    private Long regionId;
+
+    private String name;
+
+    private String description;
+
+    @Column(name = &quot;start_at&quot;)
+    private LocalDateTime startAt;
+
+    @Column(name = &quot;end_at&quot;)
+    private LocalDateTime endAt;
+
+    @Column(name = &quot;service_order_id&quot;)
+    private Long serviceOrderId;
+
+    @Column(name = &quot;creator_id&quot;)
+    private Long creatorId;
+
+    @Column(name = &quot;creator_name&quot;)
+    private String creatorName;
+
+    @Column(name = &quot;modifier_id&quot;)
+    private Long modifierId;
+
+    @Column(name = &quot;modifier_name&quot;)
+    private String modifierName;
+
+    @CreationTimestamp
+    @Column(name = &quot;gmt_create&quot;)
+    private LocalDateTime gmtCreate;
+
+    @UpdateTimestamp
+    @Column(name = &quot;gmt_modified&quot;)
+    private LocalDateTime gmtModified;
+
+    /**
+     * 服务商取消合同
+     */
+    public ContractHistory cancel(Long did, String reason, UserToken user) {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if (!ownedBy(did)) {</span>
+<span class="nc" id="L91">            throw new BusinessException(ReturnNo.RESOURCE_ID_OUTSCOPE,</span>
+<span class="nc" id="L92">                    String.format(&quot;合同(id=%d)不属于服务商(%d)&quot;, id, did));</span>
+        }
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if (!canCancel()) {</span>
+<span class="nc" id="L95">            throw new BusinessException(ReturnNo.STATENOTALLOW,</span>
+<span class="nc" id="L96">                    String.format(&quot;合同(id=%d)状态%d不允许取消&quot;, id, status));</span>
+        }
+<span class="nc" id="L98">        this.status = STATUS_CANCELED;</span>
+<span class="nc" id="L99">        applyModifier(user);</span>
+<span class="nc" id="L100">        this.gmtModified = LocalDateTime.now();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        String finalReason = StringUtils.hasText(reason) ? reason : &quot;服务商取消&quot;;</span>
+<span class="nc" id="L102">        return ContractHistory.builder()</span>
+<span class="nc" id="L103">                .serviceContractId(this.id)</span>
+<span class="nc" id="L104">                .operatorType(OPERATOR_TYPE_PROVIDER)</span>
+<span class="nc" id="L105">                .operationType(OPERATION_TYPE_CANCEL)</span>
+<span class="nc" id="L106">                .operationTime(LocalDateTime.now())</span>
+<span class="nc" id="L107">                .reason(finalReason)</span>
+<span class="nc" id="L108">                .operatorId(did)</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">                .creatorId(user == null ? null : user.getId())</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">                .creatorName(user == null ? null : user.getName())</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">                .modifierId(user == null ? null : user.getId())</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">                .modifierName(user == null ? null : user.getName())</span>
+<span class="nc" id="L113">                .build();</span>
+    }
+
+    public boolean ownedBy(Long did) {
+<span class="nc bnc" id="L117" title="All 4 branches missed.">        return serviceProviderId != null &amp;&amp; Objects.equals(serviceProviderId, did);</span>
+    }
+
+    public String statusText() {
+<span class="nc bnc" id="L121" title="All 9 branches missed.">        return switch (status == null ? -1 : status) {</span>
+<span class="nc" id="L122">            case STATUS_APPLY -&gt; &quot;申请中&quot;;</span>
+<span class="nc" id="L123">            case STATUS_ACTIVE -&gt; &quot;生效&quot;;</span>
+<span class="nc" id="L124">            case STATUS_PAUSED -&gt; &quot;暂停&quot;;</span>
+<span class="nc" id="L125">            case STATUS_CANCELED -&gt; &quot;取消&quot;;</span>
+<span class="nc" id="L126">            case STATUS_REJECTED -&gt; &quot;拒绝&quot;;</span>
+<span class="nc" id="L127">            case STATUS_EXPIRED -&gt; &quot;到期&quot;;</span>
+<span class="nc" id="L128">            default -&gt; &quot;未知状态&quot;;</span>
+        };
+    }
+
+    private boolean canCancel() {
+<span class="nc bnc" id="L133" title="All 8 branches missed.">        return status != null &amp;&amp; (status == STATUS_APPLY || status == STATUS_ACTIVE || status == STATUS_PAUSED);</span>
+    }
+
+    private void applyModifier(UserToken user) {
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        this.modifierId = user == null ? null : user.getId();</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        this.modifierName = user == null ? null : user.getName();</span>
+<span class="nc" id="L139">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

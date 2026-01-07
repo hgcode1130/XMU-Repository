@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>icon/relay.png</file>
+        <file>icon/frame.gif</file>
+        <file>icon/lightswitch.png</file>
+        <file>icon/beepmax.png</file>
+        <file>icon/beepoff.png</file>
+        <file>icon/frameoff.png</file>
+        <file>icon/relayon.png</file>
+        <file>icon/beepBaground.png</file>
+        <file>icon/frame.png</file>
+        <file>icon/gasBaground.png</file>
+        <file>icon/lightE.png</file>
+        <file>icon/relayBackground.png</file>
+        <file>icon/aolcholBackground.png</file>
+        <file>icon/lightBackground.png</file>
+        <file>icon/temBackground.png</file>
+        <file>icon/norlightswitch.png</file>
+        <file>icon/beep.png</file>
+        <file>icon/frameicon.png</file>
+        <file>icon/lighticon.png</file>
+        <file>icon/lightswitchicon.png</file>
+        <file>icon/temicon.png</file>
+        <file>icon/aolcholicon.png</file>
+        <file>icon/beepicon.png</file>
+        <file>icon/relayicon.png</file>
+        <file>icon/gasicon.png</file>
+    </qresource>
+</RCC>

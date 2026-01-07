@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>beepoff.png</file>
+        <file>beepmin.png</file>
+        <file>beepmax.png</file>
+        <file>exit.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,76 @@
+[cols="1a"]
+|===
+
+|
+[frame="none"]
+[cols="1,1"]
+!===
+! 用例编号：MALL-SERVICE-016
+! 用例名称：暂停服务商 (Suspend Service Provider)
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 级别: 用户目标 (User Goal)
+!===
+
+|
+[frame="none"]
+[cols="2"]
+!===
+! 包： 平台管理员-服务商 (Platform Administrator - Service Provider)
+! 参与者：平台管理员 (Platform Administrator)
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 描述： 平台管理员暂停某一服务商的营业权限 (Platform administrator suspends a service provider's business permissions)
+! 触发事件: 平台管理员暂停服务商 (Platform administrator suspends service provider)
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 主成功场景
+!===
+
+|
+[frame="none"]
+[cols="1,4,2", options="header"]
+!===
+! 步骤 ! 描述 ! 信息
+
+! 1
+! 系统显示所有在营业的服务商
+! 服务商名称、申请日期，法人代表、服务地区、主账号名称
+
+! 2
+! 平台管理员输入查询条件筛选服务商
+! 服务商名称
+
+! 3
+! 系统显示筛选后的服务商列表
+! 服务商名称、申请日期，法人代表、服务地区、主账号名称
+
+! 4
+! 平台管理员选择暂停的服务商
+! 
+
+! 5
+! 系统显示暂停成功
+! 
+
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 其他: 该服务商的所有服务被暂停,不能再申请接受服务订单
+!===
+|===

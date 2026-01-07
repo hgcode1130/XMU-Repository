@@ -1,0 +1,83 @@
+[cols="1a"]
+|===
+
+|
+[frame="none"]
+[cols="1,1"]
+!===
+! 用例编号：MALL-SERVICE-043
+! 用例名称：取消服务合同 (Cancel Service Contract)
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 级别: 用户目标 (User Goal)
+!===
+
+|
+[frame="none"]
+[cols="2"]
+!===
+! 包： 服务商-管理服务 (Service Provider - Manage Service)
+! 参与者：服务商 (Service Provider)
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 描述： 服务商取消现有的服务合同 (Service provider cancels an existing service contract)
+! 触发事件: 服务商取消服务合同 (Service provider cancels service contract)
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 主成功场景
+!===
+
+|
+[frame="none"]
+[cols="1,4,2", options="header"]
+!===
+! 步骤 ! 描述 ! 信息
+
+! 1
+! 系统显示所有生效的服务合同列表
+! 服务名称、服务区域、商户名称、合同状态、起止日期，联系人，联系电话
+
+! 2
+! 服务商选择目标合同，提交取消申请
+! 取消原因
+
+! 3
+! 系统记录申请并更新合同状态
+!
+
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 扩展场景
+!===
+
+|
+[frame="none"]
+[cols="1,4,2", options="header"]
+!===
+! 步骤 ! 描述 ! 信息
+
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 其他:
+!===
+|===

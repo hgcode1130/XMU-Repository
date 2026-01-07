@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LogisticsServiceFallback.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">service</a> &gt; <a href="index.source.html" class="el_package">cn.edu.xmu.oomall.service.adapter.feign.fallback</a> &gt; <span class="el_source">LogisticsServiceFallback.java</span></div><h1>LogisticsServiceFallback.java</h1><pre class="source lang-java linenums">package cn.edu.xmu.oomall.service.adapter.feign.fallback;
+
+import cn.edu.xmu.javaee.core.model.ReturnNo;
+import cn.edu.xmu.javaee.core.model.ReturnObject;
+import cn.edu.xmu.oomall.service.adapter.feign.LogisticsService;
+import cn.edu.xmu.oomall.service.adapter.feign.dto.CreateWaybillRequest;
+import cn.edu.xmu.oomall.service.adapter.feign.dto.WaybillResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+/**
+ * 物流服务降级处理
+ * 当 logistics-service 不可用时，使用模拟数据继续业务流程
+ */
+@Component
+<span class="nc" id="L19">@Slf4j</span>
+<span class="nc" id="L20">public class LogisticsServiceFallback implements LogisticsService {</span>
+    
+<span class="nc" id="L22">    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(&quot;yyyyMMddHHmmss&quot;);</span>
+    
+    @Override
+    public ReturnObject createWaybill(CreateWaybillRequest request) {
+        // 生成模拟运单号
+<span class="nc" id="L27">        String mockWaybillNo = &quot;MOCK-&quot; + LocalDateTime.now().format(FORMATTER);</span>
+        
+<span class="nc" id="L29">        log.warn(&quot;⚠️ 物流服务不可用，使用降级处理 | 生成模拟运单号={}&quot;, mockWaybillNo);</span>
+<span class="nc" id="L30">        log.info(&quot;📦 模拟运单信息 | 寄件人={} 电话={} 地址={}&quot;, </span>
+<span class="nc" id="L31">                request.getSenderName(), </span>
+<span class="nc" id="L32">                request.getSenderPhone(), </span>
+<span class="nc" id="L33">                request.getSenderAddress());</span>
+        
+        // 返回模拟运单响应
+<span class="nc" id="L36">        WaybillResponse mockResponse = WaybillResponse.builder()</span>
+<span class="nc" id="L37">                .waybillNo(mockWaybillNo)</span>
+<span class="nc" id="L38">                .status(0) // 待揽收</span>
+<span class="nc" id="L39">                .build();</span>
+        
+<span class="nc" id="L41">        return new ReturnObject(ReturnNo.OK, &quot;模拟创建运单成功（降级处理）&quot;, mockResponse);</span>
+    }
+    
+    @Override
+    public ReturnObject cancelWaybill(String waybillNo) {
+<span class="nc" id="L46">        log.warn(&quot;⚠️ 物流服务不可用，使用降级处理 | 模拟取消运单={}&quot;, waybillNo);</span>
+<span class="nc" id="L47">        log.info(&quot;📦 模拟取消运单成功 | waybillNo={}&quot;, waybillNo);</span>
+        
+<span class="nc" id="L49">        return new ReturnObject(ReturnNo.OK, &quot;模拟取消运单成功（降级处理）&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

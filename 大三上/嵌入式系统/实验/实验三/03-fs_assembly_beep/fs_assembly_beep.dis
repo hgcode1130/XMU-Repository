@@ -1,0 +1,152 @@
+
+fs_assembly_beep.elf:     file format elf64-littleaarch64
+
+
+Disassembly of section .text:
+
+0000000000280000 <_start>:
+  280000:	58000300 	ldr	x0, 280060 <stop+0xc>
+  280004:	b9400001 	ldr	w1, [x0]
+  280008:	32090021 	orr	w1, w1, #0x800000
+  28000c:	b9000001 	str	w1, [x0]
+  280010:	580002c0 	ldr	x0, 280068 <stop+0x14>
+  280014:	b9400001 	ldr	w1, [x0]
+  280018:	32090021 	orr	w1, w1, #0x800000
+  28001c:	b9000001 	str	w1, [x0]
+
+0000000000280020 <LOOP1>:
+  280020:	180001c3 	ldr	w3, 280058 <stop+0x4>
+  280024:	51000463 	sub	w3, w3, #0x1
+  280028:	7100007f 	cmp	w3, #0x0
+  28002c:	54ffffa1 	b.ne	280020 <LOOP1>  // b.any
+  280030:	580001c0 	ldr	x0, 280068 <stop+0x14>
+  280034:	b9400001 	ldr	w1, [x0]
+  280038:	18000122 	ldr	w2, 28005c <stop+0x8>
+  28003c:	0a020021 	and	w1, w1, w2
+  280040:	b9000001 	str	w1, [x0]
+
+0000000000280044 <LOOP2>:
+  280044:	180000a3 	ldr	w3, 280058 <stop+0x4>
+  280048:	51000463 	sub	w3, w3, #0x1
+  28004c:	7100007f 	cmp	w3, #0x0
+  280050:	54ffffa1 	b.ne	280044 <LOOP2>  // b.any
+
+0000000000280054 <stop>:
+  280054:	14000000 	b	280054 <stop>
+  280058:	0fffffff 	.inst	0x0fffffff ; undefined
+  28005c:	ff7fffff 	.inst	0xff7fffff ; undefined
+  280060:	ff730004 	.inst	0xff730004 ; undefined
+  280064:	00000000 	udf	#0
+  280068:	ff730000 	.inst	0xff730000 ; undefined
+  28006c:	00000000 	udf	#0
+
+Disassembly of section .debug_line:
+
+0000000000000000 <.debug_line>:
+   0:	00000058 	udf	#88
+   4:	00080005 	.inst	0x00080005 ; undefined
+   8:	0000002a 	udf	#42
+   c:	fb010104 	.inst	0xfb010104 ; undefined
+  10:	01000d0e 	.inst	0x01000d0e ; undefined
+  14:	00010101 	.inst	0x00010101 ; undefined
+  18:	00010000 	.inst	0x00010000 ; undefined
+  1c:	01010100 	.inst	0x01010100 ; undefined
+  20:	0000011f 	udf	#287
+  24:	01020000 	.inst	0x01020000 ; undefined
+  28:	020f021f 	.inst	0x020f021f ; undefined
+  2c:	00000034 	udf	#52
+  30:	00003400 	udf	#13312
+  34:	09000000 	.inst	0x09000000 ; undefined
+  38:	28000002 	stnp	w2, w0, [x0]
+  3c:	00000000 	udf	#0
+  40:	21211700 	.inst	0x21211700 ; undefined
+  44:	21212421 	.inst	0x21212421 ; undefined
+  48:	21212421 	.inst	0x21212421 ; undefined
+  4c:	21212321 	.inst	0x21212321 ; undefined
+  50:	21242121 	.inst	0x21242121 ; undefined
+  54:	02242121 	.inst	0x02242121 ; undefined
+  58:	01010007 	.inst	0x01010007 ; undefined
+
+Disassembly of section .debug_line_str:
+
+0000000000000000 <.debug_line_str>:
+   0:	6d6f682f 	ldp	d15, d26, [x1, #-272]
+   4:	65722f65 	fmls	z5.h, p3/m, z27.h, z18.h
+   8:	2f676830 	umlsl	v16.4s, v1.4h, v7.h[6]
+   c:	e58cb5e5 	st1d	{z5.d}, p5, [x15, z12.d]
+  10:	bce5a585 	.inst	0xbce5a585 ; undefined
+  14:	aee52f8f 	.inst	0xaee52f8f ; undefined
+  18:	8caae99e 	.inst	0x8caae99e ; undefined
+  1c:	2f89b8e4 	.inst	0x2f89b8e4 ; undefined
+  20:	662d3330 	.inst	0x662d3330 ; undefined
+  24:	73615f73 	.inst	0x73615f73 ; undefined
+  28:	626d6573 	.inst	0x626d6573 ; undefined
+  2c:	625f796c 	.inst	0x625f796c ; undefined
+  30:	00706565 	.inst	0x00706565 ; undefined
+  34:	615f7366 	.inst	0x615f7366 ; undefined
+  38:	6d657373 	ldp	d19, d28, [x27, #-432]
+  3c:	5f796c62 	.inst	0x5f796c62 ; undefined
+  40:	70656562 	adr	x2, cacef <_start-0x1b5311>
+  44:	Address 0x44 is out of bounds.
+
+
+Disassembly of section .debug_info:
+
+0000000000000000 <.debug_info>:
+   0:	00000024 	udf	#36
+   4:	08010005 	stxrb	w1, w5, [x0]
+   8:	00000000 	udf	#0
+   c:	00000001 	udf	#1
+  10:	28000000 	stnp	w0, w0, [x0]
+  14:	00000000 	udf	#0
+  18:	00007000 	udf	#28672
+  1c:	00130000 	.inst	0x00130000 ; undefined
+  20:	00470000 	.inst	0x00470000 ; undefined
+  24:	80010000 	.inst	0x80010000 ; undefined
+
+Disassembly of section .debug_abbrev:
+
+0000000000000000 <.debug_abbrev>:
+   0:	10001101 	adr	x1, 220 <_start-0x27fde0>
+   4:	12011117 	and	w23, w8, #0x8000000f
+   8:	1b0e030f 	madd	w15, w24, w14, w0
+   c:	130e250e 	sbfiz	w14, w8, #18, #10
+  10:	00000005 	udf	#5
+
+Disassembly of section .debug_aranges:
+
+0000000000000000 <.debug_aranges>:
+   0:	0000002c 	udf	#44
+   4:	00000002 	udf	#2
+   8:	00080000 	.inst	0x00080000 ; undefined
+   c:	00000000 	udf	#0
+  10:	00280000 	.inst	0x00280000 ; NYI
+  14:	00000000 	udf	#0
+  18:	00000070 	udf	#112
+	...
+
+Disassembly of section .debug_str:
+
+0000000000000000 <.debug_str>:
+   0:	615f7366 	.inst	0x615f7366 ; undefined
+   4:	6d657373 	ldp	d19, d28, [x27, #-432]
+   8:	5f796c62 	.inst	0x5f796c62 ; undefined
+   c:	70656562 	adr	x2, cacbb <_start-0x1b5345>
+  10:	2f00732e 	.inst	0x2f00732e ; undefined
+  14:	656d6f68 	fnmls	z8.h, p3/m, z27.h, z13.h
+  18:	3065722f 	adr	x15, cae5d <_start-0x1b51a3>
+  1c:	e52f6768 	st2w	{z8.s-z9.s}, p1, [x27, x15, lsl #2]
+  20:	85e58cb5 	ld1rsb	{z21.d}, p3/z, [x5, #37]
+  24:	8fbce5a5 	.inst	0x8fbce5a5 ; undefined
+  28:	9eaee52f 	.inst	0x9eaee52f ; undefined
+  2c:	e48caae9 	st1h	{z9.d}, p2, [x23, z12.d]
+  30:	302f89b8 	adr	x24, 5f165 <_start-0x220e9b>
+  34:	73662d33 	.inst	0x73662d33 ; undefined
+  38:	7373615f 	.inst	0x7373615f ; undefined
+  3c:	6c626d65 	ldnp	d5, d27, [x11, #-480]
+  40:	65625f79 	fnmla	z25.h, p7/m, z27.h, z2.h
+  44:	47007065 	.inst	0x47007065 ; undefined
+  48:	4120554e 	.inst	0x4120554e ; undefined
+  4c:	2e322053 	usubl	v19.8h, v2.8b, v18.8b
+  50:	Address 0x50 is out of bounds.
+

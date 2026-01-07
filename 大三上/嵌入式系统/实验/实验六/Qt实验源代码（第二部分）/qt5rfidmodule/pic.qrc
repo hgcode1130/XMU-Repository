@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>13.56M.png</file>
+        <file>125K.png</file>
+        <file>2.4G.png</file>
+        <file>NFC.png</file>
+        <file>exit.png</file>
+        <file>background.png</file>
+        <file>915M.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6570;&#x636e;&#x6316;&#x6398;&#x671f;&#x672b;&#x590d;&#x4e60;&#x6574;&#x7406;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="数据挖掘期末复习整理">数据挖掘期末复习整理</h1>
+<div class="markdown-alert markdown-alert-warning"><p class="markdown-alert-title"><svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p><p>部分题目（特别是关联分析部分）的公式在原文件中缺失（显示为 <code>\n</code>）。请对照原始课件或教材复习相关公式。</p>
+</div>
+<h2 id="第一部分单选题-50-题">第一部分：单选题 (50 题)</h2>
+<p><strong>1. [数据基础] 邮政编码（如 100084）属于哪种属性类型？</strong>
+A. 标称 (Nominal)
+B. 序数 (Ordinal)
+C. 区间 (Interval)
+D. 比率 (Ratio)</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> A </details>
+</blockquote>
+<p><strong>2. [数据基础] 摄氏温度（Temperature in Celsius）属于哪种属性类型？</strong>
+A. 标称
+B. 序数
+C. 区间
+D. 比率</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> C </details>
+</blockquote>
+<p><strong>3. [数据基础] 下列哪个统计量对离群点（Outliers）最不敏感（即最具鲁棒性）？</strong>
+A. 均值 (Mean)
+B. 中位数 (Median)
+C. 标准差 (Standard Deviation)
+D. 极差 (Range)</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>4. [数据基础] 在数据预处理中，将连续属性的值域划分成具有相同宽度的区间，这种方法称为：</strong>
+A. 等频离散化
+B. 等宽离散化
+C. 聚类离散化
+D. 二元化</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+**5. [数据基础] 关于余弦相似度（Cosine Similarity），下列说法正确的是：**
+A. 取值范围是 [0, ∞]
+B. 它可以度量两个向量在量值（Magnitude）上的差异
+C. 它度量的是两个向量在方向上的差异
+D. 它不受零值属性（0-0匹配）的影响，但不适合稀疏数据
+<details><summary><b>参考答案</b></summary> C </details>
+</blockquote>
+<p><strong>6. [数据基础] 如果两个二元向量分别是 x=0101 和 y=1001，它们的 Jaccard 系数是多少？</strong>
+A. 1/4
+B. 1/3
+C. 1/2
+D. 2/3</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>7. [数据基础] 在处理缺失值时，下列哪种做法通常不推荐？</strong>
+A. 直接删除包含缺失值的对象（当缺失比例很大时）
+B. 使用属性的平均值填充
+C. 使用最可能的值填充
+D. 总是将缺失值替换为 0</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> D </details>
+</blockquote>
+<p><strong>8. [数据基础] 哪种采样方法可以确保稀有类在样本中占有足够的比例？</strong>
+A. 简单随机抽样
+B. 分层抽样 (Stratified Sampling)
+C. 无放回抽样
+D. 蓄水池采样</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>9. [数据基础] 某属性的取值范围是 [-986, 917]，使用小数定标规范化（Decimal Scaling），j 应取多少？</strong>
+A. 2
+B. 3
+C. 4
+D. 5</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+**10. [数据基础] 主成分分析（PCA）的主要目的是：**
+A. 数据离散化
+B. 异常检测
+C. 维归约（降维）
+D. 数据采样
+<details><summary><b>参考答案</b></summary> C </details>
+</blockquote>
+<p><strong>11. [关联分析] 如果项集 {A, B} 是非频繁的，根据 Apriori 算法的先验原理，下列哪个项集一定是非频繁的？</strong>
+A. {A}
+B. {B}
+C. {A, B, C}
+D. {C}</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> C </details>
+</blockquote>
+<p><strong>12. [关联分析] 关联规则 X -&gt; Y 的置信度（Confidence）计算公式是：</strong>
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mi>o</mi><mi>n</mi><mi>f</mi><mi>i</mi><mi>d</mi><mi>e</mi><mi>n</mi><mi>c</mi><mi>e</mi><mo stretchy="false">(</mo><mi>X</mi><mo>→</mo><mi>Y</mi><mo stretchy="false">)</mo><mo>=</mo><mi>P</mi><mo stretchy="false">(</mo><mi>Y</mi><mi mathvariant="normal">∣</mi><mi>X</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mi>S</mi><mi>u</mi><mi>p</mi><mi>p</mi><mi>o</mi><mi>r</mi><mi>t</mi><mo stretchy="false">(</mo><mi>X</mi><mo>∪</mo><mi>Y</mi><mo stretchy="false">)</mo></mrow><mrow><mi>S</mi><mi>u</mi><mi>p</mi><mi>p</mi><mi>o</mi><mi>r</mi><mi>t</mi><mo stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">Confidence(X \rightarrow Y) = P(Y|X) = \frac{Support(X \cup Y)}{Support(X)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">i</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">ce</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.53em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05764em;">S</span><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight">pp</span><span class="mord mathnormal mtight" style="margin-right:0.02778em;">or</span><span class="mord mathnormal mtight">t</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight" style="margin-right:0.07847em;">X</span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05764em;">S</span><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight">pp</span><span class="mord mathnormal mtight" style="margin-right:0.02778em;">or</span><span class="mord mathnormal mtight">t</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight" style="margin-right:0.07847em;">X</span><span class="mbin mtight">∪</span><span class="mord mathnormal mtight" style="margin-right:0.22222em;">Y</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>)</p>
+<p><strong>13. [关联分析] 如果规则 A -&gt; B 的提升度（Lift）等于 1，说明：</strong>
+A. A 和 B 是正相关的
+B. A 和 B 是负相关的
+C. A 和 B 是相互独立的
+D. A 和 B 的支持度很高</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> C </details>
+</blockquote>
+<p><strong>14. [关联分析] Apriori 算法采用的搜索策略是：</strong>
+A. 深度优先搜索
+B. 逐层（Level-wise）搜索
+C. 随机搜索
+D. 贪心搜索</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+**15. [关联分析] 在 Apriori 算法中，如果有 10 个频繁 1-项集，则候选 2-项集的数量最多是：**
+A. 10
+B. 45
+C. 90
+D. 100
+<details><summary><b>参考答案</b></summary> B (C(10,2)=45) </details>
+</blockquote>
+<p><strong>16. [分类] 决策树构建中，ID3 算法使用什么指标来选择划分属性？</strong>
+A. 信息增益 (Information Gain)
+B. 增益率 (Gain Ratio)
+C. 基尼指数 (Gini Index)
+D. 分类误差</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> A </details>
+</blockquote>
+<p><strong>17. [分类] 决策树过拟合的主要原因不包括：</strong>
+A. 训练数据中的噪声
+B. 训练数据不足
+C. 树生长得太深
+D. 属性之间完全独立</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> D </details>
+</blockquote>
+<p><strong>18. [分类] 在二分类问题中，如果一个结点包含 0 个正类样本和 6 个负类样本，该结点的熵（Entropy）是多少？</strong>
+A. 0
+B. 0.5
+C. 1
+D. 6</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> A </details>
+</blockquote>
+<p><strong>19. [分类] 关于朴素贝叶斯分类器，下列说法错误的是：</strong>
+A. 它假设属性之间条件独立
+B. 它可以处理缺失值
+C. 它对孤立噪声点敏感
+D. 它是生成式模型</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> C </details>
+**20. [分类] 朴素贝叶斯中，如果某个属性值在训练集中没有出现，导致概率为0，通常采用什么方法解决？**
+A. 丢弃该属性
+B. 拉普拉斯平滑 (Laplace Smoothing)
+C. 将概率设为 0.5
+D. 增加训练数据
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>21. [分类] SVM（支持向量机）寻找的最优超平面是指：</strong>
+A. 分类误差最小的平面
+B. 距离所有样本点最近的平面
+C. 具有最大间隔（Maximal Margin）的平面
+D. 包含最多支持向量的平面</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> C </details>
+</blockquote>
+<p><strong>22. [分类] 在 SVM 中，如果数据线性不可分，通常采用什么技术将数据映射到高维空间？</strong>
+A. 核函数 (Kernel Trick)
+B. PCA
+C. 正则化
+D. 软间隔</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> A </details>
+</blockquote>
+<p><strong>23. [分类] 混淆矩阵中，被模型正确预测为正样本的数量称为：</strong>
+A. TP (True Positive)
+B. FN (False Negative)
+C. FP (False Positive)
+D. TN (True Negative)</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> A </details>
+</blockquote>
+<p><strong>24. [分类] F1 度量（F1-score）是哪两个指标的调和平均？</strong>
+A. 准确率 (Accuracy) 和 召回率 (Recall)
+B. 精度 (Precision) 和 召回率 (Recall)
+C. 精度 (Precision) 和 准确率 (Accuracy)
+D. TPR 和 FPR</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+**25. [分类] Bagging（装袋）算法的核心思想是：**
+A. 顺序训练分类器，关注被错分的样本
+B. 使用随机特征子集
+C. 有放回的自助采样 (Bootstrap) 并行训练
+D. 构建深度决策树
+<details><summary><b>参考答案</b></summary> C </details>
+</blockquote>
+<p><strong>26. [分类] 随机森林（Random Forest）相比于普通决策树，引入了哪种随机性？</strong>
+A. 仅样本随机
+B. 仅属性随机选择
+C. 样本随机采样和节点分裂时的属性随机选择
+D. 随机剪枝</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> C </details>
+</blockquote>
+<p><strong>27. [分类] 处理类不平衡（Class Imbalance）问题的常见方法不包括：</strong>
+A. 过采样 (Oversampling)，如 SMOTE
+B. 欠采样 (Undersampling)
+C. 使用准确率 (Accuracy) 作为唯一评估指标
+D. 调整分类阈值</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> C </details>
+</blockquote>
+<p><strong>28. [聚类] K-均值（K-Means）算法属于哪种聚类类型？</strong>
+A. 层次聚类
+B. 划分聚类
+C. 基于密度的聚类
+D. 基于图的聚类</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>29. [聚类] K-Means 算法的一个主要缺点是：</strong>
+A. 对初始质心的选择敏感
+B. 计算复杂度随数据量呈指数增长
+C. 只能处理二元属性
+D. 总是能找到全局最优解</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> A </details>
+**30. [聚类] 在层次聚类中，MIN（单链）策略定义的簇间距离是：**
+A. 两个簇中距离最远的两个点的距离
+B. 两个簇中距离最近的两个点的距离
+C. 两个簇的质心之间的距离
+D. 两个簇所有点对距离的平均值
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>31. [聚类] 下列哪个算法不需要预先指定簇的个数（K 值）？</strong>
+A. K-Means
+B. K-Means++
+C. DBSCAN
+D. 二分 K-Means</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> C </details>
+</blockquote>
+<p><strong>32. [聚类] 在 DBSCAN 算法中，核心点（Core Point）是指：</strong>
+A. 位于簇边界的点
+B. Eps 半径内包含至少 MinPts 个对象的点
+C. 距离所有其他点都最远的点
+D. 既不是边界点也不是噪声的点</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>33. [聚类] 轮廓系数（Silhouette Coefficient）的取值范围是：</strong>
+A. [0, 1]
+B. [-1, 1]
+C. [0, ∞]
+D. [-∞, ∞]</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>34. [聚类] 如果轮廓系数接近 1，说明：</strong>
+A. 聚类效果很好，簇内紧凑，簇间分离
+B. 聚类效果很差
+C. 簇重叠严重
+D. 数据点位于簇的边界上</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> A </details>
+**35. [回归] 简单线性回归模型 y = \beta_0 + \beta_1 x + \epsilon 中，\beta_1 代表：**
+A. 截距
+B. 斜率
+C. 误差项
+D. 决定系数
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>36. [回归] 最小二乘法（Least Square Method）的目标是最小化：</strong>
+A. 预测值与真实值的绝对误差之和
+B. 预测值与真实值的差的平方和 (SSE)
+C. 总平方和 (SST)
+D. 回归平方和 (SSR)</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>37. [回归] 决定系数 R^2 的值为 1 表示：</strong>
+A. 模型完全无法解释数据的变异
+B. 模型解释了数据 100% 的变异，所有点都在回归线上
+C. 变量之间没有线性关系
+D. 模型过拟合</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>38. [回归] 逻辑回归（Logistic Regression）主要用于解决什么问题？</strong>
+A. 线性回归问题
+B. 分类问题（通常是二分类）
+C. 聚类问题
+D. 关联规则挖掘</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>39. [回归] 逻辑回归使用什么函数将线性输出映射到 [0, 1] 之间？</strong>
+A. ReLU 函数
+B. Sigmoid (Logistic) 函数
+C. Tanh 函数
+D. Step 函数</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+**40. [异常检测] 异常（Outlier）也被称为：**
+A. 噪声
+B. 离群点
+C. 缺失值
+D. 重复值
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>41. [异常检测] 哪种异常检测方法基于“异常点距离其最近邻居比正常点要远得多”的假设？</strong>
+A. 基于统计的方法
+B. 基于距离/邻近度的方法
+C. 基于密度的方法
+D. 基于聚类的方法</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>42. [异常检测] 在基于密度的异常检测（如 LOF）中，异常点通常具有：</strong>
+A. 比其邻居更高的密度
+B. 比其邻居更低的密度
+C. 与其邻居相同的密度
+D. 无法计算的密度</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>43. [数据可视化] 想要观察两个连续变量之间的相关性，最适合的图表是：</strong>
+A. 饼图
+B. 直方图
+C. 散点图 (Scatter Plot)
+D. 箱线图</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> C </details>
+</blockquote>
+<p><strong>44. [数据可视化] 箱线图（Boxplot）主要用于展示数据的：</strong>
+A. 分布特征（中位数、四分位数、离群点）
+B. 时间变化趋势
+C. 类别比例
+D. 精确数值</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> A </details>
+**45. [综合] 下列哪项任务属于描述性挖掘任务？**
+A. 预测明天的股票价格
+B. 将客户分为不同的消费群体（聚类）
+C. 判断一笔交易是否为欺诈
+D. 预测患者是否患有某种疾病
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>46. [分类] AdaBoost 算法中，分错的样本在下一轮训练中权重会：</strong>
+A. 减小
+B. 增加
+C. 保持不变
+D. 变为 0</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>47. [聚类] 下列关于层次聚类的说法，错误的是：</strong>
+A. 可以生成树状图 (Dendrogram)
+B. 不需要预先指定 K 值
+C. 一旦合并或分裂，不能撤销
+D. 时间复杂度通常比 K-Means 低</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> D </details>
+</blockquote>
+<p><strong>48. [数据基础] 两个对象 p 和 q 之间的欧几里得距离是 d，则曼哈顿距离通常：</strong>
+A. 小于 d
+B. 等于 d
+C. 大于等于 d
+D. 与 d 无关</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> C （根据三角不等式，两边之和大于第三边，曼哈顿距离为两直角边之和，欧氏距离为斜边） </details>
+</blockquote>
+<p><strong>49. [关联分析] 如果 min_sup = 0.5，总事务数 N=10，则一个项集至少要出现几次才被认为是频繁的？</strong>
+A. 4 次
+B. 5 次
+C. 6 次
+D. 10 次</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<p><strong>50. [回归] 在多元线性回归中，为了避免多重共线性问题，通常需要：</strong>
+A. 增加更多特征
+B. 进行特征选择或使用正则化
+C. 使用非线性模型
+D. 增加样本量</p>
+<blockquote>
+<details><summary><b>参考答案</b></summary> B </details>
+</blockquote>
+<h2 id="第二部分判断题-80-题">第二部分：判断题 (80 题)</h2>
+<ol>
+<li>标称属性（Nominal）的值之间存在顺序关系。 (<strong>F</strong>，标称属性无序，序数属性才有顺序)</li>
+<li>比率属性（Ratio）具有绝对零点，因此可以计算比值。 (<strong>T</strong>)</li>
+<li>离群点（Outlier）一定是噪声数据，应该全部删除。 (<strong>F</strong>，离群点也可能包含重要信息，如欺诈检测中的异常交易)</li>
+<li>均值比中位数对极端值（离群点）更敏感。 (<strong>T</strong>)</li>
+<li>方差和标准差用于度量数据的离散程度。 (<strong>T</strong>)</li>
+<li>余弦相似度关注的是向量的长度差异，而不是方向差异。 (<strong>F</strong>，余弦相似度关注方向，不关注长度)</li>
+<li>Jaccard 系数适合处理非对称的二元属性（如购物篮数据）。 (<strong>T</strong>)</li>
+<li>皮尔森相关系数为 0 表示两个变量完全独立。 (<strong>F</strong>，只表示无线性相关)</li>
+<li>PCA（主成分分析）是一种有监督的降维方法。 (<strong>F</strong>，无监督)</li>
+<li>数据规范化（Normalization）可以将不同量纲的属性转换到相同的范围内。 (<strong>T</strong>)</li>
+<li>蓄水池采样（Reservoir Sampling）适用于对流数据进行随机采样。 (<strong>T</strong>)</li>
+<li>欧几里得距离是闵可夫斯基距离在 r=2 时的特例。 (<strong>T</strong>)</li>
+<li>缺失值处理中，对于分类属性，通常用平均值填充。 (<strong>F</strong>，平均值用于数值属性，分类属性通常用众数)</li>
+<li>协方差大于 0 表示两个变量正相关。 (<strong>T</strong>)</li>
+<li>离散化是将连续属性转换为分类属性的过程。 (<strong>T</strong>)</li>
+<li>如果一个项集是频繁的，那么它的所有超集也一定是频繁的。 (<strong>F</strong>，超集不一定频繁，子集一定频繁)</li>
+<li>Apriori 算法利用先验原理来减少候选项集的数量。 (<strong>T</strong>)</li>
+<li>支持度（Support）具有反单调性。 (<strong>T</strong>)</li>
+<li>强关联规则必须同时满足最小支持度和最小置信度阈值。 (<strong>T</strong>)</li>
+<li>提升度（Lift）等于 1 表示前件和后件相互独立。 (<strong>T</strong>)</li>
+<li>关联规则 X -&gt; Y 和 Y -&gt; X 的置信度一定相同。 (<strong>F</strong>，支持度相同但置信度分母不同，通常不同)</li>
+<li>关联规则 X -&gt; Y 和 Y -&gt; X 的支持度一定相同。 (<strong>T</strong>)</li>
+<li>频繁项集的产生通常比规则生成的计算代价更高。 (<strong>T</strong>)</li>
+<li>置信度度量了包含 X 的事务中也包含 Y 的条件概率。 (<strong>T</strong>)</li>
+<li>Apriori 算法可以一次扫描数据库就找出所有频繁项集。 (<strong>F</strong>，每产生一级频繁项集都需要扫描一次数据库)</li>
+<li>分类是一种无监督学习方法。 (<strong>F</strong>，有监督)</li>
+<li>决策树算法中，信息增益越大，表示属性的纯度提升越小。 (<strong>F</strong>，信息增益越大，纯度提升越大)</li>
+<li>决策树可以处理非线性决策边界。 (<strong>T</strong>)</li>
+<li>后剪枝（Post-pruning）通常比预剪枝（Pre-pruning）更能生成精确的树，但计算代价更高。 (<strong>T</strong>)</li>
+<li>朴素贝叶斯分类器假设属性之间是相互依赖的。 (<strong>F</strong>，假设属性之间条件独立)</li>
+<li>朴素贝叶斯分类器可以处理多分类问题。 (<strong>T</strong>)</li>
+<li>拉普拉斯平滑用于解决朴素贝叶斯中的零概率问题。 (<strong>T</strong>)</li>
+<li>SVM 是基于结构风险最小化原理的。 (<strong>T</strong>)</li>
+<li>线性 SVM 通过最大化间隔（Margin）来寻找最优超平面。 (<strong>T</strong>)</li>
+<li>支持向量是距离分离超平面最远的那些点。 (<strong>F</strong>，是距离超平面最近的点)</li>
+<li>核函数可以将线性不可分数据映射到高维空间使其线性可分。 (<strong>T</strong>)</li>
+<li>K-近邻（KNN）算法是一种懒惰学习（Lazy Learning）方法。 (<strong>T</strong>)</li>
+<li>KNN 算法中的 K 值越小，模型越不容易过拟合。 (<strong>F</strong>，K 值越小，模型越复杂，越容易过拟合)</li>
+<li>准确率（Accuracy）在处理类别不平衡数据时是一个很好的评估指标。 (<strong>F</strong>，类别不平衡时准确率会误导，应使用 F1、Recall 等)</li>
+<li>召回率（Recall）度量了所有正例中有多少被正确预测出来。 (<strong>T</strong>)</li>
+<li>ROC 曲线下的面积（AUC）越大，分类器性能越好。 (<strong>T</strong>)</li>
+<li>Bagging 算法中，基分类器之间是相互独立的，可以并行训练。 (<strong>T</strong>)</li>
+<li>Boosting 算法中，基分类器是串行训练的，后续分类器关注前一轮分错的样本。 (<strong>T</strong>)</li>
+<li>随机森林中的“随机”仅指随机选择样本。 (<strong>F</strong>，还包括随机选择特征子集)</li>
+<li>在决策树中，基尼指数越小，纯度越高。 (<strong>T</strong>)</li>
+<li>聚类是一种有监督学习方法。 (<strong>F</strong>，无监督)</li>
+<li>K-Means 算法一定能收敛到全局最优解。 (<strong>F</strong>，容易陷入局部最优)</li>
+<li>K-Means 算法对初始质心的选择不敏感。 (<strong>F</strong>，非常敏感)</li>
+<li>K-Means 算法适合处理非球形簇或大小差异很大的簇。 (<strong>F</strong>，不容易处理这些情况，更适合球形且大小相近的簇)</li>
+<li>K-Means++ 算法优化了初始质心的选择，使质心尽可能分开。 (<strong>T</strong>)</li>
+<li>层次聚类不需要预先指定簇的数量。 (<strong>T</strong>)</li>
+<li>单链（MIN）层次聚类容易受到噪声和断链问题的影响。 (<strong>T</strong>)</li>
+<li>DBSCAN 算法可以发现任意形状的簇。 (<strong>T</strong>)</li>
+<li>DBSCAN 算法需要预先指定簇的个数。 (<strong>F</strong>，不需要，自动发现簇)</li>
+<li>轮廓系数可以用来评估聚类的质量，不需要外部标签。 (<strong>T</strong>)</li>
+<li>簇内距离越小，簇间距离越大，聚类效果越好。 (<strong>T</strong>)</li>
+<li>密度聚类对参数 Eps 和 MinPts 不敏感。 (<strong>F</strong>，非常敏感)</li>
+<li>二分 K-Means 算法通常比标准 K-Means 不容易陷入局部最优。 (<strong>T</strong>)</li>
+<li>线性回归假设自变量和因变量之间存在线性关系。 (<strong>T</strong>)</li>
+<li>最小二乘法通过最大化误差平方和来拟合直线。 (<strong>F</strong>，通过最小化误差平方和)</li>
+<li>决定系数 R^2 可以为负数。 (<strong>T</strong>，在模型拟合极差时，但在标准线性回归中通常在 0-1 之间)</li>
+<li>逻辑回归虽然名字叫回归，但实际上是一种分类算法。 (<strong>T</strong>)</li>
+<li>逻辑回归使用 Sigmoid 函数将输出限制在 (0, 1) 之间。 (<strong>T</strong>)</li>
+<li>多项式回归可以用来拟合非线性关系。 (<strong>T</strong>)</li>
+<li>回归分析只能用于预测连续值。 (<strong>F</strong>，逻辑回归虽然叫回归，但用于分类预测离散值)</li>
+<li>异常点就是错误数据，没有任何价值。 (<strong>F</strong>，异常点可能蕴含重要价值，如发现新型攻击或罕见获利机会)</li>
+<li>基于距离的异常检测方法认为异常点是那些距离大多数点较远的点。 (<strong>T</strong>)</li>
+<li>LOF（局部离群因子）是一种基于密度的异常检测方法。 (<strong>T</strong>)</li>
+<li>在高维空间中，基于距离的异常检测方法效果依然很好。 (<strong>F</strong>，由于维数灾难，高维空间中距离度量失效)</li>
+<li>监督式异常检测需要标记好的正常和异常样本。 (<strong>T</strong>)</li>
+<li>数据挖掘过程包括数据预处理、挖掘、后处理等步骤。 (<strong>T</strong>)</li>
+<li>训练集和测试集可以有重叠。 (<strong>F</strong>，必须严格分开以准确评估性能)</li>
+<li>交叉验证可以减少模型评估的方差。 (<strong>T</strong>)</li>
+<li>过拟合是指模型在训练集上表现很差，在测试集上表现很好。 (<strong>F</strong>，是在训练集表现太好，泛化能力差，在测试集表现差)</li>
+<li>特征选择可以减少过拟合的风险。 (<strong>T</strong>)</li>
+<li>混淆矩阵只能用于二分类问题。 (<strong>F</strong>，可以扩展到多分类问题)</li>
+<li>强相关关系一定意味着因果关系。 (<strong>F</strong>，相关不等于因果)</li>
+<li>数据可视化可以帮助我们在挖掘之前直观地理解数据。 (<strong>T</strong>)</li>
+<li>噪声和离群点是同一个概念。 (<strong>F</strong>，噪声是随机误差，离群点是与众不同的观测值，可能是正确录入的)</li>
+<li>只有大数据才需要数据挖掘，小数据不需要。 (<strong>F</strong>，只要有挖掘价值的数据，无论大小都可以进行挖掘)</li>
+</ol>
+<h2 id="第三部分判断题-补充题库-60-题">第三部分：判断题 (补充题库 60 题)</h2>
+<ol>
+<li>数据挖掘是数据库知识发现（KDD）的一个不可缺少的步骤。 (<strong>T</strong>)</li>
+<li>数据库的简单查询任务也被视为数据挖掘。 (<strong>F</strong>，简单查询只是检索，数据挖掘涉及发现隐含模式)</li>
+<li>预测和描述是数据挖掘的两大基本任务。 (<strong>T</strong>)</li>
+<li>标称属性的值可以进行大小排序。 (<strong>F</strong>，标称属性无序，序数属性才可排序)</li>
+<li>比率属性中，零点具有真实的含义（代表不存在）。 (<strong>T</strong>)</li>
+<li>离散属性总是分类属性。 (<strong>F</strong>，离散属性可以是数值型的，如计数)</li>
+<li>均值比中位数更容易受极端值的影响。 (<strong>T</strong>)</li>
+<li>四分位差可以用来测度顺序数据的离散程度。 (<strong>T</strong>)</li>
+<li>标准分数（Z-score）具有均值为 0，标准差为 1 的特性。 (<strong>T</strong>)</li>
+<li>离群点总是代表了错误的测量，应该被删除。 (<strong>F</strong>，离群点可能是发现新知识的关键，不一定全删)</li>
+<li>聚集操作会增加数据挖掘的时间开销。 (<strong>F</strong>，聚集通常是为了减少数据规模，从而减少开销)</li>
+<li>有放回抽样中，同一个对象可能被多次选中。 (<strong>T</strong>)</li>
+<li>维归约可以帮助减少计算复杂度和提高算法效果。 (<strong>T</strong>)</li>
+<li>PCA 找出的主成分是相互正交的。 (<strong>T</strong>)</li>
+<li>冗余特征包含的信息对于当前挖掘任务几乎完全没用。 (<strong>F</strong>，冗余特征包含已有的信息，虽然没“新”信息，但不是完全没用)</li>
+<li>决策树越复杂，其泛化能力一定越强。 (<strong>F</strong>，过复杂的决策树容易过拟合，泛化能力反而下降)</li>
+<li>决策树可以自然地处理标称属性。 (<strong>T</strong>)</li>
+<li>基尼指数越大，说明节点的纯度越高。 (<strong>F</strong>，基尼指数越小，纯度越高)</li>
+<li>信息增益倾向于选择取值较多的属性。 (<strong>T</strong>)</li>
+<li>KNN 算法在预测时才进行计算，因此是懒惰学习。 (<strong>T</strong>)</li>
+<li>KNN 中的 K 值越大，模型越不容易受噪声影响，但也可能导致欠拟合。 (<strong>T</strong>)</li>
+<li>朴素贝叶斯假设属性之间相互独立。 (<strong>T</strong>)</li>
+<li>拉普拉斯估计通过在计数中增加“1”来避免零概率。 (<strong>T</strong>)</li>
+<li>支持向量机寻找的是能够将两类样本分开且边缘最小的超平面。 (<strong>F</strong>，是边缘最大的超平面)</li>
+<li>在 SVM 中，非支持向量点对超平面的位置没有贡献。 (<strong>T</strong>)</li>
+<li>集成分类器的性能总是优于单个基分类器。 (<strong>F</strong>，如果基分类器效果极差或相似度太高，集成可能没提升)</li>
+<li>Bagging 中的基分类器应该是相互独立的。 (<strong>T</strong>)</li>
+<li>提升（Boosting）方法会给难以分类的样本更高的权重。 (<strong>T</strong>)</li>
+<li>随机森林采用投票法来确定最终分类结果。 (<strong>T</strong>)</li>
+<li>过拟合通常是因为模型过于复杂捕捉了噪声。 (<strong>T</strong>)</li>
+<li>训练错误率是评估模型泛化能力的可靠指标。 (<strong>F</strong>，训练错误率衡量拟合，测试错误率才衡量泛化能力)</li>
+<li>交叉验证可以多次利用数据来提高性能评估的准确性。 (<strong>T</strong>)</li>
+<li>留出法中，训练集和测试集可以有重叠。 (<strong>F</strong>，必须不相交)</li>
+<li>准确率（Accuracy）是评估类不平衡问题的最佳指标。 (<strong>F</strong>，不平衡问题应优先考虑 Recall、F1 等)</li>
+<li>欠采样会由于丢失部分有意义数据而导致模型性能变差。 (<strong>T</strong>)</li>
+<li>精度和召回率之间通常存在权衡关系（一个高另一个低）。 (<strong>T</strong>)</li>
+<li>F1 度量能综合反映精度和召回率的水平。 (<strong>T</strong>)</li>
+<li>支持度高的项集一定是有趣的。 (<strong>F</strong>，支持度高只代表频繁，有趣性还需结合提升度等衡量)</li>
+<li>强关联规则是指满足最小支持度和最小置信度阈值的规则。 (<strong>T</strong>)</li>
+<li>Apriori 算法通过逐层搜索的方法产生频繁项集。 (<strong>T</strong>)</li>
+<li>如果一个项集是非频繁的，它的所有超集也一定是非频繁的。 (<strong>T</strong>)</li>
+<li>聚类分析中，同一个簇的对象应该尽可能相似。 (<strong>T</strong>)</li>
+<li>K 均值算法需要预先指定簇的数量 K。 (<strong>T</strong>)</li>
+<li>K 均值算法容易受到初始质心选择的影响。 (<strong>T</strong>)</li>
+<li>二分 K 均值算法可以缓解初始质心选择问题。 (<strong>T</strong>)</li>
+<li>凝聚层次聚类是一种自底向上的策略。 (<strong>T</strong>)</li>
+<li>DBSCAN 可以发现任意形状的簇。 (<strong>T</strong>)</li>
+<li>DBSCAN 中的边界点是属于某个簇但不满足核心点定义的点。 (<strong>T</strong>)</li>
+<li>一元线性回归中，斜率代表自变量变化一个单位时因变量的平均变化量。 (<strong>T</strong>)</li>
+<li>多项式回归如果阶数过高，极易产生过拟合。 (<strong>T</strong>)</li>
+<li>逻辑回归的损失函数通常采用交叉熵。 (<strong>T</strong>)</li>
+<li>异常检测旨在寻找不符合正常行为的对象。 (<strong>T</strong>)</li>
+<li>标签云是文本数据可视化的一种形式。 (<strong>T</strong>)</li>
+<li>散点图矩阵可以可视化超过 4 维的数据集。 (<strong>T</strong>)</li>
+<li>离散系数消除了计量单位对衡量离散程度的影响。 (<strong>T</strong>)</li>
+<li>数据的分布特征可以从集中趋势、离散程度和分布形态来描述。 (<strong>T</strong>)</li>
+<li>简单匹配系数（SMC）适用于非对称二元属性。 (<strong>F</strong>，SMC 统计 0-0 和 1-1 匹配，适合对称属性；Jaccard 才适合非对称)</li>
+<li>Jaccard 系数通常用于处理文档相似性，因为它忽略 0-0 匹配。 (<strong>T</strong>)</li>
+<li>余弦相似度不考虑向量的绝对量值，只考虑方向。 (<strong>T</strong>)</li>
+<li>皮尔逊相关系数取值范围在[-1, 1]之间。 (<strong>T</strong>)</li>
+</ol>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>

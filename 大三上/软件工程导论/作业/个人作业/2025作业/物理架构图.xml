@@ -1,0 +1,237 @@
+<mxfile host="Electron" modified="2023-01-01T00:00:00.000Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/20.8.16 Chrome/106.0.5249.199 Electron/21.4.0 Safari/537.36" etag="optimize" version="20.8.16" type="device">
+  <diagram id="OOMALL_Architecture" name="Page-1">
+    <mxGraphModel dx="1422" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="2339" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <mxCell id="swarm_cluster" value="Docker Swarm 集群" style="swimlane;whiteSpace=wrap;html=1;startSize=30;rounded=1;arcSize=10;fillColor=#F5F5F5;strokeColor=#666666;fontStyle=1;fontSize=16;verticalAlign=top;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="240" width="1480" height="960" as="geometry" />
+        </mxCell>
+
+        <mxCell id="user_web" value="Web用户" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#E8F5E9;strokeColor=#82B366;" vertex="1" parent="1">
+          <mxGeometry x="640" y="40" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="user_mobile" value="移动端用户" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#E8F5E9;strokeColor=#82B366;" vertex="1" parent="1">
+          <mxGeometry x="780" y="40" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="system_third" value="第三方系统" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#E8F5E9;strokeColor=#82B366;" vertex="1" parent="1">
+          <mxGeometry x="920" y="40" width="30" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="node_apps" value="应用服务器节点群 (Node-App)&#xa;label: server=product/shop/..." style="swimlane;whiteSpace=wrap;html=1;rounded=1;arcSize=10;fillColor=#E0E0E0;strokeColor=#666666;startSize=40;fontStyle=1;" vertex="1" parent="swarm_cluster">
+          <mxGeometry x="40" y="50" width="1400" height="220" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="svc_gateway" value="Gateway 网关服务&#xa;Port: 8080" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#90CAF9;strokeColor=#1E88E5;fontStyle=1;" vertex="1" parent="node_apps">
+          <mxGeometry x="640" y="60" width="140" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="svc_shop" value="Shop 商铺服务" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="node_apps">
+          <mxGeometry x="40" y="150" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_product" value="Product 商品服务" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="node_apps">
+          <mxGeometry x="180" y="150" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_order" value="ProdOrder 订单服务" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="node_apps">
+          <mxGeometry x="320" y="150" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_region" value="Region 地区服务" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="node_apps">
+          <mxGeometry x="460" y="150" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_freight" value="Freight 物流服务" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="node_apps">
+          <mxGeometry x="840" y="150" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_es_app" value="ES 搜索服务" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="node_apps">
+          <mxGeometry x="600" y="150" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_service" value="Service 服务管理" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="node_apps">
+          <mxGeometry x="720" y="150" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_aftersale" value="Aftersale 售后服务" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="node_apps">
+          <mxGeometry x="850" y="150" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_sp" value="ServiceProvider 服务商" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="node_apps">
+          <mxGeometry x="980" y="150" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_serviceorder" value="ServiceOrder 服务单" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="node_apps">
+          <mxGeometry x="1130" y="150" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="vol_logs" value="Folder: /root/logs" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;fillColor=#F5F5F5;strokeColor=#666666;verticalAlign=middle;align=center;fontSize=11;" vertex="1" parent="node_apps">
+          <mxGeometry x="1270" y="150" width="110" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="overlay_net" value="Overlay Network (my-net / javaee-proxy)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#039BE5;fontStyle=1;fontSize=14;" vertex="1" parent="swarm_cluster">
+          <mxGeometry x="40" y="320" width="1400" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="node2" value="Node 2 (Governance)" style="swimlane;whiteSpace=wrap;html=1;rounded=1;fillColor=#BBDEFB;strokeColor=#6C8EBF;startSize=30;" vertex="1" parent="swarm_cluster">
+          <mxGeometry x="40" y="420" width="260" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="comp_nacos" value="Nacos Server&#xa;8848/9848" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#81D4FA;strokeColor=#00574B;" vertex="1" parent="node2">
+          <mxGeometry x="20" y="50" width="220" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="comp_namesrv" value="RocketMQ NameSrv&#xa;9876" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#81D4FA;strokeColor=#00574B;" vertex="1" parent="node2">
+          <mxGeometry x="20" y="100" width="220" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="comp_dashboard" value="RocketMQ Dashboard&#xa;8100" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#81D4FA;strokeColor=#00574B;" vertex="1" parent="node2">
+          <mxGeometry x="20" y="150" width="220" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="vol_node2" value="logs/" style="shape=folder;fontStyle=0;spacingTop=0;tabWidth=30;tabHeight=10;html=1;fillColor=#FFFFFF;fontSize=10;align=center;" vertex="1" parent="node2">
+          <mxGeometry x="190" y="200" width="50" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="node3" value="Node 3 (MQ Broker)" style="swimlane;whiteSpace=wrap;html=1;rounded=1;fillColor=#BBDEFB;strokeColor=#6C8EBF;startSize=30;" vertex="1" parent="swarm_cluster">
+          <mxGeometry x="320" y="420" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="comp_broker" value="RocketMQ Broker&#xa;10911" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CE93D8;strokeColor=#8E24AA;" vertex="1" parent="node3">
+          <mxGeometry x="20" y="50" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="vol_node3" value="broker.conf" style="shape=note;whiteSpace=wrap;html=1;size=10;verticalAlign=middle;align=center;fontSize=10;fillColor=#FFFFFF;" vertex="1" parent="node3">
+          <mxGeometry x="110" y="100" width="70" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="node6" value="Node 6 (MySQL)" style="swimlane;whiteSpace=wrap;html=1;rounded=1;fillColor=#FFCDD2;strokeColor=#E57373;startSize=30;" vertex="1" parent="swarm_cluster">
+          <mxGeometry x="540" y="420" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="comp_mysql" value="MySQL 9.1&#xa;3306" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#EF9A9A;strokeColor=#B71C1C;" vertex="1" parent="node6">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vol_node6" value="data/ logs/" style="shape=folder;fontStyle=0;spacingTop=0;tabWidth=30;tabHeight=10;html=1;fillColor=#FFFFFF;fontSize=10;align=center;" vertex="1" parent="node6">
+          <mxGeometry x="110" y="105" width="70" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="node5" value="Node 5 (Redis)" style="swimlane;whiteSpace=wrap;html=1;rounded=1;fillColor=#FFECB3;strokeColor=#FBC02D;startSize=30;" vertex="1" parent="swarm_cluster">
+          <mxGeometry x="760" y="420" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="comp_redis" value="Redis Stack&#xa;6379" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#FFE082;strokeColor=#F57F17;" vertex="1" parent="node5">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vol_node5" value="redis.conf" style="shape=note;whiteSpace=wrap;html=1;size=10;verticalAlign=middle;align=center;fontSize=10;fillColor=#FFFFFF;" vertex="1" parent="node5">
+          <mxGeometry x="110" y="105" width="70" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="node_minio" value="Node MinIO" style="swimlane;whiteSpace=wrap;html=1;rounded=1;fillColor=#B2DFDB;strokeColor=#009688;startSize=30;" vertex="1" parent="swarm_cluster">
+          <mxGeometry x="980" y="420" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="comp_minio" value="MinIO Server&#xa;9000/9001" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#80CBC4;strokeColor=#00695C;" vertex="1" parent="node_minio">
+          <mxGeometry x="20" y="50" width="160" height="40" as="geometry" />
+        </mxCell>
+         <mxCell id="vol_minio" value="data/" style="shape=folder;fontStyle=0;spacingTop=0;tabWidth=30;tabHeight=10;html=1;fillColor=#FFFFFF;fontSize=10;align=center;" vertex="1" parent="node_minio">
+          <mxGeometry x="110" y="100" width="70" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="node_es" value="Node Search (ES)" style="swimlane;whiteSpace=wrap;html=1;rounded=1;fillColor=#D1C4E9;strokeColor=#7E57C2;startSize=30;" vertex="1" parent="swarm_cluster">
+          <mxGeometry x="1200" y="420" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="comp_es" value="Elasticsearch&#xa;9200" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#B39DDB;strokeColor=#5E35B1;" vertex="1" parent="node_es">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+         <mxCell id="vol_es" value="data/ logs/" style="shape=folder;fontStyle=0;spacingTop=0;tabWidth=30;tabHeight=10;html=1;fillColor=#FFFFFF;fontSize=10;align=center;" vertex="1" parent="node_es">
+          <mxGeometry x="110" y="105" width="70" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="mongo_cluster_group" value="MongoDB 副本集 (rs0)" style="group" vertex="1" parent="swarm_cluster">
+          <mxGeometry x="320" y="680" width="660" height="160" as="geometry" />
+        </mxCell>
+
+        <mxCell id="node4" value="Node 4 (Mongo Pri)" style="swimlane;whiteSpace=wrap;html=1;rounded=1;fillColor=#C8E6C9;strokeColor=#43A047;startSize=30;" vertex="1" parent="mongo_cluster_group">
+          <mxGeometry x="0" y="0" width="200" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="comp_mongo1" value="Primary&#xa;27017" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#A5D6A7;strokeColor=#2E7D32;" vertex="1" parent="node4">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vol_node4" value="mongo-data" style="shape=folder;fontStyle=0;spacingTop=0;tabWidth=30;tabHeight=10;html=1;fillColor=#FFFFFF;fontSize=10;align=center;" vertex="1" parent="node4">
+          <mxGeometry x="110" y="110" width="70" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="node_m2" value="Node M2 (Mongo Sec)" style="swimlane;whiteSpace=wrap;html=1;rounded=1;fillColor=#C8E6C9;strokeColor=#43A047;startSize=30;" vertex="1" parent="mongo_cluster_group">
+          <mxGeometry x="220" y="0" width="200" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="comp_mongo2" value="Secondary&#xa;27018" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#A5D6A7;strokeColor=#2E7D32;" vertex="1" parent="node_m2">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="node_m3" value="Node M3 (Mongo Sec)" style="swimlane;whiteSpace=wrap;html=1;rounded=1;fillColor=#C8E6C9;strokeColor=#43A047;startSize=30;" vertex="1" parent="mongo_cluster_group">
+          <mxGeometry x="440" y="0" width="200" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="comp_mongo3" value="Secondary&#xa;27019" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#A5D6A7;strokeColor=#2E7D32;" vertex="1" parent="node_m3">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="link_web" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="user_web" target="svc_gateway">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="655" y="140" />
+              <mxPoint x="790" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link_mobile" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="user_mobile" target="svc_gateway">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="link_third" value="API" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="system_third" target="svc_gateway">
+           <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="935" y="140" />
+              <mxPoint x="790" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="link_gw_svcs" value="Route" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="node_apps" source="svc_gateway" target="svc_order">
+          <mxGeometry relative="1" as="geometry">
+             <Array as="points">
+                <mxPoint x="710" y="130" />
+                <mxPoint x="380" y="130" />
+             </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="link_app_net" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="swarm_cluster" source="node_apps" target="overlay_net">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="link_net_node2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.108;exitY=1.025;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="swarm_cluster" source="overlay_net" target="node2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="link_net_node3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.3;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="swarm_cluster" source="overlay_net" target="node3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="link_net_node6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.457;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="swarm_cluster" source="overlay_net" target="node6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="link_net_node5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.615;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="swarm_cluster" source="overlay_net" target="node5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="link_net_minio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.77;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="swarm_cluster" source="overlay_net" target="node_minio">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+         <mxCell id="link_net_es" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.928;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="swarm_cluster" source="overlay_net" target="node_es">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="link_mq_internal" value="Route" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;dashed=1;" edge="1" parent="swarm_cluster" source="comp_namesrv" target="comp_broker">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="link_mongo_overlay" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="swarm_cluster" source="overlay_net" target="node4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="390" y="660" />
+              <mxPoint x="420" y="660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="link_mongo_sync" value="Replica Sync" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;endArrow=classic;dashed=1;" edge="1" parent="mongo_cluster_group" source="comp_mongo1" target="comp_mongo2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="link_mongo_sync2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;endArrow=classic;dashed=1;" edge="1" parent="mongo_cluster_group" source="comp_mongo2" target="comp_mongo3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>oomall 商户后台原型</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
+
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal__content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <h3 id="modal-title" class="modal__title"></h3>
+      <div id="modal-body" class="modal__body"></div>
+      <div class="modal__actions">
+        <button id="modal-cancel" class="btn btn--ghost">取消</button>
+        <button id="modal-confirm" class="btn btn--primary">确认</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="主导航">
+      <div class="sidebar__brand">oomall Merchant</div>
+      <div class="sidebar__meta">
+        <span class="badge badge--success">正式环境</span>
+        <span class="sidebar__id">商户编号：M20251025001</span>
+      </div>
+      <nav class="sidebar__nav">
+        <button class="nav-item active" data-route="account">账号与员工</button>
+        <button class="nav-item" data-route="product">商品与销售</button>
+        <button class="nav-item" data-route="order">订单履约</button>
+        <button class="nav-item" data-route="aftersale">售后处理</button>
+        <button class="nav-item" data-route="finance">交易与对账</button>
+        <button class="nav-item" data-route="service">服务目录</button>
+        <button class="nav-item" data-route="partner">合作伙伴与合同</button>
+        <button class="nav-item" data-route="activity">活动中心</button>
+      </nav>
+      <div class="sidebar__footer">
+        <button class="btn btn--ghost" data-route="account-settings">账号设置</button>
+        <button class="btn btn--ghost" data-action="logout">安全退出</button>
+      </div>
+    </aside>
+
+    <div class="layout-main">
+      <header class="topbar">
+        <div class="topbar__left">
+          <div class="breadcrumb">
+            <span>商户中心</span>
+            <span id="breadcrumb-current" class="breadcrumb__current">账号与员工</span>
+          </div>
+          <div class="topbar__search">
+            <input id="global-search" type="search" placeholder="搜索商品、订单、员工或活动" aria-label="全局搜索" />
+          </div>
+        </div>
+        <div class="topbar__actions">
+          <div class="topbar__stats">
+            <span>今日订单</span>
+            <strong id="today-orders">128</strong>
+          </div>
+          <button class="btn btn--ghost" data-action="open-notification">🔔</button>
+          <div class="topbar__user" role="button" tabindex="0">
+            <img src="https://dummyimage.com/40x40/2f5bff/ffffff&text=M" alt="头像" />
+            <div>
+              <span class="user-name">星河旗舰店</span>
+              <span class="user-role">平台签约商户</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content" id="main-content">
+        <!-- 2.1 账号与员工中心 -->
+        <section class="section active" data-section="account">
+          <header class="section__header">
+            <div>
+              <h1 class="section__title">账号与员工中心</h1>
+              <p class="section__description">维护商户主体信息、额度配置及员工账号，所有危险操作将同步至操作日志。</p>
+            </div>
+            <div class="section__actions">
+              <button class="btn btn--ghost" data-action="account-open">开户申请</button>
+              <button class="btn btn--ghost" data-action="account-toggle-admin">切换管理员视角</button>
+              <button class="btn btn--secondary" data-action="view-audit">查看审批记录</button>
+              <button class="btn btn--primary" data-action="save-account">保存修改</button>
+            </div>
+          </header>
+
+          <div class="tab-group" data-tabs="account">
+            <button class="tab active" data-tab-target="account-profile">商户账号</button>
+            <button class="tab" data-tab-target="account-staff">员工账号</button>
+          </div>
+
+          <div class="tab-panels">
+            <div class="tab-panel active" data-tab-panel="account-profile">
+              <div class="card-grid card-grid--account">
+                <article class="card card--form card--account" aria-labelledby="account-basic-title">
+                  <div class="card__header">
+                    <h2 id="account-basic-title" class="card__title">主体信息</h2>
+                    <span class="badge badge--info">已认证</span>
+                  </div>
+                  <div class="form-grid">
+                    <label class="form-field">
+                      <span>商户名称 *</span>
+                      <input id="account-name" type="text" value="星河数码旗舰店" />
+                    </label>
+                    <label class="form-field">
+                      <span>经营类目 *</span>
+                      <select id="account-category">
+                        <option value="3C数码">3C数码</option>
+                        <option value="家电">家电</option>
+                        <option value="家居">家居</option>
+                      </select>
+                    </label>
+                    <label class="form-field">
+                      <span>联系人</span>
+                      <input id="account-contact" type="text" value="赵一宁" />
+                    </label>
+                    <label class="form-field">
+                      <span>联系电话</span>
+                      <input id="account-phone" type="tel" value="13612345678" />
+                    </label>
+                    <label class="form-field">
+                      <span>联系邮箱</span>
+                      <input id="account-email" type="email" value="merchant@oomall.com" />
+                    </label>
+                    <label class="form-field">
+                      <span>经营地址</span>
+                      <input id="account-address" type="text" value="上海市虹口区嘉兴路 88 号" />
+                    </label>
+                  </div>
+                  <div class="form-actions">
+                    <button class="btn btn--ghost" data-action="reset-account">恢复上次保存</button>
+                    <button class="btn btn--primary" data-action="submit-account">提交变更</button>
+                  </div>
+                  <div class="danger-zone">
+                    <div>
+                      <h3 class="danger-zone__title">危险操作</h3>
+                      <p class="danger-zone__hint">注销商户账号前，请确保所有订单分账已结清。</p>
+                    </div>
+                    <button class="btn btn--danger" data-action="account-cancel">申请销户</button>
+                  </div>
+                </article>
+
+                <div class="card-stack">
+                  <article class="card card--compact" aria-labelledby="account-quota-title">
+                    <div class="card__header">
+                      <h2 id="account-quota-title" class="card__title">额度与状态</h2>
+                      <span class="card__subtitle">实时限制与风控概况</span>
+                    </div>
+                    <div class="stat-grid stat-grid--compact">
+                      <div class="stat-card">
+                        <div class="stat-card__header">
+                          <span class="stat-card__label">可售商品数上限</span>
+                          <button class="btn btn--inline" data-action="edit-quota">调整额度</button>
+                        </div>
+                        <div class="stat-card__metric">
+                          <span class="stat-card__value" id="quota-product-limit">500</span>
+                          <span class="stat-card__hint" id="quota-product-usage">已上架 386 件</span>
+                        </div>
+                      </div>
+                      <div class="stat-card">
+                        <div class="stat-card__header">
+                          <span class="stat-card__label">员工账号上限</span>
+                          <span class="badge badge--info stat-card__pill" id="quota-staff-rate">使用率 64%</span>
+                        </div>
+                        <div class="stat-card__metric">
+                          <span class="stat-card__value" id="quota-staff-limit">200</span>
+                          <span class="stat-card__hint" id="quota-staff-usage">已启用 128 个账号</span>
+                        </div>
+                      </div>
+                      <div class="stat-card">
+                        <div class="stat-card__header">
+                          <span class="stat-card__label">免邮门槛</span>
+                        </div>
+                        <div class="stat-card__metric">
+                          <span class="stat-card__value" id="quota-free-shipping">¥ 99.00</span>
+                          <span class="stat-card__hint">对自营商品全量生效</span>
+                        </div>
+                      </div>
+                      <div class="stat-card stat-card--status">
+                        <div class="stat-card__header">
+                          <span class="stat-card__label">风控状态</span>
+                        </div>
+                        <div class="stat-card__metric">
+                          <span class="badge badge--success" id="quota-risk-status">正常</span>
+                          <span class="stat-card__hint" id="quota-risk-hint">最近 30 日无异常交易</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="quota-pending-notice" class="alert alert--warning hidden" role="status"></div>
+                  </article>
+
+                  <article class="card card--timeline card--history" aria-labelledby="account-log-title">
+                    <div class="card__header card__header--row">
+                      <div>
+                        <h2 id="account-log-title" class="card__title">操作日志</h2>
+                        <p class="card__description">记录账号与员工的关键操作</p>
+                      </div>
+                      <div class="card__meta">
+                        <span class="card__meta-count" id="account-log-count">4 条记录</span>
+                        <button class="btn btn--ghost" data-action="download-account-log">导出日志</button>
+                      </div>
+                    </div>
+                    <ul class="timeline" id="account-timeline"></ul>
+                  </article>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-panel" data-tab-panel="account-staff">
+              <div class="section__subheader">
+                <div class="section__subactions">
+                  <button class="btn btn--primary" data-action="staff-add">新增员工</button>
+                  <button class="btn btn--ghost" data-action="staff-import">导入 CSV</button>
+                </div>
+                <div class="filter-bar">
+                  <label class="form-field">
+                    <span>关键词</span>
+                    <input id="staff-search" type="text" placeholder="姓名 / 手机 / 角色" />
+                  </label>
+                  <label class="form-field">
+                    <span>状态</span>
+                    <select id="staff-status-filter">
+                      <option value="all">全部状态</option>
+                      <option value="active">正常</option>
+                      <option value="suspended">已暂停</option>
+                    </select>
+                  </label>
+                  <label class="form-field">
+                    <span>角色</span>
+                    <select id="staff-role-filter">
+                      <option value="all">全部角色</option>
+                      <option value="管理员">管理员</option>
+                      <option value="运营">运营</option>
+                      <option value="客服">客服</option>
+                    </select>
+                  </label>
+                  <button class="btn btn--secondary" data-action="staff-reset">重置</button>
+                </div>
+              </div>
+
+              <div class="table-wrapper">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>姓名</th>
+                      <th>手机号</th>
+                      <th>角色</th>
+                      <th>状态</th>
+                      <th>最近操作</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="staff-table"></tbody>
+                </table>
+                <div id="staff-empty" class="table__empty hidden">暂无符合条件的员工账号</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2.2 商品与销售管理 -->
+        <section class="section" data-section="product">
+          <header class="section__header">
+            <div>
+              <h1 class="section__title">商品与销售管理</h1>
+              <p class="section__description">管理商品上架、变更、销售计划与批量操作，支持草稿与审批流程。</p>
+            </div>
+            <div class="section__actions">
+              <button class="btn btn--secondary" data-action="product-import">导入商品</button>
+              <button class="btn btn--primary" data-action="product-create">创建新商品</button>
+            </div>
+          </header>
+
+          <div class="tab-group" data-tabs="product">
+            <button class="tab active" data-tab-target="product-items">商品</button>
+            <button class="tab" data-tab-target="product-sales">销售</button>
+          </div>
+
+          <div class="tab-panels">
+            <div class="tab-panel active" data-tab-panel="product-items">
+              <div class="filter-bar">
+                <label class="form-field">
+                  <span>商品名称</span>
+                  <input id="product-search" type="text" placeholder="输入商品名称或条码" />
+                </label>
+                <label class="form-field">
+                  <span>审核状态</span>
+                  <select id="product-status-filter">
+                    <option value="all">全部</option>
+                    <option value="approved">已核准</option>
+                    <option value="pending">审核中</option>
+                    <option value="rejected">未通过</option>
+                  </select>
+                </label>
+                <label class="form-field">
+                  <span>商品类型</span>
+                  <select id="product-type-filter">
+                    <option value="all">全部</option>
+                    <option value="standard">普通商品</option>
+                    <option value="bundle">捆绑商品</option>
+                  </select>
+                </label>
+                <button class="btn btn--secondary" data-action="product-reset">重置条件</button>
+              </div>
+
+              <div class="table-wrapper">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>商品名称</th>
+                      <th>分类</th>
+                      <th>原价</th>
+                      <th>分账比例</th>
+                      <th>状态</th>
+                      <th>更新时间</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="product-table"></tbody>
+                </table>
+                <div id="product-empty" class="table__empty hidden">暂无商品，请先创建</div>
+              </div>
+            </div>
+
+            <div class="tab-panel" data-tab-panel="product-sales">
+              <div class="pill-tabs" id="sales-type-tabs"></div>
+              <div class="table-actions">
+                <div class="filter-bar">
+                  <label class="form-field">
+                    <span>商品名称</span>
+                    <input type="text" id="sales-search" placeholder="输入关键字" />
+                  </label>
+                  <label class="form-field">
+                    <span>开始日期</span>
+                    <input type="date" id="sales-start" />
+                  </label>
+                  <label class="form-field">
+                    <span>结束日期</span>
+                    <input type="date" id="sales-end" />
+                  </label>
+                  <label class="form-field">
+                    <span>状态</span>
+                    <select id="sales-status">
+                      <option value="all">全部</option>
+                      <option value="scheduled">未开始</option>
+                      <option value="active">进行中</option>
+                      <option value="running">进行中(运行)</option>
+                      <option value="pending">待审核</option>
+                      <option value="offline">已下架</option>
+                    </select>
+                  </label>
+                  <div class="filter-actions">
+                    <button class="btn btn--ghost" data-action="sales-reset">重置</button>
+                  </div>
+                </div>
+
+                <div class="btn-group">
+                  <button class="btn btn--ghost" data-action="sales-bulk-up">批量上架</button>
+                  <button class="btn btn--ghost" data-action="sales-bulk-down">批量下架</button>
+                </div>
+                <div class="btn-group">
+                  <button class="btn btn--secondary" data-action="sales-export">导出报表</button>
+                  <button class="btn btn--primary" data-action="sales-create">创建销售计划</button>
+                </div>
+              </div>
+              <div class="table-wrapper">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>销售ID</th>
+                      <th>商品名称</th>
+                      <th>类型</th>
+                      <th>价格</th>
+                      <th>起止时间</th>
+                      <th>库存</th>
+                      <th>状态</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sales-table"></tbody>
+                </table>
+                <div id="sales-empty" class="table__empty hidden">暂无销售计划</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2.3 订单履约中心 -->
+        <section class="section" data-section="order">
+          <header class="section__header">
+            <div>
+              <h1 class="section__title">订单履约中心</h1>
+              <p class="section__description">受理、发货、取消与追踪订单，系统将同步物流节点并提醒 SLA。</p>
+            </div>
+            <div class="section__actions">
+              <button class="btn btn--secondary" data-action="order-download">导出揽收单</button>
+              <button class="btn btn--primary" data-action="order-dispatch">批量受理</button>
+            </div>
+          </header>
+
+          <div class="status-strip" id="order-status-strip"></div>
+
+          <div class="filter-bar">
+            <label class="form-field">
+              <span>订单号</span>
+              <input id="order-search" type="text" placeholder="输入订单号或顾客信息" />
+            </label>
+            <label class="form-field">
+              <span>订单状态</span>
+              <select id="order-status-filter">
+                <option value="all">全部状态</option>
+                <option value="unpaid">未支付</option>
+                <option value="awaiting_accept">待接受</option>
+                <option value="awaiting_ship">待发货</option>
+                <option value="shipped">已发货</option>
+                <option value="finished">已完成</option>
+                <option value="cancelled">已取消</option>
+              </select>
+            </label>
+            <label class="form-field">
+              <span>下单日期</span>
+              <input id="order-date" type="date" />
+            </label>
+            <label class="form-field">
+              <span>联系电话</span>
+              <input id="order-phone" type="tel" placeholder="如 138****6611" />
+            </label>
+            <label class="form-field">
+              <span>收货地区</span>
+              <input id="order-region" type="text" placeholder="如 上海市/杭州市" />
+            </label>
+            <button class="btn btn--secondary" data-action="order-reset">重置</button>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>订单号</th>
+                  <th>顾客</th>
+                  <th>支付金额</th>
+                  <th>地址</th>
+                  <th>配送方式</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="order-table"></tbody>
+            </table>
+            <div id="order-empty" class="table__empty hidden">当前筛选条件下暂无订单</div>
+          </div>
+        </section>
+
+        <!-- 2.4 售后处理中心 -->
+        <section class="section" data-section="aftersale">
+          <header class="section__header">
+            <div>
+              <h1 class="section__title">售后处理中心</h1>
+              <p class="section__description">审核售后申请、领退货、生成服务单，确保顾客需求及时响应。</p>
+            </div>
+            <div class="section__actions">
+              <button class="btn btn--ghost" data-action="aftersale-receive-waybill">按运单收货</button>
+              <button class="btn btn--secondary" data-action="aftersale-download">导出售后单</button>
+            </div>
+          </header>
+
+          <div class="pill-tabs" id="aftersale-status"></div>
+
+          <div class="filter-bar">
+            <label class="form-field">
+              <span>售后单号</span>
+              <input id="aftersale-search" type="text" placeholder="输入售后单号或订单号" />
+            </label>
+            <label class="form-field">
+              <span>售后类型</span>
+              <select id="aftersale-type">
+                <option value="all">全部类型</option>
+                <option value="0">退货（含退款）</option>
+                <option value="1">换货</option>
+                <option value="2">寄修</option>
+                <option value="3">上门维修</option>
+              </select>
+            </label>
+            <label class="form-field">
+              <span>顾客电话</span>
+              <input id="aftersale-phone" type="tel" placeholder="例如 138****5678" />
+            </label>
+            <label class="form-field">
+              <span>运单号</span>
+              <input id="aftersale-waybill" type="text" placeholder="如 SF123456" />
+            </label>
+
+            <button class="btn btn--secondary" data-action="aftersale-reset">重置</button>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>售后单号</th>
+                  <th>顾客</th>
+                  <th>申请时间</th>
+                  <th>售后类型</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="aftersale-table"></tbody>
+            </table>
+            <div id="aftersale-empty" class="table__empty hidden">暂无售后申请</div>
+          </div>
+        </section>
+
+        <!-- 2.5 交易与对账 -->
+        <section class="section" data-section="finance">
+          <header class="section__header">
+            <div>
+              <h1 class="section__title">交易与对账</h1>
+              <p class="section__description">查看支付与退款流水，支持筛选、导出及分账详情核对。</p>
+            </div>
+            <div class="section__actions">
+              <button class="btn btn--secondary" data-action="finance-export">导出对账单</button>
+            </div>
+          </header>
+
+          <div class="tab-group" data-tabs="finance">
+            <button class="tab active" data-tab-target="finance-payment">支付单</button>
+            <button class="tab" data-tab-target="finance-refund">退款单</button>
+          </div>
+
+          <div class="tab-panels">
+            <div class="tab-panel active" data-tab-panel="finance-payment">
+              <div class="filter-bar">
+                <label class="form-field">
+                  <span>时间范围</span>
+                  <input id="payment-date" type="date" />
+                </label>
+                <label class="form-field">
+                  <span>支付渠道</span>
+                  <select id="payment-channel">
+                    <option value="all">全部渠道</option>
+                    <option value="wechat">微信支付</option>
+                    <option value="alipay">支付宝</option>
+                    <option value="unionpay">银联</option>
+                  </select>
+                </label>
+                <label class="form-field">
+                  <span>支付金额区间</span>
+                  <input id="payment-amount" type="text" placeholder="例如 0-1000" />
+                </label>
+                <label class="form-field">
+                  <span>支付单号</span>
+                  <input id="payment-no" type="text" placeholder="输入支付单号" />
+                </label>
+                <button class="btn btn--secondary" data-action="payment-reset">重置</button>
+              </div>
+
+              <div class="table-wrapper">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>支付单号</th>
+                      <th>订单号</th>
+                      <th>支付时间</th>
+                      <th>金额</th>
+                      <th>渠道</th>
+                      <th>分账状态</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="payment-table"></tbody>
+                </table>
+                <div id="payment-empty" class="table__empty hidden">暂无支付记录</div>
+              </div>
+            </div>
+
+            <div class="tab-panel" data-tab-panel="finance-refund">
+              <div class="filter-bar">
+                <label class="form-field">
+                  <span>退款金额区间</span>
+                  <input id="refund-amount" type="text" placeholder="例如 0-100" />
+                </label>
+                <label class="form-field">
+                  <span>退款时间</span>
+                  <input id="refund-date" type="date" />
+                </label>
+                <label class="form-field">
+                  <span>退款单号</span>
+                  <input id="refund-no" type="text" placeholder="输入退款单号" />
+                </label>
+                <button class="btn btn--secondary" data-action="refund-reset">重置</button>
+              </div>
+
+              <div class="table-wrapper">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>退款单号</th>
+                      <th>关联支付单</th>
+                      <th>退款时间</th>
+                      <th>退款金额</th>
+                      <th>退分账状态</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="refund-table"></tbody>
+                </table>
+                <div id="refund-empty" class="table__empty hidden">暂无退款记录</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2.6 服务目录 -->
+        <section class="section" data-section="service">
+          <header class="section__header">
+            <div>
+              <h1 class="section__title">服务目录</h1>
+              <p class="section__description">维护到家安装、维修等服务信息，关联商品和服务商，支持上线/下线与版本管理。</p>
+            </div>
+            <div class="section__actions">
+              <button class="btn btn--secondary" data-action="service-import">导入模板</button>
+              <button class="btn btn--primary" data-action="service-create">新建服务</button>
+            </div>
+          </header>
+
+          <div class="filter-bar">
+            <label class="form-field">
+              <span>服务名称</span>
+              <input id="service-search" type="text" placeholder="输入名称/ID/类型" />
+            </label>
+            <label class="form-field">
+              <span>类型</span>
+              <input id="service-type" type="text" placeholder="安装/维修/上门安装" />
+            </label>
+            <label class="form-field">
+              <span>适用商品</span>
+              <input id="service-product" type="text" placeholder="输入商品名称" />
+            </label>
+            <label class="form-field">
+              <span>状态</span>
+              <select id="service-status">
+                <option value="all">全部</option>
+                <option value="active">生效中</option>
+                <option value="pending">待审核</option>
+              </select>
+            </label>
+            <label class="form-field">
+              <span>地区</span>
+              <input id="service-region" type="text" placeholder="输入地区关键词" />
+            </label>
+            <button class="btn btn--secondary" data-action="service-reset">重置</button>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>服务名称</th>
+                  <th>类型</th>
+                  <th>服务地区</th>
+                  <th>适用商品</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="service-table"></tbody>
+            </table>
+            <div id="service-empty" class="table__empty hidden">尚未配置服务目录</div>
+          </div>
+        </section>
+
+        <!-- 2.7 合作伙伴与合同 -->
+        <section class="section" data-section="partner">
+          <header class="section__header">
+            <div>
+              <h1 class="section__title">合作伙伴与合同</h1>
+              <p class="section__description">管理服务商资源与合同流程，支持创建、确认、暂停及恢复，保证服务能力充足。</p>
+            </div>
+            <div class="section__actions">
+              <button class="btn btn--secondary" data-action="provider-invite">邀请服务商</button>
+              <button class="btn btn--primary" data-action="contract-create">创建合同</button>
+            </div>
+          </header>
+
+          <div class="tab-group" data-tabs="partner">
+            <button class="tab active" data-tab-target="partner-providers">服务商</button>
+            <button class="tab" data-tab-target="partner-contracts">合同</button>
+          </div>
+
+          <div class="tab-panels">
+            <div class="tab-panel active" data-tab-panel="partner-providers">
+              <div class="filter-bar">
+                <label class="form-field">
+                  <span>服务商名称</span>
+                  <input id="provider-search" type="text" placeholder="输入服务商名称" />
+                </label>
+                <label class="form-field">
+                  <span>服务类型</span>
+                  <select id="provider-type">
+                    <option value="all">全部</option>
+                    <option value="安装">安装</option>
+                    <option value="维修">维修</option>
+                  </select>
+                </label>
+                <label class="form-field">
+                  <span>服务地区</span>
+                  <input id="provider-region" type="text" placeholder="例如 上海" />
+                </label>
+                <button class="btn btn--secondary" data-action="provider-reset">重置</button>
+              </div>
+
+              <div class="table-wrapper">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>服务商</th>
+                      <th>服务类型</th>
+                      <th>服务地区</th>
+                      <th>联系人</th>
+                      <th>状态</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="provider-table"></tbody>
+                </table>
+                <div id="provider-empty" class="table__empty hidden">暂无合作服务商</div>
+              </div>
+            </div>
+
+            <div class="tab-panel" data-tab-panel="partner-contracts">
+              <div class="table-actions">
+                <button class="btn btn--ghost" data-action="contract-export">导出合同</button>
+                <button class="btn btn--ghost" data-action="contract-template">下载模板</button>
+              </div>
+              <div class="table-wrapper">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>合同编号</th>
+                      <th>服务商</th>
+                      <th>服务名称</th>
+                      <th>服务地区</th>
+                      <th>生效时间</th>
+                      <th>状态</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="contract-table"></tbody>
+                </table>
+                <div id="contract-empty" class="table__empty hidden">暂无合同记录</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2.8 活动中心 -->
+        <section class="section" data-section="activity">
+          <header class="section__header">
+            <div>
+              <h1 class="section__title">活动中心</h1>
+              <p class="section__description">创建和管理促销、团购、指定参与活动，支持草稿、冲突校验与执行监控。</p>
+            </div>
+            <div class="section__actions">
+              <button class="btn btn--secondary" data-action="activity-template">下载活动模板</button>
+              <button class="btn btn--primary" data-action="activity-create">新建活动</button>
+            </div>
+          </header>
+
+          <div class="tab-group" data-tabs="activity">
+            <button class="tab active" data-tab-target="activity-promo">促销</button>
+            <button class="tab" data-tab-target="activity-group">团购</button>
+            <button class="tab" data-tab-target="activity-assign">指定参与</button>
+          </div>
+
+          <div class="tab-panels">
+            <div class="tab-panel active" data-tab-panel="activity-promo">
+              <div class="filter-bar">
+                <label class="form-field">
+                  <span>活动名称</span>
+                  <input id="promo-search" type="text" placeholder="输入活动名称或商品" />
+                </label>
+                <label class="form-field">
+                  <span>活动状态</span>
+                  <select id="promo-status">
+                    <option value="all">全部</option>
+                    <option value="draft">草稿</option>
+                    <option value="pending">待审核</option>
+                    <option value="running">进行中</option>
+                    <option value="finished">已结束</option>
+                  </select>
+                </label>
+                <label class="form-field">
+                  <span>开始日期</span>
+                  <input id="promo-start" type="date" />
+                </label>
+                <label class="form-field">
+                  <span>结束日期</span>
+                  <input id="promo-end" type="date" />
+                </label>
+                <label class="form-field">
+                  <span>商品筛选</span>
+                  <input id="promo-product" type="text" placeholder="输入 SKU 或商品名称" />
+                </label>
+                <button class="btn btn--secondary" data-action="promo-reset">重置</button>
+              </div>
+              <div class="table-wrapper">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>活动名称</th>
+                      <th>类型</th>
+                      <th>折扣规则</th>
+                      <th>起止时间</th>
+                      <th>状态</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="promo-table"></tbody>
+                </table>
+                <div id="promo-empty" class="table__empty hidden">暂无促销活动</div>
+              </div>
+            </div>
+
+            <div class="tab-panel" data-tab-panel="activity-group">
+              <div class="filter-bar">
+                <label class="form-field">
+                  <span>搜索</span>
+                  <input id="group-search" type="text" placeholder="输入团购名、人数、价格" />
+                </label>
+                <label class="form-field">
+                  <span>开始日期</span>
+                  <input id="group-start" type="date" />
+                </label>
+                <label class="form-field">
+                  <span>结束日期</span>
+                  <input id="group-end" type="date" />
+                </label>
+              </div>
+              <div class="table-actions">
+                <button class="btn btn--ghost" data-action="group-export">导出结果</button>
+              </div>
+              <div class="table-wrapper">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>团购名称</th>
+                      <th>拼团人数</th>
+                      <th>起止时间</th>
+                      <th>团购价</th>
+                      <th>状态</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="group-table"></tbody>
+                </table>
+                <div id="group-empty" class="table__empty hidden">暂无团购活动</div>
+              </div>
+            </div>
+
+            <div class="tab-panel" data-tab-panel="activity-assign">
+              <div class="split-layout">
+                <div class="split-layout__main">
+                  <h2 class="section__subtitle">待选择活动</h2>
+                  <ul class="list" id="assign-activity-list"></ul>
+                </div>
+                <aside class="split-layout__aside" aria-label="已选择商品">
+                  <h2 class="section__subtitle">已指定商品</h2>
+                  <ul class="list" id="assign-product-list"></ul>
+                  <div class="form-actions">
+                    <button class="btn btn--ghost" data-action="assign-reset">清除</button>
+                    <button class="btn btn--primary" data-action="assign-submit">提交指定</button>
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+[cols="1a"]
+|===
+
+|
+[frame="none"]
+[cols="1,1"]
+!===
+! 用例编号：MALL-SERVICE-034
+! 用例名称：完成服务单 (Complete Service Order)
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 级别: 用户目标 (User Goal)
+!===
+
+|
+[frame="none"]
+[cols="2"]
+!===
+! 包： 服务商-管理服务单 (Service Provider - Manage Service Order)
+! 参与者：维修师傅 (Maintenance Personnel)
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 描述： 维修师傅标记服务单为已完成状态 (Maintenance Personnel marks service order as completed)
+! 触发事件: 维修师傅完成维修 (Maintenance Personnel has completed the repair)
+!===
+
+|
+[frame="none"]
+[cols="1,4,2", options="header"]
+!===
+! 步骤 ! 描述 ! 信息
+
+! 1
+! 系统按预约时间顺序显示派给该维修师傅的服务单列表
+! 服务单号、服务名称、商品名称、顾客姓名、顾客地址、预约时间
+
+! 2
+! 维修师傅选择要标记为完成的服务单
+!
+
+! 3
+! 系统显示服务单详情
+! 服务单号、商品名称、服务描述、顾客姓名、顾客地址、预约时间
+
+! 4
+! 维修师傅上传维修完成的照片，标记服务单为"已完成"
+! 相关照片
+
+! 5
+! 系统更新服务单状态为"已完成"，通知顾客
+!
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 扩展场景
+!===
+
+|
+[frame="none"]
+[cols="1,4,2", options="header"]
+!===
+! 步骤 ! 描述 ! 信息
+
+! 4b
+! 该维修师傅无法处理该服务单，拒绝服务单
+!
+
+! 4b.1
+! 系统通知服务商重新派工
+!
+
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 其他:
+
+!===
+|===

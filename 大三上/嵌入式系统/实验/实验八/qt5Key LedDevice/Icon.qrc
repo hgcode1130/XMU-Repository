@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>Key_off.png</file>
+        <file>Key_on.png</file>
+        <file>exit.png</file>
+    </qresource>
+</RCC>

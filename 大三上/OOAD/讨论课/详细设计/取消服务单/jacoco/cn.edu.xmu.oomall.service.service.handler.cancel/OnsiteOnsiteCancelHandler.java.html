@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OnsiteOnsiteCancelHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">service</a> &gt; <a href="index.source.html" class="el_package">cn.edu.xmu.oomall.service.service.handler.cancel</a> &gt; <span class="el_source">OnsiteOnsiteCancelHandler.java</span></div><h1>OnsiteOnsiteCancelHandler.java</h1><pre class="source lang-java linenums">package cn.edu.xmu.oomall.service.service.handler.cancel;
+
+import cn.edu.xmu.oomall.service.dao.bo.ServiceOrder;
+import cn.edu.xmu.oomall.service.service.handler.CancelHandler;
+import cn.edu.xmu.oomall.service.service.result.CancelResult;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+/**
+ * 上门服务-已上门状态取消处理器
+ * 场景：上门服务单已上门，需要释放维修人员并记录现场情况
+ */
+@Component
+<span class="fc" id="L14">@Slf4j</span>
+<span class="fc" id="L15">public class OnsiteOnsiteCancelHandler implements CancelHandler {</span>
+    
+    @Override
+    public boolean supports(Integer serviceType, Integer progress) {
+<span class="fc bfc" id="L19" title="All 4 branches covered.">        return ServiceOrder.TYPE_ONSITE == serviceType &amp;&amp; ServiceOrder.PROGRESS_ONSITE == progress;</span>
+    }
+    
+    @Override
+    public CancelResult cancel(ServiceOrder serviceOrder, String cancelReason) {
+<span class="fc" id="L24">        log.info(&quot;开始处理上门服务-已上门状态取消 | orderId={} technicianId={}&quot;, </span>
+<span class="fc" id="L25">                serviceOrder.getId(), serviceOrder.getTechnicianId());</span>
+        
+        try {
+            // 释放维修人员
+<span class="fc bfc" id="L29" title="All 2 branches covered.">            if (serviceOrder.getTechnicianId() != null) {</span>
+                // TODO: 调用维修人员服务释放资源
+<span class="fc" id="L31">                log.info(&quot;释放维修人员 | technicianId={}&quot;, serviceOrder.getTechnicianId());</span>
+            }
+            
+            // 记录现场情况
+<span class="fc" id="L35">            String evidence = String.format(&quot;服务单取消 - 原因: %s, 取消时间: %s&quot;, </span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">                    cancelReason != null ? cancelReason : &quot;未提供&quot;, </span>
+<span class="fc" id="L37">                    java.time.LocalDateTime.now());</span>
+<span class="fc" id="L38">            serviceOrder.setEvidence(evidence);</span>
+            
+            // 更新服务单状态
+<span class="fc" id="L41">            serviceOrder.setProgress(ServiceOrder.PROGRESS_CANCELED);</span>
+            
+<span class="fc" id="L43">            return CancelResult.success(&quot;取消成功，已释放维修人员并记录现场&quot;);</span>
+            
+<span class="nc" id="L45">        } catch (Exception e) {</span>
+<span class="nc" id="L46">            log.warn(&quot;处理过程中发生异常，但继续取消服务单 | error={}&quot;, e.getMessage());</span>
+<span class="nc" id="L47">            serviceOrder.setProgress(ServiceOrder.PROGRESS_CANCELED);</span>
+<span class="nc" id="L48">            return CancelResult.success(&quot;取消成功（部分处理失败，请人工核实）&quot;);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

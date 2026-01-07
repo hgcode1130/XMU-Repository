@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1149</width>
+    <height>703</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QLabel" name="label_num">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;楷体&quot;;
+color:rgb(170, 0, 127)</string>
+             </property>
+             <property name="text">
+              <string>学号</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="spinBox_id">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;楷体&quot;;
+color:rgb(170, 0, 127)</string>
+             </property>
+             <property name="maximum">
+              <number>10000000</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QLabel" name="label_name">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;楷体&quot;;
+color:rgb(170, 0, 127)</string>
+             </property>
+             <property name="text">
+              <string>姓名</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_name">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;楷体&quot;;
+color:rgb(170, 0, 127)</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QLabel" name="label_age">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;楷体&quot;;
+color:rgb(170, 0, 127)</string>
+             </property>
+             <property name="text">
+              <string>年龄</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="spinBox_age">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;楷体&quot;;
+color:rgb(170, 0, 127)</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTableWidget" name="tableWidget">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;楷体&quot;;
+color:rgb(170, 0, 127)</string>
+         </property>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>170</number>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>学号</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>姓名</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>年龄</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="pushButton_insert">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;楷体&quot;;
+color:rgb(170, 0, 127)</string>
+         </property>
+         <property name="text">
+          <string>插入数据</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_delete">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;楷体&quot;;
+color:rgb(170, 0, 127)</string>
+         </property>
+         <property name="text">
+          <string>删除数据</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_update">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;楷体&quot;;
+color:rgb(170, 0, 127)</string>
+         </property>
+         <property name="text">
+          <string>修改数据</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_select">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;楷体&quot;;
+color:rgb(170, 0, 127)</string>
+         </property>
+         <property name="text">
+          <string>查询数据</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

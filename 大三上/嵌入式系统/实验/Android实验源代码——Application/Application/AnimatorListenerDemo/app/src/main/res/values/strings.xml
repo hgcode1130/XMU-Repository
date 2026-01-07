@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AnimatorListenerDemo</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="cancel">Cancel</string>
+    <string name="hqyj">华清远见</string>
+</resources>

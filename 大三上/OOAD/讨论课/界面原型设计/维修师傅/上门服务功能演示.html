@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>上门服务功能演示</title>
+    <style>
+        /* --- 全局样式 --- */
+        :root {
+            --primary-color: #4a90e2; --success-color: #28a745; --danger-color: #dc3545;
+            --warning-color: #ffc107; --info-color: #17a2b8; --light-gray-color: #f8f9fa;
+            --gray-color: #6c757d; --dark-gray-color: #343a40; --border-color: #dee2e6;
+            --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); --button-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0; background-color: var(--light-gray-color); color: var(--dark-gray-color);
+            line-height: 1.6;
+        }
+        .header {
+            background-color: white; padding: 15px 20px; box-shadow: var(--card-shadow);
+            display: flex; align-items: center; justify-content: center; position: sticky; top: 0; z-index: 100;
+        }
+        .header-title { font-size: 1.2rem; font-weight: 600; color: var(--dark-gray-color); }
+        .container { padding: 20px; }
+        .btn {
+            display: block; width: 100%; padding: 12px 20px; border-radius: 8px;
+            border: 1px solid transparent; font-size: 1rem; font-weight: 600;
+            cursor: pointer; text-align: center; transition: all 0.2s ease; box-shadow: var(--button-shadow);
+        }
+        .btn:disabled { background-color: #ccc; cursor: not-allowed; box-shadow: none; color: #777; border-color: #ccc;}
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-success { background-color: var(--success-color); color: white; }
+        .btn-outline { background-color: white; color: var(--primary-color); border: 1px solid var(--primary-color); }
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-group .btn { flex: 1; }
+        .card {
+            background-color: white; border-radius: 12px; box-shadow: var(--card-shadow);
+            margin-bottom: 20px; overflow: hidden;
+        }
+        .card-header { padding: 15px 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .card-header h3 { margin: 0; font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .service-type-tag { font-size: 0.8rem; font-weight: 700; color: var(--info-color); border: 1px solid var(--info-color); padding: 2px 6px; border-radius: 4px; }
+        .card-status { font-size: 0.9rem; font-weight: 600; padding: 4px 8px; border-radius: 6px; color: var(--info-color); background-color: #e0f7fa; }
+        .card-body { padding: 20px; }
+        .item { display: flex; margin-bottom: 12px; font-size: 0.95rem; }
+        .item-label { width: 80px; color: var(--gray-color); flex-shrink: 0; }
+        .item-value { color: var(--dark-gray-color); font-weight: 500; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; }
+        .form-group textarea {
+            width: 100%; padding: 12px; border: 1px solid var(--border-color);
+            border-radius: 8px; font-size: 1rem; box-sizing: border-box; resize: vertical; min-height: 120px;
+        }
+        .upload-area { border: 2px dashed var(--border-color); border-radius: 8px; padding: 30px; text-align: center; cursor: pointer; background-color: #fafafa; }
+        .upload-icon { font-size: 2.5rem; color: var(--gray-color); }
+        .upload-text { margin-top: 10px; color: var(--gray-color); }
+        .section-title { font-size: 1.1rem; font-weight: 600; margin-top: 30px; margin-bottom: 15px; padding-bottom: 5px; border-bottom: 1px solid var(--border-color); }
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); display: none; align-items: center;
+            justify-content: center; z-index: 1000; padding: 20px; box-sizing: border-box;
+        }
+        .modal.active { display: flex; }
+        .modal-content { background: white; padding: 25px; border-radius: 16px; width: 100%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .modal-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 15px; text-align: center; }
+        .modal-body { margin-bottom: 25px; font-size: 0.95rem; color: var(--gray-color); line-height: 1.5; text-align: center; }
+        .modal-footer { display: flex; gap: 10px; }
+        .modal-footer .btn { flex: 1; }
+        #signature-pad-canvas { border: 1px solid var(--border-color); border-radius: 8px; cursor: crosshair; }
+        .signature-preview { margin-top: 15px; text-align: center; }
+        .signature-preview img { max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; }
+        .star-rating { display: flex; justify-content: center; font-size: 2.5rem; color: #ddd; cursor: pointer; }
+        .star-rating .star { transition: color 0.2s; }
+        .star-rating .star:hover, .star-rating .star.selected { color: var(--warning-color); }
+        .toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8); color: white; padding: 12px 25px;
+            border-radius: 25px; z-index: 2000; opacity: 0; transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; bottom: 50px; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1 class="header-title">上门服务详情</h1>
+    </header>
+
+    <div class="container" id="detail-content">
+        <!-- 内容由JS动态生成 -->
+    </div>
+    
+    <!-- 通用确认模态框 -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="confirm-modal-title" class="modal-title">操作确认</h3>
+            <div id="confirm-modal-body" class="modal-body"></div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('confirm-modal')">取消</button>
+                <button id="confirm-modal-action-btn" class="btn btn-primary">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 客户签名模态框 -->
+    <div id="signature-modal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">请客户签名确认</h3>
+            <div class="modal-body" style="padding:0; margin-bottom: 15px;">
+                <canvas id="signature-pad-canvas" width="350" height="200"></canvas>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="clearSignature()">重签</button>
+                <button class="btn btn-success" onclick="saveSignature()">确认签名</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const detailContent = document.getElementById('detail-content');
+            detailContent.innerHTML = generateOnSiteDetailHTML();
+            // 初始化页面状态
+            document.getElementById('start-service-btn').disabled = true;
+            document.getElementById('service-completion-section').style.display = 'none';
+        });
+
+        function generateOnSiteDetailHTML() {
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <h3><span class="service-type-tag">[上门]</span>服务单号: MALL-SERVICE-038</h3>
+                        <span class="card-status">待服务</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="item"><span class="item-label">服务类型:</span><span class="item-value">上门安装</span></div>
+                        <div class="item"><span class="item-label">预约时间:</span><span class="item-value">今天 14:00</span></div>
+                        <div class="item"><span class="item-label">客户姓名:</span><span class="item-value">赵先生</span></div>
+                        <div class="item"><span class="item-label">服务地址:</span><span class="item-value">深圳市南山区科技园XX大厦A座101</span></div>
+                    </div>
+                </div>
+                <h2 class="section-title">第一步：出发与抵达</h2>
+                <div class="btn-group">
+                    <button class="btn btn-outline" onclick="confirmDeparture()">导航前往</button>
+                    <button id="start-service-btn" class="btn btn-primary" onclick="startService()">我已抵达，开始服务</button>
+                </div>
+                
+                <div id="service-completion-section" style="display:none; margin-top: 20px;">
+                    <h2 class="section-title">第二步：完成服务与记录</h2>
+                    <div class="form-group">
+                        <label for="service-details">服务完成记录</label>
+                        <textarea id="service-details" placeholder="请填写服务详情，如安装过程、遇到的问题、客户反馈等。"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>上传服务凭证 (现场照片)</label>
+                        <div class="upload-area" onclick="alert('模拟上传照片功能')">
+                            <div class="upload-icon">📷</div>
+                            <div class="upload-text">点击上传现场照片</div>
+                        </div>
+                    </div>
+                    
+                    <h2 class="section-title">第三步：客户确认</h2>
+                    <div class="form-group">
+                        <label>客户签名</label>
+                        <div id="signature-preview-container" class="signature-preview" style="display:none;">
+                            <img id="signature-image" src="" alt="客户签名">
+                            <button class="btn btn-outline" style="width:auto; padding: 5px 10px; font-size: 0.8rem; margin-top:10px;" onclick="openSignatureModal()">重新签名</button>
+                        </div>
+                        <button id="signature-btn" class="btn btn-outline" onclick="openSignatureModal()">请求客户签名</button>
+                    </div>
+                    <div class="form-group" id="rating-section" style="display:none;">
+                        <label>客户满意度</label>
+                        <div class="star-rating" id="star-rating-container">
+                            <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+                    <button id="complete-btn" class="btn btn-success" onclick="completeOnsiteService()" disabled>完成服务</button>
+                </div>
+            `;
+        }
+        
+        // --- 模态框 & 提示 ---
+        function openModal(modalId) { document.getElementById(modalId).classList.add('active'); }
+        function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); }
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 2000);
+        }
+
+        // --- 上门服务流程 ---
+        function confirmDeparture() {
+            const modal = document.getElementById('confirm-modal');
+            document.getElementById('confirm-modal-title').textContent = '确认出发';
+            document.getElementById('confirm-modal-body').innerHTML = '即将开始导航至客户地址。<br>系统将记录您的出发时间。';
+            const actionBtn = document.getElementById('confirm-modal-action-btn');
+            actionBtn.className = 'btn btn-primary';
+            actionBtn.textContent = '确认出发';
+            actionBtn.onclick = () => {
+                closeModal('confirm-modal');
+                showToast('已记录出发时间，正在打开地图...');
+                alert('模拟：正在打开地图导航...');
+                document.getElementById('start-service-btn').disabled = false;
+            };
+            openModal('confirm-modal');
+        }
+
+        function startService() {
+            const modal = document.getElementById('confirm-modal');
+            document.getElementById('confirm-modal-title').textContent = '开始服务';
+            document.getElementById('confirm-modal-body').textContent = '请在开始服务前，确认您已抵达客户指定地点。';
+            const actionBtn = document.getElementById('confirm-modal-action-btn');
+            actionBtn.className = 'btn btn-success';
+            actionBtn.textContent = '我已抵达，开始服务';
+            actionBtn.onclick = () => {
+                closeModal('confirm-modal');
+                showToast('服务已开始！请开始记录服务内容。');
+                document.getElementById('service-completion-section').style.display = 'block';
+                document.querySelector('.btn-group').style.display = 'none';
+            };
+            openModal('confirm-modal');
+        }
+
+        function openSignatureModal() {
+            openModal('signature-modal');
+            const canvas = document.getElementById('signature-pad-canvas');
+            setTimeout(() => {
+                const ctx = canvas.getContext('2d');
+                let drawing = false;
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                const rect = canvas.getBoundingClientRect();
+
+                const getPos = (evt) => ({ x: evt.clientX - rect.left, y: evt.clientY - rect.top });
+                
+                canvas.onmousedown = (e) => { drawing = true; ctx.moveTo(getPos(e).x, getPos(e).y); };
+                canvas.onmouseup = () => { drawing = false; ctx.beginPath(); };
+                canvas.onmousemove = (e) => {
+                    if (drawing) {
+                        ctx.lineTo(getPos(e).x, getPos(e).y);
+                        ctx.stroke();
+                    }
+                };
+            }, 100);
+        }
+
+        function clearSignature() {
+            const canvas = document.getElementById('signature-pad-canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function saveSignature() {
+            const canvas = document.getElementById('signature-pad-canvas');
+            const dataUrl = canvas.toDataURL();
+            document.getElementById('signature-image').src = dataUrl;
+            document.getElementById('signature-preview-container').style.display = 'block';
+            document.getElementById('signature-btn').style.display = 'none';
+            document.getElementById('rating-section').style.display = 'block';
+            document.getElementById('complete-btn').disabled = false;
+            closeModal('signature-modal');
+            showToast('客户签名已保存！');
+        }
+
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('star')) {
+                const container = e.target.parentElement;
+                const value = e.target.dataset.value;
+                container.querySelectorAll('.star').forEach(star => {
+                    star.classList.toggle('selected', star.dataset.value <= value);
+                });
+            }
+        });
+        
+        function completeOnsiteService() {
+            if (!document.getElementById('service-details').value.trim()) {
+                alert('请填写服务完成记录！'); return;
+            }
+            showToast('上门服务已圆满完成！');
+            setTimeout(() => {
+                document.getElementById('detail-content').innerHTML = `
+                    <div style="text-align:center; padding: 50px 20px;">
+                        <h2 style="color: var(--success-color);">✅ 服务单已完成</h2>
+                        <p style="color: var(--gray-color);">此服务单已处理完毕。</p>
+                    </div>`;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

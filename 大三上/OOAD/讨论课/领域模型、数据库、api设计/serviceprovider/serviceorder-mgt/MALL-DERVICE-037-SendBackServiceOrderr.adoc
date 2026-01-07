@@ -1,0 +1,91 @@
+
+[cols="1a"]
+|===
+
+|
+[frame="none"]
+[cols="1,1"]
+!===
+! 用例编号：MALL-SERVICE-037
+! 用例名称：退回服务单 (Send Back Service Order)
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 级别: 用户目标 (User Goal)
+!===
+
+|
+[frame="none"]
+[cols="2"]
+!===
+! 包： 服务商-管理服务单
+! 参与者：维修师傅
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 描述： 维修师傅退回服务单 (Maintenance Worker Sends Back Service Order)
+! 触发事件: 维修师傅退回服务单 (Maintenance Worker Sends Back Service Order)
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 主成功场景
+!===
+
+|
+[frame="none"]
+[cols="1,4,2", options="header"]
+!===
+! 步骤 ! 描述 ! 信息
+
+! 1
+! 系统根据派工时间顺序显示该维修师傅的服务单列表
+! 服务单号、服务名称、产品、商户、服务地区、服务单状态、顾客姓名、联系电话
+
+! 2
+! 维修师傅选择服务单
+!
+
+! 3
+! 系统显示该服务单的详细信息
+! 服务单号、服务名称、产品、商户、服务地区、服务单状态、服务内容、顾客姓名、联系电话、顾客地址、、快递单号
+
+! 4
+! 维修师傅确认退回该服务单
+! 退回原因
+
+! 5
+! 系统更新服务单状态为"已退回"，通知服务商
+!
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 扩展场景
+!===
+
+|
+[frame="none"]
+[cols="1,4,2", options="header"]
+
+!===
+! 步骤 ! 描述 ! 信息
+
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 其他:
+!===
+|===

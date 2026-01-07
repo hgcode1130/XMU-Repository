@@ -1,84 +1,75 @@
 # 厦门大学学习资料仓库 📚
 
-[![GitHub stars](https://img.shields.io/github/stars/hgcode1130/XMU_C_language_PeerTeacher?style=social)](https://github.com/hgcode1130/XMU_C_language_PeerTeacher)
-[![GitHub forks](https://img.shields.io/github/forks/hgcode1130/XMU_C_language_PeerTeacher?style=social)](https://github.com/hgcode1130/XMU_C_language_PeerTeacher)
+[![Institution](https://img.shields.io/badge/School-XMU-blue?style=flat-square)](https://www.xmu.edu.cn/)
+[![Major](https://img.shields.io/badge/Major-Software%20Engineering-orange?style=flat-square)](https://software.xmu.edu.cn/)
+[![Status](https://img.shields.io/badge/Status-Junior-green?style=flat-square)](#)
 
-> 🎓 这是一个记录我在厦门大学学习过程的资料仓库，包含大一到大二的课程资料、实验代码、复习资料等。
+
+> [!TIP] > **网盘快速访问**
 >
-> ⭐ **如果这个仓库对你有帮助，请给个 Star 支持！**
+> - [百度网盘](https://pan.baidu.com/s/1rB0Qqzux5xnAi826QsSs3w?pwd=8pax) (提取码: 8pax)
+> - [夸克网盘](https://pan.quark.cn/s/0562fc62f553)
+
+---
 
 ## 📖 仓库简介
 
-本仓库收集整理了厦门大学计算机相关专业的学习资料，旨在为学弟学妹们提供学习参考。所有资料均来源于个人学习过程中的积累和整理。
+欢迎来到厦门大学软件学院/计算机专业学习资料仓库！本仓库系统性地整理了从大一到大三各个阶段的核心课程资料，包括课件、实验报告、历年真题及个人项目代码。
 
-## 🎯 个人状况
+旨在帮助学弟学妹们快速定位学习重点，少走弯路。
 
-- 🏫 **学校**：厦门大学
-- 📚 **专业**：软件工程
-- 📅 **当前状态**：大三上学期
+---
 
-## 📁 仓库结构
+## 📁 课程导航
 
-### 📂 [大一](./大一)
+### 🏁 [大一](./大一)
 
-- **C 语言** - 期中试题及答案
-- **C++** - 面向对象程序设计资料
-- **数学课程** - 概统、线代复习资料
-- **物理课程** - 大物 B 上作业答案
-- **电路原理** - 课件及复习资料
-- **近代史纲要** - 历年试卷及复习提纲
-- **各期试卷** - 各科目历年考试资料
+- 💻 **C/C++** - 包含 2019-2024 年期中/期末试题，重点培养面向对象思维。
+- 📐 **数学基础** - **概统** (2017-2024) 与 **线代** (2018-2024) 的海量真题。
+- ⚡ **专业基础** - 电路原理课件、近代史复习提纲及各期综合试卷。
 
-### 📂 [大二上](./大二上)
+### 🏗️ [大二上：](./大二上)
 
-- **数据结构** - 实验代码、作业及期末复习
-- **数字逻辑** - 实验报告、课件及开发板资料
-- **汇编语言** - 实验代码、期末复习及软件工具
-- **离散数学** - 历年试卷、作业答案及课件
-- **毛概** - 思考题汇总及复习资料
-- **国际海洋执法** - 课程资料
+- 🌳 **数据结构** - 重点在于实验代码实现与算法逻辑分析。
+- 🧩 **数字逻辑** - FPGA 实验报告、开发板资料及课件。
+- ⌨️ **汇编语言** - 包含仿真工具、复习资料及核心实验代码。
+- 📑 **离散数学** - 逻辑推理能力锻炼，包含作业答案与历年试卷。
 
-### 📂 [大二下](./大二下)
+### � [大二下：](./大二下)
 
-- **Java** - 实验代码、期末复习及课件
-- **算法设计与分析** - 作业、真题及复习资料
-- **数据库系统** - 实验、作业及期末复习
-- **计算机网络(CNI)** - 实验报告、作业及复习资料
-- **计算机组成原理** - 实验、笔记及复习资料
-- **多媒体技术** - 实验报告及复习资料
-- **游戏基础** - 项目代码及实验报告
-- **思政课程** - 习概、军理、四史等
 
-### 📂 其他资源
-- **厦大正版 Office 激活软件** - 学生版激活工具
+- 🧠 **算法设计与分析** (⭐⭐⭐⭐⭐) - 学习重点：动态规划、图论、算法复杂度。
+- 📀 **计算机组成原理** (⭐⭐⭐⭐⭐) - 硬件设计：CPU 周期、指令集架构。
+- 🌐 **计算机网络 (CNI)** - 实验报告包含协议分析与网络模拟。
+- 🗃️ **数据库系统** - SQL 查询优化、数据库范式设计。
+- 🎮 **游戏基础 & 多媒体** - 包含游戏项目实战代码。
 
-## 🔗 相关链接
+### �️ [大二小学期 & 实践](./大二小学期)
 
-### 编程学习资源
+- ⚙️ **Linux 实训** - 系统操作实战报告。
+- 🌟 **水项目 [Personal Course System](./大二小学期/personal_course)**
+  - 基于 **Vue3 + Spring Boot** 的现代课表管理系统。
 
-- 🔥 [C 语言专门仓库](https://github.com/hgcode1130/XMU_C_language_PeerTeacher) - 详细的 C 语言学习资料
-- 📺 [我的 B 站主页](https://space.bilibili.com/361358232?spm_id_from=333.1007.0.0) - 编程教学视频
+### 🏢 [大三上](./大三上)
 
-### 实用工具
+- ☕ **JAVAEE** - 企业级开发架构。
+- 📐 **OOAD** - 经典 2019-2024 试题，掌握系统建模。
+- 🐧 **实用操作系统** - 内核、进程管理与并发控制。
+- 🔌 **嵌入式系统** - 实验指导与开发资料。
+- 📊 **数据挖掘** - 包含课件、算法实现与复杂计算题。
 
-- 📥 [GitZip 浏览器插件](https://microsoftedge.microsoft.com/addons/detail/gitzip-for-github/nlgkiabjnbdndgblhcaobimbpifcdkjj) - 支持单文件/文件夹下载
+---
 
-## ⚠️ 免责声明
+## 🤝 贡献与联系
 
-- 📖 所有资料仅供学习参考，请勿用于商业用途
-- ✏️ 试卷答案可能存在错误，请结合课本和老师讲解使用
-- 🎓 请遵守学术诚信，独立完成作业和考试
-- 📚 建议结合课程进度使用相应资料
+诚邀同学们提交自己的优质资料！
 
-## 🤝 贡献指南
-
-欢迎同学们贡献资料！请遵循以下步骤：
-
-1. Fork 本仓库
-2. 创建新的分支 (`git checkout -b feature/new-materials`)
-3. 提交更改 (`git commit -am 'Add new materials'`)
-4. 推送到分支 (`git push origin feature/new-materials`)
-5. 创建 Pull Request
+- **提交方式**：Fork -> Branch -> Commit -> Pull Request。
+- **开源精神**：如果你觉得有帮助，欢迎 **Star ⭐** 本仓库。
+- **联系我**：
+  - 📧 Email: 37220232203808@stu.xmu.edu.cn
+  - 📺 B 站主页：[hgcode1130](https://space.bilibili.com/361358232)
+  - 💬 GitHub Issues
 
 ## 贡献名单
 
@@ -105,15 +96,3 @@
     </td>
   </tr>
 </table>
-
-## 📞 联系方式
-
-如有问题或建议，欢迎通过以下方式联系：
-
-- 邮箱：37220232203808@stu.xmu.edu.cn
-- 📧 GitHub Issues
-- 📺 B 站私信：[我的 B 站主页](https://space.bilibili.com/361358232)
-
----
-
-**⭐ 如果这个仓库对你有帮助，请点个 Star 支持一下！**

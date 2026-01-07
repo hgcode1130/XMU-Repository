@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProviderServiceOrderService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">service</a> &gt; <a href="index.source.html" class="el_package">cn.edu.xmu.oomall.service.service</a> &gt; <span class="el_source">ProviderServiceOrderService.java</span></div><h1>ProviderServiceOrderService.java</h1><pre class="source lang-java linenums">package cn.edu.xmu.oomall.service.service;
+
+import cn.edu.xmu.javaee.core.exception.BusinessException;
+import cn.edu.xmu.javaee.core.model.ReturnNo;
+import cn.edu.xmu.javaee.core.model.ReturnObject;
+import cn.edu.xmu.javaee.core.model.UserToken;
+import cn.edu.xmu.oomall.service.dao.ServiceContractRepository;
+import cn.edu.xmu.oomall.service.dao.ServiceOrderHistoryRepository;
+import cn.edu.xmu.oomall.service.dao.ServiceOrderRepository;
+import cn.edu.xmu.oomall.service.dao.bo.ServiceContract;
+import cn.edu.xmu.oomall.service.dao.bo.ServiceOrder;
+import cn.edu.xmu.oomall.service.dao.bo.ServiceOrderHistory;
+import cn.edu.xmu.oomall.service.service.factory.AcceptHandlerFactory;
+import cn.edu.xmu.oomall.service.service.factory.CancelHandlerFactory;
+import cn.edu.xmu.oomall.service.service.handler.AcceptHandler;
+import cn.edu.xmu.oomall.service.service.handler.CancelHandler;
+import cn.edu.xmu.oomall.service.service.result.AcceptResult;
+import cn.edu.xmu.oomall.service.service.result.CancelResult;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * 服务商侧服务单用例服务
+ * 使用策略模式处理不同服务类型和状态的业务逻辑
+ */
+@Service
+@RequiredArgsConstructor
+<span class="nc" id="L30">@Slf4j</span>
+public class ProviderServiceOrderService {
+
+    private final ServiceOrderRepository serviceOrderRepository;
+    private final ServiceOrderHistoryRepository serviceOrderHistoryRepository;
+    private final ServiceContractRepository serviceContractRepository;
+    private final CancelHandlerFactory cancelHandlerFactory;
+    private final AcceptHandlerFactory acceptHandlerFactory;
+
+    /**
+     * 取消服务单（使用策略模式）
+     * 
+     * @param did 服务商ID
+     * @param orderId 服务单ID
+     * @param result 取消原因
+     * @param user 操作用户
+     * @return 操作结果
+     */
+    @Transactional
+    public ReturnObject cancel(Long did, Long orderId, String result, UserToken user) {
+<span class="nc" id="L50">        log.info(&quot;开始取消服务单 | did={} orderId={} result={}&quot;, did, orderId, result);</span>
+        
+        // 1. 加载服务单并校验权限
+<span class="nc" id="L53">        ServiceOrder order = loadAndValidateServiceOrder(orderId, did);</span>
+        
+        // 2. 校验状态是否允许取消
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (!canCancel(order.getProgress())) {</span>
+<span class="nc" id="L57">            throw new BusinessException(ReturnNo.STATENOTALLOW,</span>
+<span class="nc" id="L58">                    String.format(&quot;服务单(id=%d)状态%d不允许取消&quot;, orderId, order.getProgress()));</span>
+        }
+        
+        // 3. 获取对应的取消处理器
+<span class="nc" id="L62">        CancelHandler handler = cancelHandlerFactory.getCancelHandler(order.getType(), order.getProgress());</span>
+        
+        // 4. 记录原状态
+<span class="nc" id="L65">        Integer lastStatus = order.getProgress();</span>
+        
+        // 5. 执行取消逻辑
+<span class="nc" id="L68">        CancelResult cancelResult = handler.cancel(order, result);</span>
+        
+        // 6. 保存服务单变更
+<span class="nc" id="L71">        serviceOrderRepository.save(order);</span>
+        
+        // 7. 记录操作历史
+<span class="nc" id="L74">        ServiceOrderHistory history = buildCancelHistory(order, lastStatus, result, did, user);</span>
+<span class="nc" id="L75">        serviceOrderHistoryRepository.save(history);</span>
+        
+<span class="nc" id="L77">        log.info(&quot;取消服务单成功 | did={} orderId={} result={}&quot;, did, orderId, cancelResult.getMessage());</span>
+<span class="nc" id="L78">        return new ReturnObject(ReturnNo.OK);</span>
+    }
+    
+    /**
+     * 接受服务单（使用策略模式）
+     * 
+     * @param did 服务商ID
+     * @param orderId 服务单ID
+     * @param user 操作用户
+     * @return 操作结果
+     */
+    @Transactional
+    public ReturnObject accept(Long did, Long orderId, UserToken user) {
+<span class="nc" id="L91">        log.info(&quot;开始接受服务单 | did={} orderId={}&quot;, did, orderId);</span>
+        
+        // 1. 加载服务单并校验权限
+<span class="nc" id="L94">        ServiceOrder order = loadAndValidateServiceOrder(orderId, did);</span>
+        
+        // 2. 校验状态是否为待接受
+<span class="nc bnc" id="L97" title="All 4 branches missed.">        if (order.getProgress() == null || order.getProgress() != ServiceOrder.PROGRESS_WAIT_ACCEPT) {</span>
+<span class="nc" id="L98">            throw new BusinessException(ReturnNo.STATENOTALLOW,</span>
+<span class="nc" id="L99">                    String.format(&quot;服务单(id=%d)状态%d不是待接受状态&quot;, orderId, order.getProgress()));</span>
+        }
+        
+        // 3. 获取对应的接受处理器
+<span class="nc" id="L103">        AcceptHandler handler = acceptHandlerFactory.getAcceptHandler(order.getType());</span>
+        
+        // 4. 执行接受逻辑
+<span class="nc" id="L106">        AcceptResult acceptResult = handler.accept(order, did);</span>
+        
+        // 5. 保存服务单变更
+<span class="nc" id="L109">        serviceOrderRepository.save(order);</span>
+        
+        // 6. 记录操作历史
+<span class="nc" id="L112">        ServiceOrderHistory history = buildAcceptHistory(order, did, user);</span>
+<span class="nc" id="L113">        serviceOrderHistoryRepository.save(history);</span>
+        
+<span class="nc" id="L115">        log.info(&quot;接受服务单成功 | did={} orderId={} result={}&quot;, did, orderId, acceptResult.getMessage());</span>
+<span class="nc" id="L116">        return new ReturnObject(ReturnNo.OK);</span>
+    }
+
+    
+    /**
+     * 加载服务单并校验权限
+     */
+    private ServiceOrder loadAndValidateServiceOrder(Long orderId, Long did) {
+<span class="nc" id="L124">        ServiceOrder order = serviceOrderRepository.findById(orderId)</span>
+<span class="nc" id="L125">                .orElseThrow(() -&gt; new BusinessException(ReturnNo.RESOURCE_ID_NOTEXIST,</span>
+<span class="nc" id="L126">                        String.format(&quot;服务单不存在，id=%d&quot;, orderId)));</span>
+        
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        if (order.getServiceContractId() == null) {</span>
+<span class="nc" id="L129">            throw new BusinessException(ReturnNo.RESOURCE_ID_OUTSCOPE,</span>
+<span class="nc" id="L130">                    String.format(&quot;服务单(id=%d)未绑定服务合同，无法校验服务商&quot;, orderId));</span>
+        }
+        
+<span class="nc" id="L133">        ServiceContract contract = serviceContractRepository.findById(order.getServiceContractId())</span>
+<span class="nc" id="L134">                .orElseThrow(() -&gt; new BusinessException(ReturnNo.RESOURCE_ID_OUTSCOPE,</span>
+<span class="nc" id="L135">                        String.format(&quot;服务单(id=%d)未找到对应合同(%d)&quot;, orderId, order.getServiceContractId())));</span>
+        
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        if (!contract.ownedBy(did)) {</span>
+<span class="nc" id="L138">            throw new BusinessException(ReturnNo.RESOURCE_ID_OUTSCOPE,</span>
+<span class="nc" id="L139">                    String.format(&quot;服务单(id=%d)不属于服务商(%d)&quot;, orderId, did));</span>
+        }
+        
+<span class="nc" id="L142">        return order;</span>
+    }
+    
+    /**
+     * 判断是否可以取消
+     */
+    private boolean canCancel(Integer progress) {
+<span class="nc bnc" id="L149" title="All 2 branches missed.">        return progress != null &amp;&amp; </span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">               (progress == ServiceOrder.PROGRESS_ACCEPTED ||</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">                progress == ServiceOrder.PROGRESS_DISPATCHED ||</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">                progress == ServiceOrder.PROGRESS_RECEIVED ||</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">                progress == ServiceOrder.PROGRESS_ONSITE);</span>
+    }
+   
+    /**
+     * 构建取消操作历史记录
+     */
+    private ServiceOrderHistory buildCancelHistory(ServiceOrder order, Integer lastStatus, 
+                                                  String result, Long did, UserToken user) {
+<span class="nc" id="L161">        return ServiceOrderHistory.builder()</span>
+<span class="nc" id="L162">                .serviceOrderId(order.getId())</span>
+<span class="nc" id="L163">                .operatorType(1) // 服务商操作</span>
+<span class="nc" id="L164">                .operationType(3) // 取消操作</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">                .operationContent(result != null ? result : &quot;服务商取消&quot;)</span>
+<span class="nc" id="L166">                .lastStatus(lastStatus)</span>
+<span class="nc" id="L167">                .currentStatus(ServiceOrder.PROGRESS_CANCELED)</span>
+<span class="nc" id="L168">                .operatorId(did)</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">                .creatorId(user == null ? null : user.getId())</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">                .creatorName(user == null ? null : user.getName())</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">                .modifierId(user == null ? null : user.getId())</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">                .modifierName(user == null ? null : user.getName())</span>
+<span class="nc" id="L173">                .build();</span>
+    }
+    
+    /**
+     * 构建接受操作历史记录
+     */
+    private ServiceOrderHistory buildAcceptHistory(ServiceOrder order, Long did, UserToken user) {
+<span class="nc" id="L180">        return ServiceOrderHistory.builder()</span>
+<span class="nc" id="L181">                .serviceOrderId(order.getId())</span>
+<span class="nc" id="L182">                .operatorType(1) // 服务商操作</span>
+<span class="nc" id="L183">                .operationType(1) // 接受操作</span>
+<span class="nc" id="L184">                .operationContent(&quot;服务商接受服务单&quot;)</span>
+<span class="nc" id="L185">                .lastStatus(ServiceOrder.PROGRESS_WAIT_ACCEPT)</span>
+<span class="nc" id="L186">                .currentStatus(ServiceOrder.PROGRESS_ACCEPTED)</span>
+<span class="nc" id="L187">                .operatorId(did)</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">                .creatorId(user == null ? null : user.getId())</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">                .creatorName(user == null ? null : user.getName())</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">                .modifierId(user == null ? null : user.getId())</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">                .modifierName(user == null ? null : user.getName())</span>
+<span class="nc" id="L192">                .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

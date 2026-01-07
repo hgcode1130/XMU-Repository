@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ServiceOrder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">service</a> &gt; <a href="index.source.html" class="el_package">cn.edu.xmu.oomall.service.dao.bo</a> &gt; <span class="el_source">ServiceOrder.java</span></div><h1>ServiceOrder.java</h1><pre class="source lang-java linenums">package cn.edu.xmu.oomall.service.dao.bo;
+
+import cn.edu.xmu.javaee.core.exception.BusinessException;
+import cn.edu.xmu.javaee.core.model.ReturnNo;
+import cn.edu.xmu.javaee.core.model.UserToken;
+import cn.edu.xmu.oomall.service.adapter.controller.dto.ConsigneeDto;
+import cn.edu.xmu.oomall.service.adapter.controller.dto.CreateServiceOrderDto;
+import cn.edu.xmu.oomall.service.model.ServiceBizConstants;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.util.StringUtils;
+
+import java.time.LocalDateTime;
+
+/**
+ * 服务单实体
+ */
+@Entity
+@Table(name = &quot;service_order&quot;, uniqueConstraints = {
+        @UniqueConstraint(name = &quot;uk_service_order_shop_aftersale&quot;, columnNames = { &quot;shop_id&quot;, &quot;aftersale_id&quot; })
+})
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class ServiceOrder {
+
+    public static final int PROGRESS_WAIT_ACCEPT = ServiceBizConstants.OrderProgress.WAIT_ACCEPT;
+    public static final int PROGRESS_ACCEPTED = ServiceBizConstants.OrderProgress.ACCEPTED;
+    public static final int PROGRESS_DISPATCHED = ServiceBizConstants.OrderProgress.DISPATCHED;
+    public static final int PROGRESS_RECEIVED = ServiceBizConstants.OrderProgress.RECEIVED;
+    public static final int PROGRESS_ONSITE = ServiceBizConstants.OrderProgress.ONSITE;
+    public static final int PROGRESS_FINISHED = ServiceBizConstants.OrderProgress.FINISHED;
+    public static final int PROGRESS_RETURNED = ServiceBizConstants.OrderProgress.RETURNED;
+    public static final int PROGRESS_CANCELED = ServiceBizConstants.OrderProgress.CANCELED;
+
+    public static final int TYPE_ONSITE = 0;
+    public static final int TYPE_MAIL = 1;
+    public static final int TYPE_OFFLINE = 2;
+
+    private static final int OPERATOR_TYPE_PROVIDER = ServiceBizConstants.OperatorType.PROVIDER;
+    private static final int OPERATOR_TYPE_SYSTEM = ServiceBizConstants.OperatorType.SYSTEM;
+    private static final int OPERATION_TYPE_CREATE = ServiceBizConstants.OrderOperationType.CREATE;
+    private static final int OPERATION_TYPE_CANCEL = ServiceBizConstants.OrderOperationType.CANCEL;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long aftersaleId;
+    private Long shopId;
+    private Integer type;
+    private Long regionId;
+    private String address;
+    private String contact;
+    @Column(name = &quot;c_phone&quot;)
+    private String phone;
+    private Integer progress;
+    private String maintainerName;
+    private String maintainerMobile;
+    private String description;
+    private LocalDateTime reserveDate;
+    private Long technicianId;
+    @Column(name = &quot;c_model&quot;)
+    private String model;
+    private LocalDateTime reserveTime;
+    private Long serviceContractId;
+    private String evidence;
+    private Long serviceId;
+    private Long reasonId;
+    private String waybillNo;
+    private Long creatorId;
+    private String creatorName;
+    private Long modifierId;
+    private String modifierName;
+    @CreationTimestamp
+    private LocalDateTime gmtCreate;
+    @UpdateTimestamp
+    private LocalDateTime gmtModified;
+
+    /**
+     * 创建服务单初始化，业务校验下沉 BO
+     * 引入策略模式处理不同类型的初始化差异
+     */
+    public void initForCreate(Long shopId, Long aftersaleId, CreateServiceOrderDto dto, UserToken user) {
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        if (dto == null) {</span>
+<span class="nc" id="L90">            throw new BusinessException(ReturnNo.FIELD_NOTVALID, &quot;请求体不能为空&quot;);</span>
+        }
+
+<span class="nc" id="L93">        ServiceOrderType strategy = ServiceOrderType.fromCode(dto.getType());</span>
+
+<span class="nc" id="L95">        ConsigneeDto consignee = dto.getConsignee();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (consignee == null) {</span>
+<span class="nc" id="L97">            throw new BusinessException(ReturnNo.FIELD_NOTVALID, &quot;consignee不能为空&quot;);</span>
+        }
+<span class="nc" id="L99">        this.shopId = shopId;</span>
+<span class="nc" id="L100">        this.aftersaleId = aftersaleId;</span>
+<span class="nc" id="L101">        this.type = dto.getType();</span>
+<span class="nc" id="L102">        this.regionId = consignee.getRegionId();</span>
+<span class="nc" id="L103">        this.address = consignee.getAddress();</span>
+<span class="nc" id="L104">        this.contact = consignee.getName();</span>
+<span class="nc" id="L105">        this.phone = consignee.getMobile();</span>
+<span class="nc bnc" id="L106" title="All 4 branches missed.">        if (dto.getServiceContractId() != null &amp;&amp; dto.getServiceContractId() &lt;= 0) {</span>
+<span class="nc" id="L107">            throw new BusinessException(ReturnNo.FIELD_NOTVALID, &quot;serviceContractId非法&quot;);</span>
+        }
+<span class="nc" id="L109">        this.serviceContractId = dto.getServiceContractId();</span>
+
+        // 委托策略进行初始化
+<span class="nc" id="L112">        strategy.init(this);</span>
+
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        this.creatorId = user == null ? null : user.getId();</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        this.creatorName = user == null ? null : user.getName();</span>
+<span class="nc" id="L116">    }</span>
+
+    /**
+     * 服务单类型策略枚举
+     * 封装不同类型的初始化、取消等差异化逻辑
+     */
+<span class="nc" id="L122">    @AllArgsConstructor</span>
+    @Getter
+    private enum ServiceOrderType {
+<span class="nc" id="L125">        ONSITE(TYPE_ONSITE) {</span>
+            @Override
+            public void init(ServiceOrder order) {
+                // 上门服务单初始状态为待接受（待网点/师傅接单）
+<span class="nc" id="L129">                order.setProgress(PROGRESS_WAIT_ACCEPT);</span>
+<span class="nc" id="L130">            }</span>
+        },
+<span class="nc" id="L132">        MAIL(TYPE_MAIL) {</span>
+            @Override
+            public void init(ServiceOrder order) {
+                // 寄修服务单初始状态也为待接受（待网点确认接收寄修请求）
+                // 未来如有不同逻辑（如直接生成运单）可在此扩展
+<span class="nc" id="L137">                order.setProgress(PROGRESS_WAIT_ACCEPT);</span>
+<span class="nc" id="L138">            }</span>
+        },
+<span class="nc" id="L140">        OFFLINE(TYPE_OFFLINE) {</span>
+            @Override
+            public void init(ServiceOrder order) {
+<span class="nc" id="L143">                order.setProgress(PROGRESS_WAIT_ACCEPT);</span>
+<span class="nc" id="L144">            }</span>
+        };
+
+        private final int code;
+
+        public abstract void init(ServiceOrder order);
+
+        public static ServiceOrderType fromCode(Integer code) {
+<span class="nc bnc" id="L152" title="All 2 branches missed.">            if (code == null)</span>
+<span class="nc" id="L153">                throw new BusinessException(ReturnNo.FIELD_NOTVALID, &quot;type不能为空&quot;);</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">            for (ServiceOrderType type : values()) {</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">                if (type.code == code) {</span>
+<span class="nc" id="L156">                    return type;</span>
+                }
+            }
+<span class="nc" id="L159">            throw new BusinessException(ReturnNo.FIELD_NOTVALID, &quot;无效的服务单类型: &quot; + code);</span>
+        }
+    }
+
+    /**
+     * 生成创建历史记录
+     */
+    public ServiceOrderHistory buildCreationHistory(UserToken user) {
+<span class="nc" id="L167">        return ServiceOrderHistory.builder()</span>
+<span class="nc" id="L168">                .serviceOrderId(this.id)</span>
+<span class="nc" id="L169">                .operatorType(OPERATOR_TYPE_SYSTEM)</span>
+<span class="nc" id="L170">                .operationType(OPERATION_TYPE_CREATE)</span>
+<span class="nc" id="L171">                .operationContent(&quot;售后创建服务单&quot;)</span>
+<span class="nc" id="L172">                .lastStatus(null)</span>
+<span class="nc" id="L173">                .currentStatus(this.progress)</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">                .operatorId(user == null ? null : user.getId())</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">                .creatorId(user == null ? null : user.getId())</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">                .creatorName(user == null ? null : user.getName())</span>
+<span class="nc" id="L177">                .build();</span>
+    }
+
+    /**
+     * 服务商取消服务单，校验归属与进度
+     */
+    public ServiceOrderHistory cancel(ServiceContract contract, Long did, String result, UserToken user) {
+<span class="nc bnc" id="L184" title="All 6 branches missed.">        if (serviceContractId == null || contract == null || !serviceContractId.equals(contract.getId())) {</span>
+<span class="nc" id="L185">            throw new BusinessException(ReturnNo.RESOURCE_ID_OUTSCOPE,</span>
+<span class="nc" id="L186">                    String.format(&quot;服务单(id=%d)未绑定当前服务商合同&quot;, id));</span>
+        }
+<span class="nc bnc" id="L188" title="All 2 branches missed.">        if (!contract.ownedBy(did)) {</span>
+<span class="nc" id="L189">            throw new BusinessException(ReturnNo.RESOURCE_ID_OUTSCOPE,</span>
+<span class="nc" id="L190">                    String.format(&quot;服务单(id=%d)不属于服务商(%d)&quot;, id, did));</span>
+        }
+<span class="nc bnc" id="L192" title="All 2 branches missed.">        if (!canCancel()) {</span>
+<span class="nc" id="L193">            throw new BusinessException(ReturnNo.STATENOTALLOW,</span>
+<span class="nc" id="L194">                    String.format(&quot;服务单(id=%d)状态%d不允许取消&quot;, id, progress));</span>
+        }
+<span class="nc bnc" id="L196" title="All 2 branches missed.">        int lastStatus = progress == null ? 0 : progress;</span>
+<span class="nc" id="L197">        this.progress = PROGRESS_CANCELED;</span>
+<span class="nc" id="L198">        applyModifier(user);</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">        String content = StringUtils.hasText(result) ? result : &quot;服务商取消&quot;;</span>
+
+<span class="nc" id="L201">        return ServiceOrderHistory.builder()</span>
+<span class="nc" id="L202">                .serviceOrderId(this.id)</span>
+<span class="nc" id="L203">                .operatorType(OPERATOR_TYPE_PROVIDER)</span>
+<span class="nc" id="L204">                .operationType(OPERATION_TYPE_CANCEL)</span>
+<span class="nc" id="L205">                .operationContent(content)</span>
+<span class="nc" id="L206">                .lastStatus(lastStatus)</span>
+<span class="nc" id="L207">                .currentStatus(PROGRESS_CANCELED)</span>
+<span class="nc" id="L208">                .operatorId(did)</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">                .creatorId(user == null ? null : user.getId())</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">                .creatorName(user == null ? null : user.getName())</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">                .modifierId(user == null ? null : user.getId())</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">                .modifierName(user == null ? null : user.getName())</span>
+<span class="nc" id="L213">                .build();</span>
+    }
+
+    private boolean canCancel() {
+<span class="nc bnc" id="L217" title="All 4 branches missed.">        return progress != null &amp;&amp; ServiceBizConstants.OrderProgress.CANCEL_ALLOWED.contains(progress);</span>
+    }
+
+    private void applyModifier(UserToken user) {
+<span class="nc bnc" id="L221" title="All 2 branches missed.">        this.modifierId = user == null ? null : user.getId();</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">        this.modifierName = user == null ? null : user.getName();</span>
+<span class="nc" id="L223">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

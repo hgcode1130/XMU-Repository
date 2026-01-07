@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OOAD 选择题练习</title>
+    <meta
+      name="description"
+      content="面向对象分析与设计课程选择题练习系统，支持章节选择、随机练习与错题记录。"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="dark-theme">
+    <div class="app-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h1>OOAD 刷题王</h1>
+          <p>Advanced Design Practice</p>
+        </div>
+
+        <nav class="sidebar-nav">
+          <section class="nav-section">
+            <h3>练习设置</h3>
+            <div class="setting-item">
+              <label for="chapter-select">选择章节</label>
+              <select id="chapter-select">
+                <option value="all">全都要 (所有章节)</option>
+              </select>
+            </div>
+            <div class="setting-item">
+              <label>练习模式</label>
+              <div class="mode-toggle">
+                <button id="mode-sequential" class="active">顺序</button>
+                <button id="mode-random">随机</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="nav-section">
+            <h3>学习进度</h3>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <span class="stat-value" id="stats-total">0</span>
+                <span class="stat-label">已做</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-value highlight" id="stats-wrong">0</span>
+                <span class="stat-label">错题</span>
+              </div>
+            </div>
+            <button id="btn-practice-wrong" class="secondary-btn">
+              练习错题
+            </button>
+            <button id="btn-clear-stats" class="text-btn">清空数据</button>
+          </section>
+        </nav>
+
+        <div class="sidebar-footer">
+          <p>© 2026 Antigravity OOAD Lab</p>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <header class="quiz-header">
+          <div class="progress-container">
+            <div class="progress-info">
+              <span id="current-chapter-name">准备开始</span>
+              <span id="quiz-progress-text">0 / 0</span>
+            </div>
+            <div class="progress-bar">
+              <div id="progress-fill" style="width: 0%"></div>
+            </div>
+          </div>
+        </header>
+
+        <div class="quiz-container" id="quiz-container">
+          <!-- Welcome Screen -->
+          <div id="welcome-screen" class="screen">
+            <div class="welcome-content">
+              <div class="hero-icon">🎓</div>
+              <h2>准备好开始了吗？</h2>
+              <p>左侧选择章节和模式，点击下方按钮开始练习。</p>
+              <button id="btn-start-quiz" class="primary-btn">开始练习</button>
+            </div>
+          </div>
+
+          <!-- Question Screen -->
+          <div id="question-screen" class="screen hidden">
+            <div class="question-card">
+              <div class="question-header">
+                <span class="q-number" id="q-idx">Q1.</span>
+                <p class="q-text" id="q-text">这里是题目内容？</p>
+              </div>
+              <div class="options-list" id="options-container">
+                <!-- Options will be injected here -->
+              </div>
+              <div class="question-footer">
+                <div class="feedback hidden" id="feedback">
+                  <span id="feedback-icon"></span>
+                  <span id="feedback-text"></span>
+                </div>
+                <button id="btn-next" class="primary-btn hidden">下一题</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Result Screen -->
+          <div id="result-screen" class="screen hidden">
+            <div class="result-content">
+              <div class="result-icon">🎉</div>
+              <h2>同步完成！</h2>
+              <div class="result-stats">
+                <p>
+                  本次练习得分：<strong id="result-score">0</strong> /
+                  <span id="result-total">0</span>
+                </p>
+                <p>正确率：<strong id="result-accuracy">0%</strong></p>
+              </div>
+              <button id="btn-restart" class="primary-btn">返回菜单</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

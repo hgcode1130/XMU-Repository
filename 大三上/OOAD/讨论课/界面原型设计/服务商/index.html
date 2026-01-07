@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>oomall 服务商后台原型</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .hidden {
+      display: none !important;
+    }
+
+    .auth-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 32px;
+      background: linear-gradient(140deg, rgba(47, 91, 255, 0.12), rgba(19, 194, 194, 0.1));
+    }
+
+    .auth-view {
+      width: min(420px, 100%);
+      background: #fff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-base);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .auth-view h1 {
+      font: var(--font-title-600);
+      margin: 0;
+    }
+
+    .auth-view p {
+      margin: 0;
+      color: var(--color-neutral-600);
+      line-height: 24px;
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .auth-form input {
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-neutral-200);
+      font: var(--font-body-300);
+      background: var(--color-neutral-100);
+    }
+
+    .auth-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .auth-switch {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .auth-switch button {
+      border: none;
+      background: transparent;
+      color: var(--color-primary-500);
+      cursor: pointer;
+      font: var(--font-body-300);
+    }
+
+    .auth-view--signup {
+      width: min(1100px, 100%);
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-base);
+      padding: 32px;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 32px;
+    }
+
+    .signup-hero {
+      grid-column: span 5;
+      background: linear-gradient(145deg, rgba(47, 91, 255, 0.95), rgba(19, 194, 194, 0.9));
+      color: #fff;
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .signup-hero h2 {
+      margin: 0;
+      font: var(--font-title-600);
+    }
+
+    .signup-hero p {
+      margin: 0;
+      line-height: 24px;
+    }
+
+    .signup-hero ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font: var(--font-body-300);
+    }
+
+    .signup-hero li::before {
+      content: "✔";
+      display: inline-block;
+      margin-right: 8px;
+    }
+
+    .signup-form {
+      grid-column: span 7;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .signup-form .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .signup-form label {
+      font: var(--font-caption-300);
+      color: var(--color-neutral-600);
+    }
+
+    .signup-form input,
+    .signup-form select,
+    .signup-form textarea {
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-neutral-200);
+      font: var(--font-body-300);
+    }
+
+    .signup-form .form-field.error input,
+    .signup-form .form-field.error select,
+    .signup-form .form-field.error textarea {
+      border-color: var(--color-danger-500);
+    }
+
+    .signup-form .form-field.error .hint {
+      color: var(--color-danger-500);
+    }
+
+    .signup-actions {
+      grid-column: span 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    @media (max-width: 991px) {
+      .auth-view--signup {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      .signup-hero {
+        grid-column: span 1;
+      }
+
+      .signup-form {
+        grid-column: span 1;
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="toast-container" class="toast-container"></div>
+  <div id="modal" class="modal">
+    <div class="modal__content">
+      <h3 id="modal-title" class="modal__title"></h3>
+      <div id="modal-body"></div>
+      <div class="modal__actions">
+        <button id="modal-cancel" class="btn btn--ghost">取消</button>
+        <button id="modal-confirm" class="btn btn--primary">确认</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="auth-container" class="auth-container">
+    <div id="login-view" class="auth-view">
+      <h1>登录服务商控制台</h1>
+      <p>使用审核通过的服务商账号管理服务单、合同与团队。如果尚未入驻，可先注册。</p>
+      <form id="auth-login-form" class="auth-form">
+        <div class="form-field">
+          <label for="auth-login-account">登录账号</label>
+          <input id="auth-login-account" name="account" type="text" placeholder="service@example.com" required />
+        </div>
+        <div class="form-field">
+          <label for="auth-login-password">密码</label>
+          <input id="auth-login-password" name="password" type="password" placeholder="至少 8 位字符" required />
+        </div>
+        <div class="auth-actions">
+          <label style="display:flex; align-items:center; gap:8px;">
+            <input type="checkbox" /> 记住我
+          </label>
+          <button type="button" class="btn btn--ghost" data-action="forget-password">忘记密码？</button>
+        </div>
+        <button type="submit" class="btn btn--primary">立即登录</button>
+      </form>
+      <div class="auth-switch">
+        <span>还没有账号？</span>
+        <button data-auth="show-signup">去注册</button>
+      </div>
+    </div>
+
+    <div id="signup-view" class="auth-view--signup hidden">
+      <div class="signup-hero">
+        <h2>新服务商入驻</h2>
+        <p>一次注册即可接入多个商户渠道，系统提供统一派单、结算与售后支撑。</p>
+        <ul>
+          <li>一次审核，直连商户订单</li>
+          <li>服务质量评分与激励机制</li>
+          <li>官方培训与技术支持</li>
+        </ul>
+        <button class="btn btn--ghost" data-auth="show-login" style="width:max-content;">已有账号？返回登录</button>
+      </div>
+      <form id="auth-signup-form" class="signup-form">
+        <div class="form-field" data-signup-field="company">
+          <label>服务商名称 *</label>
+          <input type="text" name="company" placeholder="盛唐维修服务有限公司" />
+        </div>
+        <div class="form-field" data-signup-field="category">
+          <label>服务商类别 *</label>
+          <select name="category">
+            <option value="">请选择</option>
+            <option value="家电维修">家电维修</option>
+            <option value="安装服务">安装服务</option>
+            <option value="数码维修">数码维修</option>
+          </select>
+        </div>
+        <div class="form-field" data-signup-field="products">
+          <label>服务商品 *</label>
+          <input type="text" name="products" placeholder="电视机, 洗衣机" />
+          <span class="hint">使用逗号分隔多个品类</span>
+        </div>
+        <div class="form-field" data-signup-field="address">
+          <label>公司地址 *</label>
+          <input type="text" name="address" placeholder="上海市浦东新区张江高科技园区 288 号" />
+        </div>
+        <div class="form-field" data-signup-field="contact">
+          <label>联系电话 *</label>
+          <input type="tel" name="contact" placeholder="13812345678" />
+          <span class="hint">请输入 11 位手机号码</span>
+        </div>
+        <div class="form-field" data-signup-field="email">
+          <label>联系邮箱 *</label>
+          <input type="email" name="email" placeholder="service@example.com" />
+        </div>
+        <div class="form-field" data-signup-field="coverage" style="grid-column: span 2;">
+          <label>服务范围 *</label>
+          <textarea name="coverage" rows="3" placeholder="上海、杭州、苏州"></textarea>
+        </div>
+        <div class="form-field" data-signup-field="account">
+          <label>登录账号 *</label>
+          <input type="text" name="account" placeholder="建议使用企业邮箱" />
+        </div>
+        <div class="form-field" data-signup-field="password">
+          <label>设置密码 *</label>
+          <input type="password" name="password" placeholder="至少 8 位，含数字与字母" />
+        </div>
+        <div class="form-field" data-signup-field="confirm">
+          <label>确认密码 *</label>
+          <input type="password" name="confirm" placeholder="再次输入密码" />
+        </div>
+        <div class="signup-actions">
+          <label style="display:flex; align-items:center; gap:8px;">
+            <input type="checkbox" name="agreements" /> 同意《服务商合作协议》
+          </label>
+          <div style="display:flex; gap:12px;">
+            <button type="button" class="btn btn--secondary" id="auth-signup-draft">保存草稿</button>
+            <button type="submit" class="btn btn--primary">提交审核</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="app-shell" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="sidebar__brand">oomall Service</div>
+      <nav class="sidebar__nav">
+        <div class="nav-group">
+          <div class="nav-group__title">控制台</div>
+          <div class="nav-item" data-route="dashboard"><span>工作台</span></div>
+          <div class="nav-item" data-route="orders"><span>服务单管理</span></div>
+          <div class="nav-item" data-route="contracts"><span>服务合同</span></div>
+          <div class="nav-item" data-route="team"><span>团队管理</span></div>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group__title">系统</div>
+          <div class="nav-item" data-route="account"><span>账户设置</span></div>
+          <div class="nav-item" data-route="notifications"><span>消息中心</span></div>
+        </div>
+      </nav>
+    </aside>
+    <div class="layout-main">
+      <header class="topbar">
+        <div class="topbar__search">
+          <input id="global-search" type="search" placeholder="搜索服务单、商户或合同" />
+        </div>
+        <div class="topbar__actions">
+          <button class="btn btn--ghost" data-route="notifications">🔔 通知</button>
+          <div>👤 盛唐维修服务</div>
+        </div>
+      </header>
+      <main class="content">
+        <section class="section" data-section="login">
+          <div class="card-grid">
+            <div class="card card--wide"
+              style="grid-column: span 12; display:flex; flex-wrap:wrap; gap:32px; align-items:flex-start;">
+              <div style="flex:1 1 320px;">
+                <h2 class="section-title" style="margin-bottom:16px;">登录服务商控制台</h2>
+                <p style="color:var(--color-neutral-600); line-height:24px;">
+                  使用审核通过的服务商账号登录，管理服务单、合同、团队与账户信息。若尚未入驻，可先创建账号。
+                </p>
+                <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
+                  <button class="btn btn--primary" data-route="signup">我要注册</button>
+                  <button class="btn btn--ghost" data-route="dashboard">返回控制台概览</button>
+                </div>
+              </div>
+              <form id="login-form"
+                style="flex:1 1 320px; display:flex; flex-direction:column; gap:16px; background:var(--color-neutral-100); padding:24px; border-radius:var(--radius-lg); box-shadow:var(--shadow-soft);">
+                <div class="form-field">
+                  <label for="login-account">登录账号</label>
+                  <input id="login-account" name="account" type="text" placeholder="例如 service@example.com" required />
+                </div>
+                <div class="form-field">
+                  <label for="login-password">密码</label>
+                  <input id="login-password" name="password" type="password" placeholder="至少 8 位字符" required />
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <label class="agreements" style="display:flex; align-items:center; gap:8px;">
+                    <input type="checkbox" id="login-remember" /> 记住我
+                  </label>
+                  <button type="button" class="btn btn--ghost" data-action="forget-password">忘记密码？</button>
+                </div>
+                <button type="submit" class="btn btn--primary">立即登录</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" data-section="signup">
+          <div class="card-grid">
+            <div class="card card--wide"
+              style="grid-column: span 12; display:grid; grid-template-columns: repeat(12,1fr); gap:32px;">
+              <div
+                style="grid-column: span 5; background: linear-gradient(145deg, rgba(47, 91, 255, 0.95), rgba(19, 194, 194, 0.9)); color:#fff; border-radius: var(--radius-lg); padding:32px; display:flex; flex-direction:column; gap:16px;">
+                <h2 style="margin:0; font: var(--font-title-600);">新服务商入驻</h2>
+                <p style="margin:0; line-height:24px;">
+                  完成一次注册即可与多平台商户合作，系统提供统一派单、结算及售后支持。请填写真实有效信息，便于平台审核。
+                </p>
+                <ul
+                  style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:12px; font: var(--font-body-300);">
+                  <li>✔ 一次审核，直连商户订单</li>
+                  <li>✔ 服务质量评分与激励机制</li>
+                  <li>✔ 免费培训与运营工具</li>
+                </ul>
+                <button class="btn btn--ghost" data-route="login"
+                  style="margin-top:auto; align-self:flex-start;">已有账号？前往登录</button>
+              </div>
+              <form id="signup-form"
+                style="grid-column: span 7; display:grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap:20px;">
+                <div class="form-field" data-signup-field="company">
+                  <label>服务商名称 *</label>
+                  <input type="text" name="company" placeholder="盛唐维修服务有限公司" />
+                </div>
+                <div class="form-field" data-signup-field="category">
+                  <label>服务商类别 *</label>
+                  <select name="category">
+                    <option value="">请选择</option>
+                    <option value="家电维修">家电维修</option>
+                    <option value="安装服务">安装服务</option>
+                    <option value="数码维修">数码维修</option>
+                  </select>
+                </div>
+                <div class="form-field" data-signup-field="products">
+                  <label>服务商品 *</label>
+                  <input type="text" name="products" placeholder="电视机, 洗衣机" />
+                  <span class="hint">使用逗号分隔多个品类</span>
+                </div>
+                <div class="form-field" data-signup-field="address">
+                  <label>公司地址 *</label>
+                  <input type="text" name="address" placeholder="上海市浦东新区张江高科技园区 288 号" />
+                </div>
+                <div class="form-field" data-signup-field="contact">
+                  <label>联系电话 *</label>
+                  <input type="tel" name="contact" placeholder="13812345678" />
+                  <span class="hint">请输入 11 位手机号码</span>
+                </div>
+                <div class="form-field" data-signup-field="email">
+                  <label>联系邮箱 *</label>
+                  <input type="email" name="email" placeholder="service@example.com" />
+                </div>
+                <div class="form-field" data-signup-field="coverage">
+                  <label>服务范围 *</label>
+                  <textarea name="coverage" rows="3" placeholder="上海、杭州、苏州"></textarea>
+                </div>
+                <div class="form-field" data-signup-field="account">
+                  <label>登录账号 *</label>
+                  <input type="text" name="account" placeholder="建议使用企业邮箱" />
+                </div>
+                <div class="form-field" data-signup-field="password">
+                  <label>设置密码 *</label>
+                  <input type="password" name="password" placeholder="至少 8 位，含数字与字母" />
+                </div>
+                <div class="form-field" data-signup-field="confirm">
+                  <label>确认密码 *</label>
+                  <input type="password" name="confirm" placeholder="再次输入密码" />
+                </div>
+                <div style="grid-column: span 2; display:flex; justify-content:space-between; align-items:center;">
+                  <label style="display:flex; align-items:center; gap:8px;">
+                    <input type="checkbox" name="agreements" /> 同意《服务商合作协议》
+                  </label>
+                  <div style="display:flex; gap:12px;">
+                    <button type="button" class="btn btn--secondary" id="signup-draft">保存草稿</button>
+                    <button type="submit" class="btn btn--primary">提交审核</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section class="section active" data-section="dashboard">
+          <h2 class="section-title">今日概览</h2>
+          <div id="dashboard-summary" class="card-grid"></div>
+          <div class="card card--wide">
+            <div class="card__label">最新动态</div>
+            <div id="dashboard-activity" class="list"></div>
+          </div>
+        </section>
+
+        <section class="section" data-section="orders">
+          <div class="alert" id="orders-alert"></div>
+          <div class="pill-tabs" id="orders-filters"></div>
+          <div class="filter-bar">
+            <div class="form-field">
+              <label>服务单编号</label>
+              <input id="orders-search" type="text" placeholder="输入编号或商户" />
+            </div>
+            <div class="form-field">
+              <label>快递单号查询</label>
+              <input id="orders-waybill" type="text" placeholder="输入快递单号" />
+            </div>
+            <button id="orders-waybill-search" class="btn btn--primary">按快递单号查询</button>
+            <button id="orders-reset" class="btn btn--secondary">重置条件</button>
+          </div>
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>服务单号</th>
+                  <th>商户</th>
+                  <th>服务类型</th>
+                  <th>服务地区</th>
+                  <th>创建时间</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="orders-table-body"></tbody>
+            </table>
+            <div id="orders-empty" class="table__empty hidden">暂无符合条件的服务单</div>
+          </div>
+        </section>
+
+
+        <section class="section" data-section="contracts">
+          <h2 class="section-title">服务合同</h2>
+          <p style="margin:0; color: var(--color-neutral-600);">
+            汇总待确认与已签约的服务合同，支持筛选、查看条款并执行确认/拒绝。
+          </p>
+
+          <div class="contracts-status-tabs" data-contract-status-tabs>
+            <button type="button" class="contracts-status-tabs__item active" data-contract-status="pending">
+              待确认
+            </button>
+            <button type="button" class="contracts-status-tabs__item" data-contract-status="active">
+              生效中
+            </button>
+            <button type="button" class="contracts-status-tabs__item" data-contract-status="suspended">
+              已暂停
+            </button>
+            <button type="button" class="contracts-status-tabs__item" data-contract-status="terminated">
+              已终止/已到期
+            </button>
+          </div>
+
+          <form class="contracts-filters" data-contract-filter-form>
+            <div class="form-field">
+              <label>服务商名称</label>
+              <input type="text" name="provider" value="盛唐维修服务有限公司" readonly />
+            </div>
+            <div class="form-field">
+              <label>服务名称</label>
+              <input type="text" name="serviceName" placeholder="输入服务名称关键字" />
+            </div>
+            <div class="form-field">
+              <label>服务地区</label>
+              <select name="regions" multiple>
+                <option value="长三角">长三角</option>
+                <option value="珠三角">珠三角</option>
+                <option value="华北">华北</option>
+                <option value="华东">华东</option>
+                <option value="华南">华南</option>
+                <option value="西南">西南</option>
+              </select>
+              <span class="form-hint">按住 Ctrl / Command 可多选</span>
+            </div>
+            <div class="form-field">
+              <label>合同期限（起）</label>
+              <input type="date" name="startDate" />
+            </div>
+            <div class="form-field">
+              <label>合同期限（止）</label>
+              <input type="date" name="endDate" />
+            </div>
+            <div class="contracts-filters__actions">
+              <button type="submit" class="btn btn--primary" data-action="contract-search">搜索</button>
+              <button type="button" class="btn btn--secondary" data-action="contract-reset">重置条件</button>
+            </div>
+          </form>
+
+          <div class="contracts-layout contracts-layout--single">
+            <div class="contracts-list">
+              <div class="contracts-list__header">
+                <div>
+                  <h3>合同列表</h3>
+                  <p>选择左侧列表中的合同查看详细条款</p>
+                </div>
+                <button type="button" class="btn btn--ghost" data-action="contract-new-request">
+                  提交新合同申请
+                </button>
+              </div>
+              <div class="contracts-list__body" data-contract-list></div>
+              <div class="contracts-empty hidden" data-contract-empty>暂无符合条件的合同</div>
+            </div>
+          </div>
+        </section>
+
+
+        <section class="section" data-section="account">
+          <div id="account-alert" class="alert"></div>
+          <div class="tab-group" id="account-tabs"></div>
+          <div class="tab-panels">
+            <div data-tab-panel="company">
+              <h3 class="section-title">公司资料</h3>
+              <div id="account-company" class="card-grid"></div>
+            </div>
+            <div data-tab-panel="region" hidden>
+              <h3 class="section-title">服务区域</h3>
+              <div id="account-regions" class="list"></div>
+              <div class="table-actions">
+                <button class="btn btn--primary" data-action="account-add-region">新增服务区域</button>
+              </div>
+            </div>
+            <div data-tab-panel="qualification" hidden>
+              <h3 class="section-title">资质文件</h3>
+              <div id="account-files" class="list"></div>
+              <div class="table-actions">
+                <button class="btn btn--secondary" data-action="account-upload-file">上传新文件</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" data-section="team">
+          <div class="table-actions">
+            <button class="btn btn--primary" data-action="team-add">添加员工</button>
+            <button class="btn btn--ghost" data-action="team-import">导入 CSV</button>
+          </div>
+          <div class="filter-bar">
+            <div class="form-field">
+              <label>搜索员工</label>
+              <input id="team-search" type="text" placeholder="输入姓名、联系方式或角色" />
+            </div>
+            <div class="form-field">
+              <label>状态筛选</label>
+              <select id="team-status-filter">
+                <option value="all">全部状态</option>
+                <option value="active">正常</option>
+                <option value="paused">已暂停</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>角色筛选</label>
+              <select id="team-role-filter">
+                <option value="all">全部角色</option>
+                <option value="管理员">管理员</option>
+                <option value="维修师傅">维修师傅</option>
+              </select>
+            </div>
+            <button id="team-reset" class="btn btn--secondary">重置条件</button>
+          </div>
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>姓名</th>
+                  <th>联系方式</th>
+                  <th>角色</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="team-table-body"></tbody>
+            </table>
+            <div id="team-empty" class="table__empty hidden">暂无符合条件的员工</div>
+          </div>
+        </section>
+
+        <section class="section" data-section="notifications">
+          <h2 class="section-title">消息中心</h2>
+          <div id="notifications-list" class="list"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

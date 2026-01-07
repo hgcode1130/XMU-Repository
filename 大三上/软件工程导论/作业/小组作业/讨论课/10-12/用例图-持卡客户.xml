@@ -1,0 +1,82 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0" version="28.2.5">
+  <diagram name="Page-1" id="C-9h8g7f-6e5d-4c3b">
+    <mxGraphModel dx="1158" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="system-boundary" value="ATM 自助服务" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;strokeColor=#000000;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="260" y="80" width="520" height="660" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-balance" value="UC-ATM-02&#xa;余额查询" style="ellipse;whiteSpace=wrap;html=1;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="50" y="80" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-withdraw" value="UC-ATM-03&#xa;现金取款" style="ellipse;whiteSpace=wrap;html=1;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="50" y="240" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-auth" value="UC-ATM-01&#xa;持卡认证" style="ellipse;whiteSpace=wrap;html=1;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="310" y="160" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-print" value="打印凭条" style="ellipse;whiteSpace=wrap;html=1;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="310" y="340" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-end" value="UC-ATM-04&#xa;退卡并结束交易" style="ellipse;whiteSpace=wrap;html=1;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="170" y="540" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="actor-customer" value="&lt;div&gt;《主参与者》&lt;/div&gt;持卡客户" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" parent="1" vertex="1">
+          <mxGeometry x="80" y="300" width="60" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="actor-central" value="&lt;div&gt;&amp;lt;&amp;lt;辅助参与者&amp;gt;&amp;gt;&lt;/div&gt;中央计算机" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" parent="1" vertex="1">
+          <mxGeometry x="865" y="140" width="60" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="actor-branch" value="&lt;div&gt;&amp;lt;&amp;lt;辅助参与者&amp;gt;&amp;gt;&lt;/div&gt;分行计算机" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" parent="1" vertex="1">
+          <mxGeometry x="870" y="320" width="50" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="actor-printer" value="&lt;div&gt;&amp;lt;&amp;lt;system&amp;gt;&amp;gt;&lt;/div&gt;打印机模块" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" parent="1" vertex="1">
+          <mxGeometry x="860" y="500" width="60" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-customer-balance" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor-customer" target="uc-balance" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-customer-withdraw" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor-customer" target="uc-withdraw" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-include-balance-auth" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;html=1;rounded=0;dashed=1;align=center;verticalAlign=bottom;" parent="1" source="uc-balance" target="uc-auth" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-include-withdraw-auth" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;html=1;rounded=0;dashed=1;align=center;verticalAlign=bottom;" parent="1" source="uc-withdraw" target="uc-auth" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-extend-withdraw-print" value="&lt;div&gt;&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;{extension point: 交易成功时}&lt;/div&gt;" style="endArrow=open;html=1;rounded=0;dashed=1;align=center;verticalAlign=bottom;" parent="1" source="uc-print" target="uc-withdraw" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-include-balance-end" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;html=1;rounded=0;dashed=1;align=center;verticalAlign=bottom;" parent="1" source="uc-balance" target="uc-end" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-include-withdraw-end" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;html=1;rounded=0;dashed=1;align=center;verticalAlign=bottom;" parent="1" source="uc-withdraw" target="uc-end" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-auth-central" style="endArrow=open;html=1;rounded=0;dashed=1;" parent="1" source="uc-auth" target="actor-central" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-auth-branch" style="endArrow=open;html=1;rounded=0;dashed=1;" parent="1" source="uc-auth" target="actor-branch" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-balance-branch" style="endArrow=open;html=1;rounded=0;dashed=1;" parent="1" source="uc-balance" target="actor-branch" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-withdraw-branch" style="endArrow=open;html=1;rounded=0;dashed=1;" parent="1" source="uc-withdraw" target="actor-branch" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-print-printer" style="endArrow=open;html=1;rounded=0;dashed=1;" parent="1" source="uc-print" target="actor-printer" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="note-monitoring" value="扩展流程:&#xa;若出现通信异常、&#xa;出钞失败等情况，&#xa;系统将记录日志并&#xa;触发监控告警。&#xa;(落地系统: 运维平台)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;" parent="1" vertex="1">
+          <mxGeometry x="40" y="500" width="140" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-note-withdraw" style="endArrow=none;html=1;rounded=0;dashed=1;" parent="1" source="note-monitoring" target="uc-withdraw" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

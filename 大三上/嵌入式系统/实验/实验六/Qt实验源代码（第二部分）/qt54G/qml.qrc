@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Pop.qml</file>
+        <file>PopCall.qml</file>
+        <file>Modelmessagedialog.qml</file>
+    </qresource>
+</RCC>

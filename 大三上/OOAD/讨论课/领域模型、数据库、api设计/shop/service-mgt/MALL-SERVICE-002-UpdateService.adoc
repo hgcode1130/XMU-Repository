@@ -1,0 +1,74 @@
+
+[cols="1a"]
+|===
+
+|
+[frame="none"]
+[cols="1,1"]
+!===
+! 用例编号：MALL-SERVICE-002
+! 用例名称：修改商品服务 (Update Service)
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 级别: 用户目标 (User Goal)
+!===
+
+|
+[frame="none"]
+[cols="2"]
+!===
+! 包： 商户-管理服务 (Service Management)
+! 参与者：商户 (Merchant)
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 描述：商户修改已创建的商品服务信息 (Merchant updates the information of an existing product service)
+! 触发事件：商户修改商品服务信息 (Merchant updates product service information)
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 主成功场景
+!===
+
+|
+[frame="none"]
+[cols="1,4,2", options="header"]
+!===
+! 步骤 ! 描述 ! 信息
+
+! 1
+! 系统显示该商户所有商品服务
+! 服务名称、服务状态（启用/禁用）、服务类型、服务地区、负责服务商列表、适用商品列表
+
+! 2
+! 商户修改商品服务，更新服务信息并提交
+! 修改后的服务名称、服务状态（启用/禁用）、服务类型、服务地区、负责服务商列表、适用商品列表
+
+! 3
+! 系统保存服务信息，修改商品服务成功
+!
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 扩展场景
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 其他:
+!===
+|===

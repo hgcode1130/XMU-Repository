@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>维修师傅工作台</title>
+    <style>
+        /* --- 全局样式 --- */
+        :root {
+            --primary-color: #4a90e2;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --light-gray-color: #f8f9fa;
+            --gray-color: #6c757d;
+            --dark-gray-color: #343a40;
+            --border-color: #dee2e6;
+            --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            --button-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            background-color: var(--light-gray-color);
+            color: var(--dark-gray-color);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .page {
+            display: none;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        .header {
+            background-color: white;
+            padding: 15px 20px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark-gray-color);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .header-main-title {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-left: 40px;
+        }
+
+        .header .back-button,
+        .header .action-button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-gray-color);
+            line-height: 1;
+            padding: 0 10px;
+            min-width: 40px;
+        }
+
+        .header .back-button {
+            font-size: 1.8rem;
+            text-align: left;
+        }
+
+        .header .action-button {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: right;
+        }
+
+        .container {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        /* --- 按钮样式 --- */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+            box-shadow: var(--button-shadow);
+        }
+
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background-color: #357abd;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background-color: #218838;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background-color: #c82333;
+        }
+
+        .btn-outline {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-outline:hover:not(:disabled) {
+            background-color: #f0f6ff;
+        }
+
+        .btn-outline-danger {
+            background-color: white;
+            color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+        }
+
+        /* --- 卡片样式 --- */
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h3 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .service-type-tag {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--info-color);
+            border: 1px solid var(--info-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .card-status {
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .status-assigned {
+            color: var(--warning-color);
+            background-color: #fff8e1;
+        }
+
+        .status-item-received {
+            color: var(--primary-color);
+            background-color: #e3f2fd;
+        }
+
+        .status-on-site {
+            color: var(--info-color);
+            background-color: #e0f7fa;
+        }
+
+        .status-repairing {
+            color: var(--success-color);
+            background-color: #d4edda;
+        }
+
+        .status-completed {
+            color: var(--gray-color);
+            background-color: #e9ecef;
+        }
+
+        .status-returned {
+            color: var(--danger-color);
+            background-color: #f8d7da;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-body .item {
+            display: flex;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .card-body .item:last-child {
+            margin-bottom: 0;
+        }
+
+        .card-body .item-label {
+            width: 80px;
+            color: var(--gray-color);
+            flex-shrink: 0;
+        }
+
+        .card-body .item-value {
+            color: var(--dark-gray-color);
+            font-weight: 500;
+        }
+
+        .card-footer {
+            background-color: var(--light-gray-color);
+            padding: 15px 20px;
+            border-top: 1px solid var(--border-color);
+            text-align: right;
+        }
+
+        .card-footer .btn {
+            display: inline-block;
+            width: auto;
+            padding: 8px 16px;
+        }
+
+        /* --- 表单样式 --- */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            line-height: 1.5;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-color: white;
+        }
+
+        .form-group select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #fafafa;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+        }
+
+        .upload-area .upload-icon {
+            font-size: 2.5rem;
+            color: var(--gray-color);
+        }
+
+        .upload-area .upload-text {
+            margin-top: 10px;
+            color: var(--gray-color);
+        }
+
+        .photo-preview {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .photo-preview img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* --- 特定页面样式 --- */
+        #list-page .tabs {
+            display: flex;
+            background-color: white;
+            box-shadow: inset 0 -1px 0 var(--border-color);
+            margin: -20px -20px 20px -20px;
+            padding: 0 20px;
+        }
+
+        #list-page .tab {
+            padding: 15px 10px;
+            margin-right: 20px;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray-color);
+            transition: all 0.2s ease;
+        }
+
+        #list-page .tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* --- 模态框/弹出层 --- */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            animation: modal-fade-in 0.3s ease;
+        }
+
+        @keyframes modal-fade-in {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .modal-body {
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            color: var(--gray-color);
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .modal-body p {
+            margin: 5px 0;
+        }
+
+        .modal-body strong {
+            color: var(--dark-gray-color);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-footer .btn {
+            flex: 1;
+        }
+
+        /* --- 签名板样式 --- */
+        #signature-pad-canvas {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: crosshair;
+        }
+
+        .signature-preview {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .signature-preview img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        /* --- 星级评价样式 --- */
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #ddd;
+            cursor: pointer;
+        }
+
+        .star-rating .star {
+            transition: color 0.2s;
+        }
+
+        .star-rating .star:hover,
+        .star-rating .star.selected {
+            color: var(--warning-color);
+        }
+
+        /* --- 提示 --- */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            bottom: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ====================
+         服务单列表页 (主页)
+    ===================== -->
+    <div id="list-page" class="page active">
+        <header class="header">
+            <div style="min-width: 40px;"></div>
+            <h1 class="header-main-title">服务单列表</h1>
+            <button class="action-button" onclick="scanBarcode()">扫码</button>
+        </header>
+        <div class="container">
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab(this, 'pending')">待处理 (4)</div>
+                <div class="tab" onclick="switchTab(this, 'completed')">已完成 (0)</div>
+            </div>
+            <div id="service-list-container">
+                <!-- 卡片模板... (与之前版本相同) -->
+                <div class="card service-card" data-case="onsite">
+                    <div class="card-header">
+                        <h3><span class="service-type-tag">[上门]</span>服务单号: MALL-SERVICE-038</h3>
+                        <span class="card-status status-assigned">已派工</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="item"><span class="item-label">商户:</span><span class="item-value">品优家电</span></div>
+                        <div class="item"><span class="item-label">服务类型:</span><span class="item-value">上门安装</span>
+                        </div>
+                        <div class="item"><span class="item-label">优先级:</span><span class="item-value"
+                                style="color: var(--danger-color); font-weight: 600;">高</span></div>
+                        <div class="item"><span class="item-label">预约时间:</span><span class="item-value">今天 14:00</span>
+                        </div>
+                        <div class="item"><span class="item-label">客户姓名:</span><span class="item-value">赵先生</span></div>
+                        <div class="item"><span class="item-label">服务地址:</span><span
+                                class="item-value">深圳市南山区科技园XX大厦</span></div>
+                        <div class="item"><span class="item-label">售后单号:</span><span
+                                class="item-value">AFS-20251014003</span></div>
+                        <div class="item"><span class="item-label">订单号:</span><span
+                                class="item-value">ORD-20251014003</span></div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary"
+                            onclick="event.stopPropagation(); showDetailPage('onsite');">查看详情</button>
+                    </div>
+                </div>
+                <div class="card service-card" data-case="return">
+                    <div class="card-header">
+                        <h3>服务单号: MALL-SERVICE-037</h3>
+                        <span class="card-status status-item-received">已收件</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="item"><span class="item-label">商户:</span><span class="item-value">智享数码</span></div>
+                        <div class="item"><span class="item-label">物品名称:</span><span class="item-value">品牌X-型号Y
+                                游戏机</span></div>
+                        <div class="item"><span class="item-label">优先级:</span><span class="item-value"
+                                style="color: var(--warning-color); font-weight: 600;">中</span></div>
+                        <div class="item"><span class="item-label">预约时间:</span><span class="item-value">2025-10-15
+                                10:00</span></div>
+                        <div class="item"><span class="item-label">客户姓名:</span><span class="item-value">孙先生</span></div>
+                        <div class="item"><span class="item-label">故障描述:</span><span
+                                class="item-value">无法连接网络，系统频繁报错。</span></div>
+                        <div class="item"><span class="item-label">售后单号:</span><span
+                                class="item-value">AFS-20251014002</span></div>
+                        <div class="item"><span class="item-label">订单号:</span><span
+                                class="item-value">ORD-20251014002</span></div>
+                        <div class="item"><span class="item-label">快递单号:</span><span
+                                class="item-value">SF9876543210</span></div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-outline-danger"
+                            onclick="event.stopPropagation(); showDetailPage('return');">退回服务单</button>
+                    </div>
+                </div>
+                <div class="card service-card" data-case="receipt">
+                    <div class="card-header">
+                        <h3>服务单号: MALL-SERVICE-035</h3><span class="card-status status-assigned">已派工</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="item"><span class="item-label">商户:</span><span class="item-value">悦选商城</span></div>
+                        <div class="item"><span class="item-label">物品名称:</span><span class="item-value">品牌A-型号B
+                                智能手表</span></div>
+                        <div class="item"><span class="item-label">优先级:</span><span class="item-value"
+                                style="color: var(--success-color); font-weight: 600;">低</span></div>
+                        <div class="item"><span class="item-label">预约时间:</span><span class="item-value">2025-10-16
+                                09:00</span></div>
+                        <div class="item"><span class="item-label">故障描述:</span><span
+                                class="item-value">屏幕碎裂，无法开机。</span></div>
+                        <div class="item"><span class="item-label">售后单号:</span><span
+                                class="item-value">AFS-20251014001</span></div>
+                        <div class="item"><span class="item-label">订单号:</span><span
+                                class="item-value">ORD-20251014001</span></div>
+                    </div>
+                    <div class="card-footer"><button class="btn btn-primary"
+                            onclick="event.stopPropagation(); showDetailPage('receipt');">确认收件</button></div>
+                </div>
+                <div class="card service-card" data-case="complete">
+                    <div class="card-header">
+                        <h3>服务单号: MALL-SERVICE-034</h3><span class="card-status status-repairing">维修中</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="item"><span class="item-label">商户:</span><span class="item-value">乐购电子</span></div>
+                        <div class="item"><span class="item-label">物品名称:</span><span class="item-value">品牌C-型号D
+                                无线耳机</span></div>
+                        <div class="item"><span class="item-label">优先级:</span><span class="item-value"
+                                style="color: var(--warning-color); font-weight: 600;">中</span></div>
+                        <div class="item"><span class="item-label">预约时间:</span><span class="item-value">2025-10-14
+                                16:00</span></div>
+                        <div class="item"><span class="item-label">客户姓名:</span><span class="item-value">李女士</span></div>
+                        <div class="item"><span class="item-label">故障描述:</span><span
+                                class="item-value">左耳无声，充电盒无法充电。</span></div>
+                        <div class="item"><span class="item-label">售后单号:</span><span
+                                class="item-value">AFS-20251014004</span></div>
+                        <div class="item"><span class="item-label">订单号:</span><span
+                                class="item-value">ORD-20251014004</span></div>
+                        <div class="item"><span class="item-label">快递单号:</span><span
+                                class="item-value">YTO1122334455</span></div>
+                    </div>
+                    <div class="card-footer"><button class="btn btn-success"
+                            onclick="event.stopPropagation(); showDetailPage('complete');">完成服务单</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================
+         服务单详情页
+    ===================== -->
+    <div id="detail-page" class="page">
+        <header class="header">
+            <button class="back-button" onclick="showListPage()">‹</button>
+            <h1 id="detail-page-title" class="header-title">服务单详情</h1>
+        </header>
+        <div class="container">
+            <div id="detail-content"></div>
+        </div>
+    </div>
+
+    <!-- ====================
+         模态框
+    ===================== -->
+    <div id="toast" class="toast"></div>
+
+    <!-- 通用确认模态框 (新) -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="confirm-modal-title" class="modal-title">操作确认</h3>
+            <div id="confirm-modal-body" class="modal-body"></div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('confirm-modal')">取消</button>
+                <button id="confirm-modal-action-btn" class="btn btn-primary">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 退回服务单确认模态框 (新) -->
+    <div id="return-confirm-modal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">请确认退回信息</h3>
+            <div class="modal-body" style="text-align: left; padding: 0 10px;">
+                <p><strong>退回原因:</strong> <span id="summary-return-reason"></span></p>
+                <p><strong>详细说明:</strong> <span id="summary-return-details"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('return-confirm-modal')">返回修改</button>
+                <button class="btn btn-danger" onclick="processReturn()">确认退回</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 退货单生成模态框 (新) -->
+    <div id="return-label-modal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">✅ 退回成功，已生成退货单</h3>
+            <div class="modal-body" style="text-align: center;">
+                <p>请将此物流单贴于包裹上</p>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=RETURN-TRACK-987654321"
+                    alt="QR Code">
+                <p>物流单号: <strong>RETURN-TRACK-987654321</strong></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="alert('模拟打印中...')">打印物流单</button>
+                <button class="btn btn-primary" onclick="finishReturn()">完成</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 客户签名模态框 (新) -->
+    <div id="signature-modal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">请客户签名确认</h3>
+            <div class="modal-body" style="padding:0; margin-bottom: 15px;">
+                <canvas id="signature-pad-canvas" width="350" height="200"></canvas>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="clearSignature()">重签</button>
+                <button class="btn btn-success" onclick="saveSignature()">确认签名</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const listPage = document.getElementById('list-page');
+        const detailPage = document.getElementById('detail-page');
+        const detailContent = document.getElementById('detail-content');
+        const detailPageTitle = document.getElementById('detail-page-title');
+
+        // --- 页面导航 ---
+        function showListPage() { listPage.classList.add('active'); detailPage.classList.remove('active'); }
+        function showDetailPage(type) {
+            listPage.classList.remove('active');
+            detailPage.classList.add('active');
+            const generators = {
+                receipt: { title: '服务单详情', func: generateReceiptDetailHTML },
+                complete: { title: '完成服务单', func: generateCompleteDetailHTML },
+                onsite: { title: '上门服务详情', func: generateOnSiteDetailHTML },
+                return: { title: '退回服务单', func: generateReturnDetailHTML }
+            };
+            detailPageTitle.textContent = generators[type].title;
+            detailContent.innerHTML = generators[type].func();
+
+            if (type === 'onsite') {
+                // 初始化上门服务页面的状态
+                document.getElementById('start-service-btn').disabled = true;
+                document.getElementById('service-completion-section').style.display = 'none';
+            }
+        }
+
+        // --- 动态内容生成 ---
+
+        function generateReturnDetailHTML() {
+            return `
+                <div class="card"><div class="card-header"><h3>服务单号: MALL-SERVICE-037</h3><span class="card-status status-item-received">已收件</span></div>
+                    <div class="card-body">
+                        <div class="item"><span class="item-label">商户:</span><span class="item-value">智享数码</span></div>
+                        <div class="item"><span class="item-label">物品名称:</span><span class="item-value">品牌X-型号Y 游戏机</span></div>
+                        <div class="item"><span class="item-label">优先级:</span><span class="item-value" style="color: var(--warning-color); font-weight: 600;">中</span></div>
+                        <div class="item"><span class="item-label">预约时间:</span><span class="item-value">2025-10-15 10:00</span></div>
+                        <div class="item"><span class="item-label">客户姓名:</span><span class="item-value">孙先生</span></div>
+                        <div class="item"><span class="item-label">故障描述:</span><span class="item-value">无法连接网络，系统频繁报错。</span></div>
+                        <div class="item"><span class="item-label">售后单号:</span><span class="item-value">AFS-20251014002</span></div>
+                        <div class="item"><span class="item-label">订单号:</span><span class="item-value">ORD-20251014002</span></div>
+                        <div class="item"><span class="item-label">快递单号:</span><span class="item-value">SF9876543210</span></div>
+                    </div>
+                </div>
+                <h2 class="section-title">退回操作</h2>
+                <div class="form-group">
+                    <label for="return-reason">退回原因</label>
+                    <select id="return-reason">
+                        <option value="">请选择退回原因</option>
+                        <option value="超出服务范围">超出服务范围</option>
+                        <option value="缺少必要工具或配件">缺少必要工具或配件</option>
+                        <option value="客户取消服务">客户取消服务</option>
+                        <option value="物品与描述不符">物品与描述不符</option>
+                        <option value="人为损坏不在保修范围">人为损坏不在保修范围</option>
+                        <option value="无法联系客户">无法联系客户</option>
+                        <option value="其他原因">其他原因</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="return-details">详细说明</label>
+                    <textarea id="return-details" placeholder="请详细描述退回的具体原因..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>上传凭证 (如物品状况照片)</label>
+                    <input type="file" id="return-photos-input" multiple accept="image/*" style="display: none;" onchange="previewPhotos(this, 'photo-preview-return')">
+                    <div class="upload-area" onclick="document.getElementById('return-photos-input').click()"><div class="upload-icon">📷</div><div class="upload-text">点击上传照片</div></div>
+                    <div id="photo-preview-return" class="photo-preview"></div>
+                </div>
+                <button class="btn btn-danger" onclick="submitReturn()">确认退回</button>
+            `;
+        }
+
+        function generateOnSiteDetailHTML() {
+            return `
+                <div class="card">
+                    <div class="card-header"><h3><span class="service-type-tag">[上门]</span>服务单号: MALL-SERVICE-038</h3><span class="card-status status-assigned">已派工</span></div>
+                    <div class="card-body">
+                        <div class="item"><span class="item-label">商户:</span><span class="item-value">品优家电</span></div>
+                        <div class="item"><span class="item-label">服务类型:</span><span class="item-value">上门安装</span></div>
+                        <div class="item"><span class="item-label">优先级:</span><span class="item-value" style="color: var(--danger-color); font-weight: 600;">高</span></div>
+                        <div class="item"><span class="item-label">预约时间:</span><span class="item-value">今天 14:00</span></div>
+                        <div class="item"><span class="item-label">客户姓名:</span><span class="item-value">赵先生</span></div>
+                        <div class="item"><span class="item-label">服务地址:</span><span class="item-value">深圳市南山区科技园XX大厦A座101</span></div>
+                        <div class="item"><span class="item-label">售后单号:</span><span class="item-value">AFS-20251014003</span></div>
+                        <div class="item"><span class="item-label">订单号:</span><span class="item-value">ORD-20251014003</span></div>
+                    </div>
+                </div>
+                <h2 class="section-title">第一步：出发与抵达</h2>
+                <div class="btn-group">
+                    <button class="btn btn-outline" onclick="confirmDeparture()">导航前往</button>
+                    <button id="start-service-btn" class="btn btn-primary" onclick="startService()">我已抵达，开始服务</button>
+                </div>
+                
+                <div id="service-completion-section" style="display:none; margin-top: 20px;">
+                    <h2 class="section-title">第二步：完成服务与记录</h2>
+                    <div class="form-group">
+                        <label for="service-details">服务完成记录</label>
+                        <textarea id="service-details" placeholder="请填写服务详情，如安装过程、遇到的问题、客户反馈等。"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>上传服务凭证 (现场照片)</label>
+                        <input type="file" id="service-photos-input" multiple accept="image/*" style="display: none;" onchange="previewPhotos(this, 'photo-preview-service')">
+                        <div class="upload-area" onclick="document.getElementById('service-photos-input').click()"><div class="upload-icon">📷</div><div class="upload-text">点击上传现场照片</div></div>
+                        <div id="photo-preview-service" class="photo-preview"></div>
+                    </div>
+                    
+                    <h2 class="section-title">第三步：客户确认</h2>
+                    <div class="form-group">
+                        <label>客户签名</label>
+                        <div id="signature-preview-container" class="signature-preview" style="display:none;">
+                            <img id="signature-image" src="" alt="客户签名">
+                            <button class="btn btn-outline" style="width:auto; padding: 5px 10px; font-size: 0.8rem; margin-top:10px;" onclick="openSignatureModal()">重新签名</button>
+                        </div>
+                        <button id="signature-btn" class="btn btn-outline" onclick="openSignatureModal()">请求客户签名</button>
+                    </div>
+                    <div class="form-group" id="rating-section" style="display:none;">
+                        <label>客户满意度</label>
+                        <div class="star-rating" id="star-rating-container">
+                            <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+                    <button id="complete-btn" class="btn btn-success" onclick="completeOnsiteService()" disabled>完成服务</button>
+                </div>
+            `;
+        }
+
+        // --- 其他页面的生成函数 (保持不变) ---
+        function generateReceiptDetailHTML() {
+            return `
+                <div class="card">
+                    <div class="card-header"><h3>服务单号: MALL-SERVICE-035</h3><span class="card-status status-assigned">已派工</span></div>
+                    <div class="card-body">
+                        <div class="item"><span class="item-label">商户:</span><span class="item-value">悦选商城</span></div>
+                        <div class="item"><span class="item-label">物品名称:</span><span class="item-value">品牌A-型号B 智能手表</span></div>
+                        <div class="item"><span class="item-label">优先级:</span><span class="item-value" style="color: var(--success-color); font-weight: 600;">低</span></div>
+                        <div class="item"><span class="item-label">预约时间:</span><span class="item-value">2025-10-16 09:00</span></div>
+                        <div class="item"><span class="item-label">客户姓名:</span><span class="item-value">王先生</span></div>
+                        <div class="item"><span class="item-label">故障描述:</span><span class="item-value">屏幕碎裂，无法开机。</span></div>
+                        <div class="item"><span class="item-label">售后单号:</span><span class="item-value">AFS-20251014001</span></div>
+                        <div class="item"><span class="item-label">订单号:</span><span class="item-value">ORD-20251014001</span></div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="confirmReceipt()">确认收件</button>
+            `;
+        }
+
+        function generateCompleteDetailHTML() {
+            return `
+                <div class="card">
+                    <div class="card-header"><h3>服务单号: MALL-SERVICE-034</h3><span class="card-status status-repairing">维修中</span></div>
+                    <div class="card-body">
+                        <div class="item"><span class="item-label">商户:</span><span class="item-value">乐购电子</span></div>
+                        <div class="item"><span class="item-label">物品名称:</span><span class="item-value">品牌C-型号D 无线耳机</span></div>
+                        <div class="item"><span class="item-label">优先级:</span><span class="item-value" style="color: var(--warning-color); font-weight: 600;">中</span></div>
+                        <div class="item"><span class="item-label">预约时间:</span><span class="item-value">2025-10-14 16:00</span></div>
+                        <div class="item"><span class="item-label">客户姓名:</span><span class="item-value">李女士</span></div>
+                        <div class="item"><span class="item-label">故障描述:</span><span class="item-value">左耳无声，充电盒无法充电。</span></div>
+                        <div class="item"><span class="item-label">售后单号:</span><span class="item-value">AFS-20251014004</span></div>
+                        <div class="item"><span class="item-label">订单号:</span><span class="item-value">ORD-20251014004</span></div>
+                        <div class="item"><span class="item-label">快递单号:</span><span class="item-value">YTO1122334455</span></div>
+                    </div>
+                </div>
+                <h2 class="section-title">维修完成记录</h2>
+                <div class="form-group">
+                    <label for="completion-details">维修详情</label>
+                    <textarea id="completion-details" placeholder="请填写维修过程、更换的配件、解决的问题等详细信息..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>上传维修完成照片 <span style="color: var(--danger-color);">*</span></label>
+                    <input type="file" id="completion-photos-input" multiple accept="image/*" style="display: none;" onchange="previewPhotos(this, 'photo-preview-completion')">
+                    <div class="upload-area" onclick="document.getElementById('completion-photos-input').click()">
+                        <div class="upload-icon">📷</div>
+                        <div class="upload-text">点击上传维修完成照片（必填）</div>
+                    </div>
+                    <div id="photo-preview-completion" class="photo-preview"></div>
+                </div>
+                <button class="btn btn-success" onclick="submitCompletion()">提交并生成回寄单</button>
+            `;
+        }
+
+        // --- 模态框 & 提示 ---
+        function openModal(modalId) { document.getElementById(modalId).classList.add('active'); }
+        function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); }
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 2000);
+        }
+        function previewPhotos(input, previewContainerId) { /* ... 现有代码 ... */ }
+
+        // --- 上门服务流程 (新) ---
+        function confirmDeparture() {
+            const modal = document.getElementById('confirm-modal');
+            document.getElementById('confirm-modal-title').textContent = '确认出发';
+            document.getElementById('confirm-modal-body').innerHTML = '即将开始导航至客户地址。<br>系统将记录您的出发时间。';
+            const actionBtn = document.getElementById('confirm-modal-action-btn');
+            actionBtn.className = 'btn btn-primary';
+            actionBtn.textContent = '确认出发';
+            actionBtn.onclick = () => {
+                closeModal('confirm-modal');
+                showToast('已记录出发时间，正在打开地图...');
+                alert('模拟导航...');
+                document.getElementById('start-service-btn').disabled = false;
+            };
+            openModal('confirm-modal');
+        }
+
+        function startService() {
+            const modal = document.getElementById('confirm-modal');
+            document.getElementById('confirm-modal-title').textContent = '开始服务';
+            document.getElementById('confirm-modal-body').textContent = '请在开始服务前，确认您已抵达客户指定地点。';
+            const actionBtn = document.getElementById('confirm-modal-action-btn');
+            actionBtn.className = 'btn btn-success';
+            actionBtn.textContent = '我已抵达，开始服务';
+            actionBtn.onclick = () => {
+                closeModal('confirm-modal');
+                showToast('服务已开始！');
+                document.getElementById('service-completion-section').style.display = 'block';
+                document.querySelector('.btn-group').style.display = 'none'; // 隐藏出发按钮组
+            };
+            openModal('confirm-modal');
+        }
+
+        let signaturePad;
+        function openSignatureModal() {
+            openModal('signature-modal');
+            const canvas = document.getElementById('signature-pad-canvas');
+            // 延迟初始化以确保canvas可见
+            setTimeout(() => {
+                // 简单的签名板实现
+                const ctx = canvas.getContext('2d');
+                let drawing = false;
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+
+                function getMousePos(canvas, evt) {
+                    const rect = canvas.getBoundingClientRect();
+                    return { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
+                }
+
+                canvas.onmousedown = (e) => { drawing = true; ctx.moveTo(getMousePos(canvas, e).x, getMousePos(canvas, e).y); };
+                canvas.onmouseup = () => { drawing = false; ctx.beginPath(); };
+                canvas.onmousemove = (e) => {
+                    if (drawing) {
+                        ctx.lineTo(getMousePos(canvas, e).x, getMousePos(canvas, e).y);
+                        ctx.stroke();
+                    }
+                };
+            }, 100);
+        }
+
+        function clearSignature() {
+            const canvas = document.getElementById('signature-pad-canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function saveSignature() {
+            const canvas = document.getElementById('signature-pad-canvas');
+            const dataUrl = canvas.toDataURL();
+            document.getElementById('signature-image').src = dataUrl;
+            document.getElementById('signature-preview-container').style.display = 'block';
+            document.getElementById('signature-btn').style.display = 'none';
+            document.getElementById('rating-section').style.display = 'block';
+            document.getElementById('complete-btn').disabled = false;
+            closeModal('signature-modal');
+            showToast('签名已保存！');
+        }
+
+        // 星级评价交互
+        document.addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('star')) {
+                const container = e.target.parentElement;
+                const value = e.target.dataset.value;
+                const stars = container.querySelectorAll('.star');
+                stars.forEach(star => {
+                    star.classList.toggle('selected', star.dataset.value <= value);
+                });
+            }
+        });
+
+        function completeOnsiteService() {
+            const details = document.getElementById('service-details').value.trim();
+            const photos = document.getElementById('service-photos-input').files;
+
+            if (!details) {
+                alert('请填写服务完成记录！');
+                return;
+            }
+            if (photos.length === 0) {
+                alert('请上传至少一张服务凭证照片！');
+                return;
+            }
+
+            showToast('上门服务已完成！');
+            setTimeout(() => {
+                showListPage();
+                document.querySelector('.card[data-case="onsite"]').remove();
+            }, 1000);
+        }
+
+        // --- 退回服务单流程 (新) ---
+        function submitReturn() {
+            const reason = document.getElementById('return-reason').value;
+            const details = document.getElementById('return-details').value.trim();
+            if (!reason) { alert('请选择退回原因！'); return; }
+            if (!details) { alert('请填写详细说明！'); return; }
+
+            document.getElementById('summary-return-reason').textContent = reason;
+            document.getElementById('summary-return-details').textContent = details;
+            openModal('return-confirm-modal');
+        }
+
+        function processReturn() {
+            closeModal('return-confirm-modal');
+            showToast('正在生成退货物流单...');
+            setTimeout(() => { openModal('return-label-modal'); }, 500);
+        }
+
+        function finishReturn() {
+            closeModal('return-label-modal');
+            showToast('服务单已成功退回！');
+            setTimeout(() => {
+                showListPage();
+                document.querySelector('.card[data-case="return"]').remove();
+            }, 500);
+        }
+
+        // --- 其他用例功能 (保持不变) ---
+        function scanBarcode() {
+            showToast('扫码功能开发中...');
+        }
+
+        function confirmReceipt() {
+            showToast('收件确认成功！');
+            setTimeout(() => {
+                showListPage();
+                document.querySelector('.card[data-case="receipt"]').remove();
+            }, 1000);
+        }
+
+        function submitCompletion() {
+            const details = document.getElementById('completion-details').value.trim();
+            const photos = document.getElementById('completion-photos-input').files;
+
+            if (!details) {
+                alert('请填写维修详情！');
+                return;
+            }
+            if (photos.length === 0) {
+                alert('请上传至少一张维修完成照片！');
+                return;
+            }
+
+            showToast('正在生成回寄单...');
+            setTimeout(() => {
+                showToast('维修完成，回寄单已生成！');
+                setTimeout(() => {
+                    showListPage();
+                    document.querySelector('.card[data-case="complete"]').remove();
+                }, 1000);
+            }, 500);
+        }
+
+        function previewPhotos(input, previewContainerId) {
+            const container = document.getElementById(previewContainerId);
+            container.innerHTML = '';
+            if (input.files) {
+                Array.from(input.files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        container.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+
+    </script>
+</body>
+
+</html>

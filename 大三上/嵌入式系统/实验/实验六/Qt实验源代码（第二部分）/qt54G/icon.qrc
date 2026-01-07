@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>icon/handup.png</file>
+        <file>icon/CALL.png</file>
+        <file>icon/back.png</file>
+        <file>icon/background.jpg</file>
+        <file>icon/exit.png</file>
+        <file>icon/simlost.png</file>
+    </qresource>
+</RCC>

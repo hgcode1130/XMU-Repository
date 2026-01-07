@@ -1,0 +1,53 @@
+QT       += core gui charts
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+CONFIG += c++11
+
+# The following define makes your compiler emit warnings if you use
+# any Qt feature that has been marked deprecated (the exact warnings
+# depend on your compiler). Please consult the documentation of the
+# deprecated API in order to know how to port your code away from it.
+DEFINES += QT_DEPRECATED_WARNINGS
+
+# You can also make your code fail to compile if it uses deprecated APIs.
+# In order to do so, uncomment the following line.
+# You can also select to disable deprecated APIs only up to a certain version of Qt.
+#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+SOURCES += \
+    beepdevice.cpp \
+    customtabstyle.cpp \
+    lightelectric.cpp \
+    lightled.cpp \
+    lis3dhdevice.cpp \
+    main.cpp \
+    mixadcdevice.cpp \
+    relaydevice.cpp \
+    semicircular.cpp \
+    temdevice.cpp \
+    widget.cpp
+
+HEADERS += \
+    beepdevice.h \
+    customtabstyle.h \
+    lightelectric.h \
+    lightled.h \
+    lis3dhdevice.h \
+    mixadcdevice.h \
+    relaydevice.h \
+    semicircular.h \
+    temdevice.h \
+    widget.h
+
+FORMS +=
+
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    icon.qrc
+
+DISTFILES +=

@@ -1,0 +1,3 @@
+C:/FS3399M4/Android/FS3399/LED/app/.cxx/RelWithDebInfo/4j22xf3t/arm64-v8a/CMakeFiles/led.dir
+C:/FS3399M4/Android/FS3399/LED/app/.cxx/RelWithDebInfo/4j22xf3t/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/FS3399M4/Android/FS3399/LED/app/.cxx/RelWithDebInfo/4j22xf3t/arm64-v8a/CMakeFiles/rebuild_cache.dir

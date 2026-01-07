@@ -1,0 +1,82 @@
+
+[cols="1a"]
+|===
+
+|
+[frame="none"]
+[cols="1,1"]
+!===
+! 用例编号：MALL-SERVICE-033
+! 用例名称：派工 (Assign Service Order)
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 级别: 用户目标 (User Goal)
+!===
+
+|
+[frame="none"]
+[cols="2"]
+!===
+! 包： 服务商-服务单管理 (Service Provider - Manage Service Orders)
+! 参与者：服务商 (Service Provider)
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 描述：服务商将待派工的服务单派工给维修师傅 (Service provider assigns an unassigned service order to a maintenance worker.)
+! 触发事件: 服务商进行派工 (Service provider performs assignment.)
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 主成功场景
+!===
+
+|
+[frame="none"]
+[cols="1,4,2", options="header"]
+!===
+! 步骤 ! 描述 ! 信息
+
+! 1
+! 系统显示所有待派工的服务单
+! 服务单号、服务名称、产品、商户、服务地区、服务单状态、顾客姓名、联系电话
+
+! 2
+! 服务商选择某一待派工的服务单
+!
+
+! 3
+! 系统显示可派工的维修师傅
+! 维修师傅编号、姓名、工作状态、负责区域、联系方式、技能
+
+! 4
+! 服务商选择某一维修师傅进行派工
+!
+
+! 5
+! 系统确认派工成功更新服务单状态为已派工，并向选中的维修师傅发送派工通知
+! 服务单状态
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 扩展场景
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 其他:
+!===
+|===

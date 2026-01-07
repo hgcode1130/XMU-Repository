@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ServiceOrderService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">service</a> &gt; <a href="index.source.html" class="el_package">cn.edu.xmu.oomall.service.service</a> &gt; <span class="el_source">ServiceOrderService.java</span></div><h1>ServiceOrderService.java</h1><pre class="source lang-java linenums">package cn.edu.xmu.oomall.service.service;
+
+import cn.edu.xmu.javaee.core.model.ReturnNo;
+import cn.edu.xmu.javaee.core.model.ReturnObject;
+import cn.edu.xmu.javaee.core.model.UserToken;
+import cn.edu.xmu.oomall.service.adapter.controller.dto.CreateServiceOrderDto;
+import cn.edu.xmu.oomall.service.dao.ServiceOrderHistoryRepository;
+import cn.edu.xmu.oomall.service.dao.ServiceOrderRepository;
+import cn.edu.xmu.oomall.service.dao.bo.ServiceOrder;
+import cn.edu.xmu.oomall.service.dao.bo.ServiceOrderHistory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+/**
+ * 服务单领域服务
+ */
+@Service
+@RequiredArgsConstructor
+<span class="nc" id="L24">@Slf4j</span>
+public class ServiceOrderService {
+
+    private final ServiceOrderRepository serviceOrderRepository;
+    private final ServiceOrderHistoryRepository serviceOrderHistoryRepository;
+
+    /**
+     * 创建服务单
+     */
+    @Transactional
+    public ReturnObject createServiceOrder(Long shopId, Long aftersaleId, CreateServiceOrderDto dto, UserToken user) {
+<span class="nc" id="L35">        Optional&lt;ServiceOrder&gt; existing = serviceOrderRepository.findByShopIdAndAftersaleId(shopId, aftersaleId);</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        if (existing.isPresent()) {</span>
+<span class="nc" id="L37">            ServiceOrder order = existing.get();</span>
+<span class="nc" id="L38">            log.info(&quot;create service order idempotent hit | shopId={} aftersaleId={} serviceOrderId={}&quot;, shopId, aftersaleId, order.getId());</span>
+<span class="nc" id="L39">            return new ReturnObject(ReturnNo.OK, order);</span>
+        }
+
+<span class="nc" id="L42">        ServiceOrder order = new ServiceOrder();</span>
+<span class="nc" id="L43">        order.initForCreate(shopId, aftersaleId, dto, user);</span>
+        try {
+<span class="nc" id="L45">            order = serviceOrderRepository.save(order);</span>
+<span class="nc" id="L46">            ServiceOrderHistory history = order.buildCreationHistory(user);</span>
+<span class="nc" id="L47">            serviceOrderHistoryRepository.save(history);</span>
+<span class="nc" id="L48">            log.info(&quot;create service order success | shopId={} aftersaleId={} serviceOrderId={}&quot;, shopId, aftersaleId, order.getId());</span>
+<span class="nc" id="L49">            return new ReturnObject(ReturnNo.CREATED, order);</span>
+<span class="nc" id="L50">        } catch (DataIntegrityViolationException e) {</span>
+<span class="nc" id="L51">            ServiceOrder idempotent = serviceOrderRepository.findByShopIdAndAftersaleId(shopId, aftersaleId)</span>
+<span class="nc" id="L52">                    .orElseThrow(() -&gt; e);</span>
+<span class="nc" id="L53">            log.info(&quot;create service order idempotent via unique constraint | shopId={} aftersaleId={} serviceOrderId={}&quot;,</span>
+<span class="nc" id="L54">                    shopId, aftersaleId, idempotent.getId());</span>
+<span class="nc" id="L55">            return new ReturnObject(ReturnNo.OK, idempotent);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

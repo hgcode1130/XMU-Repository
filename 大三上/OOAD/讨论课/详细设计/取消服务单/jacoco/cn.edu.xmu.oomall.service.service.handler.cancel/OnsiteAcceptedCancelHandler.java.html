@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OnsiteAcceptedCancelHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">service</a> &gt; <a href="index.source.html" class="el_package">cn.edu.xmu.oomall.service.service.handler.cancel</a> &gt; <span class="el_source">OnsiteAcceptedCancelHandler.java</span></div><h1>OnsiteAcceptedCancelHandler.java</h1><pre class="source lang-java linenums">package cn.edu.xmu.oomall.service.service.handler.cancel;
+
+import cn.edu.xmu.oomall.service.dao.bo.ServiceOrder;
+import cn.edu.xmu.oomall.service.service.handler.CancelHandler;
+import cn.edu.xmu.oomall.service.service.result.CancelResult;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+/**
+ * 上门服务-已接受状态取消处理器
+ * 场景：上门服务单已被接受，仅需更新状态
+ */
+@Component
+<span class="fc" id="L14">@Slf4j</span>
+<span class="fc" id="L15">public class OnsiteAcceptedCancelHandler implements CancelHandler {</span>
+    
+    @Override
+    public boolean supports(Integer serviceType, Integer progress) {
+<span class="fc bfc" id="L19" title="All 4 branches covered.">        return ServiceOrder.TYPE_ONSITE == serviceType &amp;&amp; ServiceOrder.PROGRESS_ACCEPTED == progress;</span>
+    }
+    
+    @Override
+    public CancelResult cancel(ServiceOrder serviceOrder, String cancelReason) {
+<span class="fc" id="L24">        log.info(&quot;开始处理上门服务-已接受状态取消 | orderId={}&quot;, serviceOrder.getId());</span>
+        
+        // 仅更新服务单状态
+<span class="fc" id="L27">        serviceOrder.setProgress(ServiceOrder.PROGRESS_CANCELED);</span>
+        
+<span class="fc" id="L29">        return CancelResult.success(&quot;取消成功&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

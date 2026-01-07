@@ -1,0 +1,111 @@
+[cols="1a"]
+|===
+
+|
+[frame="none"]
+[cols="1,1"]
+!===
+! 用例编号：MALL-SERVICE-035
+! 用例名称：确认收件 (Confirm Receipt)
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 级别: 用户目标 (User Goal)
+!===
+
+|
+[frame="none"]
+[cols="2"]
+!===
+! 包： 服务商-服务单管理 (Service Provider - Manage Service Orders)
+! 参与者：维修师傅 (Maintenance Worker)
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 描述：维修师傅收到待维修商品后检查商品并确认收件 (Maintenance worker inspects and confirms receipt after receiving the item for repair)
+! 触发事件：维修师傅确认收件 (Maintenance worker confirms receipt)
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 主成功场景
+!===
+
+|
+[frame="none"]
+[cols="1,4,2", options="header"]
+!===
+! 步骤 ! 描述 ! 信息
+
+! 1
+! 维修师傅收到待维修商品，根据快递单号查询对应的服务单
+! 快递单号
+
+! 2
+! 系统显示服务单详情
+! 服务单号、服务名称、产品、商户、服务地区、服务单状态、服务内容、顾客姓名、联系电话、顾客地址，售后单信息，订单信息、快递单号
+
+! 3
+! 维修师傅检查商品符合维修要求后确认收件
+!
+
+! 4
+! 系统更新服务单状态为已收件
+!
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 扩展场景
+!===
+
+|
+[frame="none"]
+[cols="1,4,2", options="header"]
+
+!===
+! 步骤 ! 描述 ! 信息
+
+! 2a
+! 服务单不存在
+!
+
+! 2a.1
+! 系统提示服务单不存在
+!
+
+! 2a.2
+! 返回第1步维修师傅重新输入快递单号
+!
+
+! 3a
+! 商品不符合维修要求
+!
+
+! 3a.1
+! 维修师傅检查后发现商品与服务单信息不符，拒绝收件并提交拒绝原因
+! 拒绝收件的原因
+
+! 3a.2
+! 系统更新服务单状态为拒绝收件，调用创建运单子功能用例，寄回商品
+!
+
+
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 其他:
+!===
+|===

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MailRepairAcceptHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">service</a> &gt; <a href="index.source.html" class="el_package">cn.edu.xmu.oomall.service.service.handler.accept</a> &gt; <span class="el_source">MailRepairAcceptHandler.java</span></div><h1>MailRepairAcceptHandler.java</h1><pre class="source lang-java linenums">package cn.edu.xmu.oomall.service.service.handler.accept;
+
+import cn.edu.xmu.oomall.service.adapter.feign.LogisticsService;
+import cn.edu.xmu.oomall.service.adapter.feign.dto.CreateWaybillRequest;
+import cn.edu.xmu.oomall.service.adapter.feign.dto.WaybillResponse;
+import cn.edu.xmu.oomall.service.dao.bo.ServiceOrder;
+import cn.edu.xmu.oomall.service.service.handler.AcceptHandler;
+import cn.edu.xmu.oomall.service.service.result.AcceptResult;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+/**
+ * 寄修服务接受处理器
+ * 场景：寄修服务需要生成运单让客户寄送物品
+ */
+@Component
+@RequiredArgsConstructor
+<span class="nc" id="L22">@Slf4j</span>
+public class MailRepairAcceptHandler implements AcceptHandler {
+    
+<span class="nc" id="L25">    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(&quot;yyyyMMddHHmmss&quot;);</span>
+    
+    private final LogisticsService logisticsService;
+    
+    @Override
+    public boolean supports(Integer serviceType) {
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        return ServiceOrder.TYPE_MAIL == serviceType;</span>
+    }
+    
+    @Override
+    public AcceptResult accept(ServiceOrder serviceOrder, Long providerId) {
+<span class="nc" id="L36">        log.info(&quot;开始处理寄修服务接受 | orderId={} providerId={}&quot;, </span>
+<span class="nc" id="L37">                serviceOrder.getId(), providerId);</span>
+        
+        // 构建运单请求
+<span class="nc" id="L40">        CreateWaybillRequest request = CreateWaybillRequest.builder()</span>
+<span class="nc" id="L41">                .receiverName(&quot;维修中心&quot;)</span>
+<span class="nc" id="L42">                .receiverPhone(&quot;400-000-0000&quot;)</span>
+<span class="nc" id="L43">                .receiverRegionId(1L)</span>
+<span class="nc" id="L44">                .receiverAddress(&quot;维修中心地址&quot;)</span>
+<span class="nc" id="L45">                .senderName(serviceOrder.getContact())</span>
+<span class="nc" id="L46">                .senderPhone(serviceOrder.getPhone())</span>
+<span class="nc" id="L47">                .senderRegionId(serviceOrder.getRegionId())</span>
+<span class="nc" id="L48">                .senderAddress(serviceOrder.getAddress())</span>
+<span class="nc" id="L49">                .build();</span>
+        
+        String waybillNo;
+        
+        try {
+            // 尝试调用物流服务创建运单
+<span class="nc" id="L55">            var response = logisticsService.createWaybill(request);</span>
+<span class="nc bnc" id="L56" title="All 4 branches missed.">            if (response != null &amp;&amp; response.getData() != null) {</span>
+<span class="nc" id="L57">                WaybillResponse waybillResponse = (WaybillResponse) response.getData();</span>
+<span class="nc" id="L58">                waybillNo = waybillResponse.getWaybillNo();</span>
+<span class="nc" id="L59">                log.info(&quot;✅ 成功调用物流服务创建运单 | waybillNo={}&quot;, waybillNo);</span>
+<span class="nc" id="L60">            } else {</span>
+                // 物流服务返回空数据，使用降级处理
+<span class="nc" id="L62">                waybillNo = generateMockWaybillNo();</span>
+<span class="nc" id="L63">                log.warn(&quot;⚠️ 物流服务返回空数据，使用模拟运单号 | waybillNo={}&quot;, waybillNo);</span>
+            }
+<span class="nc" id="L65">        } catch (Exception e) {</span>
+            // 物流服务调用失败，使用降级处理
+<span class="nc" id="L67">            waybillNo = generateMockWaybillNo();</span>
+<span class="nc" id="L68">            log.warn(&quot;⚠️ 物流服务调用失败，使用降级处理 | error={} | 生成模拟运单号={}&quot;, </span>
+<span class="nc" id="L69">                    e.getMessage(), waybillNo);</span>
+<span class="nc" id="L70">            log.info(&quot;📦 模拟运单信息 | 寄件人={} 电话={} 地址={}&quot;, </span>
+<span class="nc" id="L71">                    request.getSenderName(), </span>
+<span class="nc" id="L72">                    request.getSenderPhone(), </span>
+<span class="nc" id="L73">                    request.getSenderAddress());</span>
+<span class="nc" id="L74">        }</span>
+        
+        // 更新服务单状态和运单号
+<span class="nc" id="L77">        serviceOrder.setProgress(ServiceOrder.PROGRESS_ACCEPTED);</span>
+<span class="nc" id="L78">        serviceOrder.setWaybillNo(waybillNo);</span>
+        
+<span class="nc" id="L80">        log.info(&quot;寄修服务接受完成 | orderId={} waybillNo={}&quot;, serviceOrder.getId(), waybillNo);</span>
+<span class="nc" id="L81">        return AcceptResult.success(&quot;接受成功，已生成运单&quot;, waybillNo);</span>
+    }
+    
+    /**
+     * 生成模拟运单号（降级处理）
+     */
+    private String generateMockWaybillNo() {
+<span class="nc" id="L88">        return &quot;MOCK-&quot; + LocalDateTime.now().format(FORMATTER);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

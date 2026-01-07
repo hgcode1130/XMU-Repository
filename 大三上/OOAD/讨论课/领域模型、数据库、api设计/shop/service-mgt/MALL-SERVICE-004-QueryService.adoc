@@ -1,0 +1,83 @@
+﻿[cols="1a"]
+|===
+
+|
+[frame="none"]
+[cols="1,1"]
+!===
+! 用例编号：MALL-SERVICE-004
+! 用例名称：查询商品服务 (Query Service)
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 级别: 用户目标 (User Goal)
+!===
+
+|
+[frame="none"]
+[cols="2"]
+!===
+! 包： 商户-管理服务 (Merchant - Manage Services)
+! 参与者：商户 (Merchant)
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 描述：商户按条件查询服务列表
+! 触发事件: 商户进入服务列表并设置筛选项
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 主成功场景
+!===
+
+|
+[frame="none"]
+[cols="1,4,2", options="header"]
+!===
+! 步骤 ! 描述 ! 信息
+
+! 1
+! 商户输入查询条件
+! 服务名称、类型、服务商品、服务状态、区域
+
+! 2
+! 系统返回匹配结果并支持分页/排序/导出
+! 服务名称、服务类型、服务商品、服务状态、服务区域
+
+! 3
+! 商户查看服务详情
+! 服务名称、服务类型、服务商品、服务状态、服务区域、服务关联的服务合同，服务历史审核记录
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 扩展场景
+!===
+
+|
+[frame="none"]
+[cols="1,4,2", options="header"]
+!===
+
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 其他:
+
+!===
+|===
+

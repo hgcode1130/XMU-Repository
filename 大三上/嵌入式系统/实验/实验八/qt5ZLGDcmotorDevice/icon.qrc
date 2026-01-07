@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>icon/Servo.png</file>
+        <file>icon/exit.png</file>
+        <file>icon/FAN.png</file>
+        <file>icon/FAN_close.png</file>
+        <file>icon/part1.png</file>
+        <file>icon/part2.png</file>
+        <file>icon/part3.png</file>
+        <file>icon/part4.png</file>
+        <file>icon/partclose.png</file>
+        <file>icon/Dc.png</file>
+        <file>icon/Stepper.png</file>
+        <file>icon/part1clicked.png</file>
+        <file>icon/part2clicked.png</file>
+        <file>icon/part3clicked.png</file>
+        <file>icon/part4clicked.png</file>
+        <file>icon/part5.png</file>
+        <file>icon/part5clicked.png</file>
+        <file>icon/part6.png</file>
+        <file>icon/part6clicked.png</file>
+        <file>icon/partcloseclicked.png</file>
+        <file>icon/left.png</file>
+        <file>icon/right.png</file>
+        <file>icon/stop.png</file>
+        <file>icon/leftclicked.png</file>
+        <file>icon/rightclicked.png</file>
+        <file>icon/stopclicked.png</file>
+        <file>icon/background.png</file>
+    </qresource>
+</RCC>

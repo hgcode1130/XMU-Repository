@@ -1,0 +1,349 @@
+<mxfile host="app.diagrams.net" modified="2023-10-27T00:00:00.000Z" agent="5.0 (Windows)" etag="OOMALL_Structure" version="21.0.0" type="device">
+  <diagram id="OOMALL_Architecture" name="Page-1">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <mxCell id="Title" value="OOMALL电商平台功能结构图" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="660" y="20" width="360" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="SubTitle" value="厦门大学信息学院 JavaEE课程项目" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="660" y="60" width="360" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Sys_Platform" value="平台管理子系统" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="120" width="220" height="460" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="Mod_P_ShopAudit" value="商铺审核管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#E3F2FD;" vertex="1" parent="Sys_Platform">
+          <mxGeometry y="30" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_P_ShopAudit" value="• 商铺申请审核&#xa;• 商铺信息查询" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Platform">
+          <mxGeometry y="56" width="220" height="34" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="Mod_P_ProdAudit" value="商品审核管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#E3F2FD;" vertex="1" parent="Sys_Platform">
+          <mxGeometry y="90" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_P_ProdAudit" value="• 商品草稿审核&#xa;• 商品发布管理&#xa;• 商品禁售解禁&#xa;• 分账比例设置" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Platform">
+          <mxGeometry y="116" width="220" height="64" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_P_Cat" value="分类管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#E3F2FD;" vertex="1" parent="Sys_Platform">
+          <mxGeometry y="180" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_P_Cat" value="• 一级分类管理&#xa;• 二级分类管理&#xa;• 分类修改删除" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Platform">
+          <mxGeometry y="206" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_P_Region" value="地区管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#E3F2FD;" vertex="1" parent="Sys_Platform">
+          <mxGeometry y="256" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_P_Region" value="• 地区信息维护&#xa;• 地区启用停用&#xa;• 地区层级管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Platform">
+          <mxGeometry y="282" width="220" height="50" as="geometry" />
+        </mxCell>
+         <mxCell id="Mod_P_Act" value="活动审核管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#E3F2FD;" vertex="1" parent="Sys_Platform">
+          <mxGeometry y="332" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_P_Act" value="• 团购活动审核" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Platform">
+          <mxGeometry y="358" width="220" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_P_SP" value="服务商管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#E3F2FD;" vertex="1" parent="Sys_Platform">
+          <mxGeometry y="378" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_P_SP" value="• 服务商审核&#xa;• 服务商查询&#xa;• 服务商停用/恢复" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Platform">
+          <mxGeometry y="404" width="220" height="50" as="geometry" />
+        </mxCell>
+
+
+        <mxCell id="Sys_Shop" value="商铺管理子系统" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="290" y="120" width="220" height="320" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_S_Info" value="商铺信息管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#E8F5E9;" vertex="1" parent="Sys_Shop">
+          <mxGeometry y="30" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_S_Info" value="• 商铺申请注册&#xa;• 商铺信息修改&#xa;• 商铺信息查询" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Shop">
+          <mxGeometry y="56" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_S_Status" value="商铺状态管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#E8F5E9;" vertex="1" parent="Sys_Shop">
+          <mxGeometry y="106" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_S_Status" value="• 商铺上线&#xa;• 商铺下线&#xa;• 商铺关闭" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Shop">
+          <mxGeometry y="132" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_S_Freight" value="运费模板管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#E8F5E9;" vertex="1" parent="Sys_Shop">
+          <mxGeometry y="182" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_S_Freight" value="• 模板创建/修改/删除&#xa;• 模板克隆&#xa;• 重量/件数模板配置&#xa;• 地区运费配置" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Shop">
+          <mxGeometry y="208" width="220" height="64" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Sys_Product" value="商品管理子系统" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="540" y="120" width="220" height="490" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_Pr_Info" value="商品信息管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#FFF3E0;" vertex="1" parent="Sys_Product">
+          <mxGeometry y="30" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_Pr_Info" value="• 商品信息查询/修改&#xa;• 商品关联管理&#xa;• 运费模板关联&#xa;• 物流关联管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Product">
+          <mxGeometry y="56" width="220" height="64" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_Pr_Draft" value="商品草稿管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#FFF3E0;" vertex="1" parent="Sys_Product">
+          <mxGeometry y="120" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_Pr_Draft" value="• 草稿创建/修改/删除&#xa;• 草稿查询&#xa;• 草稿提交审核" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Product">
+          <mxGeometry y="146" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_Pr_Sales" value="销售管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#FFF3E0;" vertex="1" parent="Sys_Product">
+          <mxGeometry y="196" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_Pr_Sales" value="• 销售信息创建/查询&#xa;• 销售信息删除&#xa;• 销售取消" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Product">
+          <mxGeometry y="222" width="220" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="Mod_Pr_Promo" value="优惠活动管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#FFF3E0;" vertex="1" parent="Sys_Product">
+          <mxGeometry y="272" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_Pr_Promo" value="• 优惠券活动管理/查询&#xa;• 优惠计算&#xa;• 团购活动管理&#xa;• 团购活动查询" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Product">
+          <mxGeometry y="298" width="220" height="64" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Sys_Order" value="订单管理子系统" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="790" y="120" width="220" height="150" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_O_Proc" value="订单处理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#FFF8E1;" vertex="1" parent="Sys_Order">
+          <mxGeometry y="30" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_O_Proc" value="• 订单创建&#xa;• 订单查询" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Order">
+          <mxGeometry y="56" width="220" height="34" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_O_Search" value="订单搜索" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#FFF8E1;" vertex="1" parent="Sys_Order">
+          <mxGeometry y="90" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_O_Search" value="• 按商品名搜索&#xa;• 按用户搜索" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Order">
+          <mxGeometry y="116" width="220" height="34" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Sys_Freight" value="物流管理子系统" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="120" width="220" height="420" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_F_Ware" value="仓库管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#F3E5F5;" vertex="1" parent="Sys_Freight">
+          <mxGeometry y="30" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_F_Ware" value="• 仓库创建/修改&#xa;• 仓库删除&#xa;• 仓库查询" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Freight">
+          <mxGeometry y="56" width="220" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="Mod_F_Region" value="配送地区管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#F3E5F5;" vertex="1" parent="Sys_Freight">
+          <mxGeometry y="106" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_F_Region" value="• 配送地区添加/修改&#xa;• 配送地区删除&#xa;• 配送地区查询" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Freight">
+          <mxGeometry y="132" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_F_Contract" value="物流合同管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#F3E5F5;" vertex="1" parent="Sys_Freight">
+          <mxGeometry y="182" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_F_Contract" value="• 合同创建/修改/删除&#xa;• 合同启用停用&#xa;• 合同查询" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Freight">
+          <mxGeometry y="208" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_F_Exp" value="快递服务" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#F3E5F5;" vertex="1" parent="Sys_Freight">
+          <mxGeometry y="258" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_F_Exp" value="• 快递单创建&#xa;• 快递状态查询&#xa;• 不可达地区管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Freight">
+          <mxGeometry y="284" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Sys_Aftersale" value="售后管理子系统" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#ffcccc;strokeColor=#cc6666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="790" y="290" width="220" height="200" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_AS_Query" value="售后查询" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#FFE0E0;" vertex="1" parent="Sys_Aftersale">
+          <mxGeometry y="30" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_AS_Query" value="• 售后单查询&#xa;• 售后详情查看" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Aftersale">
+          <mxGeometry y="56" width="220" height="34" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_AS_Review" value="售后审核" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#FFE0E0;" vertex="1" parent="Sys_Aftersale">
+          <mxGeometry y="90" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_AS_Review" value="• 售后申请审核&#xa;• 同意/拒绝售后&#xa;• 售后类型转换" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Aftersale">
+          <mxGeometry y="116" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_AS_Receive" value="售后验收" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#FFE0E0;" vertex="1" parent="Sys_Aftersale">
+          <mxGeometry y="166" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_AS_Receive" value="• 退回商品验收" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Aftersale">
+          <mxGeometry y="192" width="220" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Sys_Service" value="服务管理子系统" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#e6f2ff;strokeColor=#6699cc;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="290" y="460" width="220" height="260" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_Svc_Info" value="服务信息管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#E0F0FF;" vertex="1" parent="Sys_Service">
+          <mxGeometry y="30" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_Svc_Info" value="• 服务创建/修改/删除&#xa;• 服务查询&#xa;• 服务商品关联" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Service">
+          <mxGeometry y="56" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_Svc_Contract" value="服务合同管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#E0F0FF;" vertex="1" parent="Sys_Service">
+          <mxGeometry y="106" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_Svc_Contract" value="• 服务商查询&#xa;• 服务合同订立&#xa;• 服务合同确认/取消&#xa;• 服务合同暂停/恢复" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Service">
+          <mxGeometry y="132" width="220" height="64" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_Svc_Order" value="服务单管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#E0F0FF;" vertex="1" parent="Sys_Service">
+          <mxGeometry y="196" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_Svc_Order" value="• 服务单派发&#xa;• 服务单状态跟踪" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Service">
+          <mxGeometry y="222" width="220" height="34" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Sys_ServiceProvider" value="服务商管理子系统" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#fff0e6;strokeColor=#cc9966;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="540" y="630" width="220" height="260" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_SP_Account" value="服务商账号管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#FFF0E0;" vertex="1" parent="Sys_ServiceProvider">
+          <mxGeometry y="30" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_SP_Account" value="• 服务商申请入驻&#xa;• 服务商信息修改&#xa;• 服务商审核" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_ServiceProvider">
+          <mxGeometry y="56" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_SP_Staff" value="服务商人员管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#FFF0E0;" vertex="1" parent="Sys_ServiceProvider">
+          <mxGeometry y="106" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_SP_Staff" value="• 员工添加/修改/删除&#xa;• 员工账号启用/停用&#xa;• 员工查询" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_ServiceProvider">
+          <mxGeometry y="132" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_SP_Order" value="服务单处理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#FFF0E0;" vertex="1" parent="Sys_ServiceProvider">
+          <mxGeometry y="182" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_SP_Order" value="• 服务单接收/拒绝&#xa;• 服务单查询&#xa;• 服务单派工&#xa;• 服务单完成确认" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_ServiceProvider">
+          <mxGeometry y="208" width="220" height="64" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Sys_Core" value="基础服务子系统" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="120" width="220" height="490" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_C_GW" value="API网关服务" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#eeeeee;" vertex="1" parent="Sys_Core">
+          <mxGeometry y="30" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_C_GW" value="• 请求路由&#xa;• 负载均衡&#xa;• 服务发现" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Core">
+          <mxGeometry y="56" width="220" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="Mod_C_Auth" value="认证授权服务" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#eeeeee;" vertex="1" parent="Sys_Core">
+          <mxGeometry y="106" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_C_Auth" value="• 用户认证&#xa;• 权限校验&#xa;• JWT令牌管理" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Core">
+          <mxGeometry y="132" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_C_Cache" value="缓存服务" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#eeeeee;" vertex="1" parent="Sys_Core">
+          <mxGeometry y="182" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_C_Cache" value="• Redis缓存&#xa;• 布隆过滤器" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Core">
+          <mxGeometry y="208" width="220" height="34" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_C_MQ" value="消息服务" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#eeeeee;" vertex="1" parent="Sys_Core">
+          <mxGeometry y="242" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_C_MQ" value="• RocketMQ消息&#xa;• 异步通知" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Core">
+          <mxGeometry y="268" width="220" height="34" as="geometry" />
+        </mxCell>
+
+        <mxCell id="Mod_C_Common" value="公共组件" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=12;fontColor=#333333;bgcolor=#eeeeee;" vertex="1" parent="Sys_Core">
+          <mxGeometry y="302" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Func_C_Common" value="• AOP切面处理&#xa;• 异常统一处理&#xa;• 数据验证&#xa;• 工具类库" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=10;spacingRight=4;overflow=hidden;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="Sys_Core">
+          <mxGeometry y="328" width="220" height="64" as="geometry" />
+        </mxCell>
+
+        <mxCell id="link_root" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=none;endFill=0;" edge="1" parent="1" source="Title">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="840" y="100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="bus_horiz" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="150" y="100" as="sourcePoint" />
+            <mxPoint x="1400" y="100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="link_sys1" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="Sys_Platform">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="150" y="100" as="sourcePoint" />
+            <mxPoint x="150" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link_sys2" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="Sys_Shop">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="100" as="sourcePoint" />
+            <mxPoint x="400" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link_sys3" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="Sys_Product">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="650" y="100" as="sourcePoint" />
+            <mxPoint x="650" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link_sys4" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="Sys_Order">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="900" y="100" as="sourcePoint" />
+            <mxPoint x="900" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link_sys5" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="Sys_Freight">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1150" y="100" as="sourcePoint" />
+            <mxPoint x="1150" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link_sys6" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="Sys_Core">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1400" y="100" as="sourcePoint" />
+            <mxPoint x="1400" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="link_sys7" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="Sys_Shop" target="Sys_Service">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="440" as="sourcePoint" />
+            <mxPoint x="400" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="link_sys8" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="Sys_Service" target="Sys_ServiceProvider">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="720" as="sourcePoint" />
+            <mxPoint x="650" y="630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

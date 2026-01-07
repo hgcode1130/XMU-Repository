@@ -1,0 +1,95 @@
+[cols="1a"]
+|===
+
+|
+[frame="none"]
+[cols="1,1"]
+!===
+! 用例编号：MALL-SERVICE-042
+! 用例名称：确认服务合同 (Confirm Service Contract)
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 级别: 用户目标 (User Goal)
+!===
+
+|
+[frame="none"]
+[cols="2"]
+!===
+! 包： 服务商-管理服务 (Service Provider - Manage Service)
+! 参与者：服务商 (Service Provider)
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 描述： 服务商确认服务合同 (Service provider confirms the service contract)
+! 触发事件: 服务商确认服务合同 (Service provider confirms service contract)
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 主成功场景
+!===
+
+|
+[frame="none"]
+[cols="1,4,2", options="header"]
+!===
+! 步骤 ! 描述 ! 信息
+
+! 1
+! 系统显示所有待确认合同列表
+! 服务名称、服务区域、商户名称、合同状态、起止日期，联系人，联系电话
+
+! 2
+! 服务商选择其中一个目标合同
+! 
+
+! 3
+! 系统显示合同详情
+! 服务名称、服务区域、商户名称、合同状态、起止日期，联系人，联系电话、条款
+
+! 4
+! 服务商确认合同
+! 
+
+!===
+
+|
+[frame="none"]
+[cols="1", options="header"]
+!===
+! 扩展场景
+!===
+
+|
+[frame="none"]
+[cols="1,4,2", options="header"]
+!===
+! 步骤 ! 描述 ! 信息
+
+! 4a
+! 服务商拒绝服务合同，并提交拒绝原因
+! 拒绝原因
+
+! 4a.1
+! 系统更新合同状态到平台
+! 
+
+!===
+
+|
+[frame="none"]
+[cols="1"]
+!===
+! 其他:
+!===
+|===

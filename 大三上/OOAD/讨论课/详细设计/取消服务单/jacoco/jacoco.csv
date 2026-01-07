@@ -1,0 +1,33 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+service,cn.edu.xmu.oomall.service.model,ServiceBizConstants.OrderProgress,14,0,0,0,2,0,2,0,2,0
+service,cn.edu.xmu.oomall.service.model,ServiceBizConstants.ContractOperationType,3,0,0,0,1,0,1,0,1,0
+service,cn.edu.xmu.oomall.service.model,ServiceBizConstants.ContractStatus,3,0,0,0,1,0,1,0,1,0
+service,cn.edu.xmu.oomall.service.model,ServiceBizConstants.OperatorType,3,0,0,0,1,0,1,0,1,0
+service,cn.edu.xmu.oomall.service.model,ServiceBizConstants.OrderOperationType,3,0,0,0,1,0,1,0,1,0
+service,cn.edu.xmu.oomall.service.service,ServiceContractService,58,0,0,0,9,0,3,0,3,0
+service,cn.edu.xmu.oomall.service.service,ProviderServiceOrderService,406,0,38,0,70,0,28,0,9,0
+service,cn.edu.xmu.oomall.service.service,ServiceContractService.CancelContractResult,9,0,0,0,1,0,1,0,1,0
+service,cn.edu.xmu.oomall.service.service,ServiceOrderService,127,0,2,0,19,0,4,0,3,0
+service,cn.edu.xmu.oomall.service.adapter.feign.fallback,LogisticsServiceFallback,68,0,0,0,17,0,4,0,4,0
+service,cn.edu.xmu.oomall.service.service.factory,AcceptHandlerFactory,50,0,4,0,10,0,4,0,2,0
+service,cn.edu.xmu.oomall.service.service.factory,CancelHandlerFactory,56,0,4,0,10,0,4,0,2,0
+service,cn.edu.xmu.oomall.service.adapter.controller,ProviderServiceOrderController,48,0,2,0,6,0,4,0,3,0
+service,cn.edu.xmu.oomall.service.adapter.controller,ProviderContractController,87,0,6,0,16,0,5,0,2,0
+service,cn.edu.xmu.oomall.service.adapter.controller,InternalController,88,0,6,0,13,0,5,0,2,0
+service,cn.edu.xmu.oomall.service.service.handler.accept,MailRepairAcceptHandler,127,0,6,0,37,0,7,0,4,0
+service,cn.edu.xmu.oomall.service.service.handler.accept,OnsiteAcceptHandler,28,0,2,0,7,0,5,0,4,0
+service,cn.edu.xmu.oomall.service.service.result,AcceptResult,23,0,0,0,13,0,3,0,3,0
+service,cn.edu.xmu.oomall.service.service.result,CancelResult,7,16,0,0,4,9,1,2,1,2
+service,cn.edu.xmu.oomall.service.service.handler.cancel,OnsiteOnsiteCancelHandler,13,61,0,8,4,13,0,8,0,4
+service,cn.edu.xmu.oomall.service.service.handler.cancel,MailRepairDispatchedCancelHandler,0,65,1,7,0,15,1,6,0,3
+service,cn.edu.xmu.oomall.service.service.handler.cancel,MailRepairAcceptedCancelHandler,0,59,1,5,0,14,1,5,0,3
+service,cn.edu.xmu.oomall.service.service.handler.cancel,MailRepairReceivedCancelHandler,0,94,1,5,0,25,1,5,0,3
+service,cn.edu.xmu.oomall.service.service.handler.cancel,OnsiteDispatchedCancelHandler,13,41,0,6,4,9,0,7,0,4
+service,cn.edu.xmu.oomall.service.service.handler.cancel,OnsiteAcceptedCancelHandler,0,31,0,4,0,6,0,6,0,4
+service,cn.edu.xmu.oomall.service.dao.bo,ServiceOrder.ServiceOrderType.new ServiceOrder.ServiceOrderType() {...},11,0,0,0,3,0,2,0,2,0
+service,cn.edu.xmu.oomall.service.dao.bo,ServiceOrder.ServiceOrderType.new ServiceOrder.ServiceOrderType() {...},11,0,0,0,3,0,2,0,2,0
+service,cn.edu.xmu.oomall.service.dao.bo,ServiceOrder.ServiceOrderType.new ServiceOrder.ServiceOrderType() {...},11,0,0,0,3,0,2,0,2,0
+service,cn.edu.xmu.oomall.service.dao.bo,ServiceOrder.ServiceOrderType,62,0,6,0,10,0,5,0,2,0
+service,cn.edu.xmu.oomall.service.dao.bo,ServiceOrder,299,0,48,0,61,0,29,0,5,0
+service,cn.edu.xmu.oomall.service.dao.bo,ServiceContract,180,0,39,0,35,0,27,0,5,0
+service,cn.edu.xmu.oomall.service,ServiceApplication,8,0,0,0,3,0,2,0,2,0

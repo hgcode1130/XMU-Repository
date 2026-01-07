@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>Icons/ledoff.png</file>
+        <file>Icons/exit.png</file>
+        <file>Icons/ledred.png</file>
+        <file>Icons/ledgreen.png</file>
+        <file>Icons/ledblue.png</file>
+        <file>Icons/ledon.png</file>
+    </qresource>
+</RCC>

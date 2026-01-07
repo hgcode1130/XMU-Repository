@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>退回服务单</title>
+    <style>
+        /* --- 全局样式 --- */
+        :root {
+            --primary-color: #4a90e2;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --light-gray-color: #f8f9fa;
+            --gray-color: #6c757d;
+            --dark-gray-color: #343a40;
+            --border-color: #dee2e6;
+            --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            --button-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            background-color: var(--light-gray-color);
+            color: var(--dark-gray-color);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .header {
+            background-color: white;
+            padding: 15px 20px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark-gray-color);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .header .back-button {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--dark-gray-color);
+            line-height: 1;
+            padding: 0 10px;
+            min-width: 40px;
+            text-align: left;
+        }
+
+        .container {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        /* --- 按钮样式 --- */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+            box-shadow: var(--button-shadow);
+        }
+
+        .btn-danger { background-color: var(--danger-color); color: white; }
+        .btn-danger:hover { background-color: #c82333; }
+
+        /* --- 卡片样式 --- */
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .card-header h3 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .card-body { padding: 20px; }
+        .card-body .item { display: flex; margin-bottom: 12px; font-size: 0.95rem; }
+        .card-body .item:last-child { margin-bottom: 0; }
+        .card-body .item-label { width: 80px; color: var(--gray-color); flex-shrink: 0; }
+        .card-body .item-value { color: var(--dark-gray-color); font-weight: 500; }
+
+        /* --- 表单样式 --- */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; }
+        .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            line-height: 1.5;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-color: white;
+        }
+        .form-group select {
+             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+             background-repeat: no-repeat;
+             background-position: right 0.75rem center;
+             background-size: 16px 12px;
+        }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #fafafa;
+        }
+        .upload-area:hover { border-color: var(--primary-color); }
+        .upload-area .upload-icon { font-size: 2.5rem; color: var(--gray-color); }
+        .upload-area .upload-text { margin-top: 10px; color: var(--gray-color); }
+        .photo-preview { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        .photo-preview img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* --- 成功提示 --- */
+        .toast {
+            position: fixed; bottom: 30px; left: 50%;
+            transform: translateX(-50%); background: rgba(0, 0, 0, 0.8);
+            color: white; padding: 12px 25px; border-radius: 25px;
+            z-index: 2000; opacity: 0; transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <button class="back-button" onclick="alert('返回列表页')">‹</button>
+        <h1 class="header-title">退回服务单</h1>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3>服务单号: MALL-SERVICE-037</h3>
+            </div>
+            <div class="card-body">
+                <div class="item"><span class="item-label">服务类型:</span><span class="item-value">维修</span></div>
+                <div class="item"><span class="item-label">物品名称:</span><span class="item-value">品牌X-型号Y 游戏机</span></div>
+                <div class="item"><span class="item-label">客户姓名:</span><span class="item-value">孙先生</span></div>
+                <div class="item"><span class="item-label">故障描述:</span><span class="item-value">无法连接网络，系统频繁报错。</span></div>
+            </div>
+        </div>
+        <h2 class="section-title">退回操作</h2>
+        <div class="form-group">
+            <label for="return-reason">退回原因</label>
+            <select id="return-reason">
+                <option value="">请选择退回原因</option>
+                <option value="无法维修">无法维修（缺少零件/技术限制）</option>
+                <option value="客户取消">客户主动取消服务</option>
+                <option value="信息不符">邮寄物品与服务单信息不符</option>
+                <option value="无法联系">无法联系上客户</option>
+                <option value="其他">其他（请在详情中说明）</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="return-details">详细说明</label>
+            <textarea id="return-details" placeholder="请详细描述退回的具体原因，例如：经检测，该游戏机主板芯片损坏，本店无匹配零件，无法维修。"></textarea>
+        </div>
+        <div class="form-group">
+            <label>上传凭证 (如物品状况照片)</label>
+            <input type="file" id="return-photos-input" multiple accept="image/*" style="display: none;" onchange="previewPhotos(this, 'photo-preview-return')">
+            <div class="upload-area" onclick="document.getElementById('return-photos-input').click()">
+                <div class="upload-icon">📷</div>
+                <div class="upload-text">点击上传照片</div>
+            </div>
+            <div id="photo-preview-return" class="photo-preview"></div>
+        </div>
+        <button class="btn btn-danger" onclick="submitReturn()">确认退回</button>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // 显示操作成功提示
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // 预览上传的照片
+        function previewPhotos(input, previewContainerId) {
+            const previewContainer = document.getElementById(previewContainerId);
+            if (input.files) {
+                // 如果是新选择照片，先清空预览
+                previewContainer.innerHTML = ''; 
+                Array.from(input.files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        previewContainer.appendChild(img);
+                    }
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+
+        // 提交退回服务单
+        function submitReturn() {
+            const reason = document.getElementById('return-reason');
+            const details = document.getElementById('return-details');
+
+            if (!reason.value) {
+                alert('请选择退回原因！');
+                reason.focus();
+                return;
+            }
+             if (!details.value.trim()) {
+                alert('请填写详细说明！');
+                details.focus();
+                return;
+            }
+            
+            // 模拟提交成功
+            console.log('提交退回申请...');
+            console.log('退回原因:', reason.value);
+            console.log('详细说明:', details.value);
+            console.log('上传文件:', document.getElementById('return-photos-input').files);
+
+            showToast('服务单已成功退回！');
+            
+            // 在独立页面中，可以禁用按钮防止重复提交
+            document.querySelector('.btn-danger').disabled = true;
+            document.querySelector('.btn-danger').textContent = '已提交';
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,7318 @@
+openapi: 3.0.1
+info:
+  title: 电商系统后端API
+  description: |-
+    - 2025年软件工程专业《软件工程》、《面向对象分析分析与设计》、《JavaEE平台技术》课程设计API
+
+    - 通用错误处理
+    所有在路径上的id不存在，返回状态码404，errno = 4， errmsg 自定义
+    所有参数的错误返回状态码400，errno = 3， errmsg 自定义
+    未登录的状态码为401
+    没有权限访问， 返回状态码403，errno = 16
+    访问的对象不是本shop的对象，返回状态码403，errno = 17， errmsg 自定义
+    - API中时间格式的定义
+    统一为yyyy-MM-ddTHH:mm:ss.SSS 
+    如2016-05-09T13:09:55.235 表示2016年05月09日13点09分55秒235毫秒，时区为应用服务器所在地时区
+    - 顾客和后台管理人员兼容登录的token
+      顾客的token，departId为-100
+      管理人员的token为-1，表示未开店的后台人员，0为平台管理人员， >=1的值为shopId
+      当试图用顾客的token访问后台API时，需抛出错误3
+      后台管理员token可以正常访问顾客API。
+      
+  version: 1.4.0
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: mingqiu@xmu.edu.cn
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+tags:
+  - name: aftersale
+  - name: 商户-服务管理
+  - name: 商户-服务合同管理
+  - name: 商户-服务单管理
+  - name: 服务商-服务合同管理
+  - name: 服务商-服务单管理
+  - name: 维修师傅-服务单管理
+  - name: 平台管理员-服务商管理
+paths:
+  /shops/{shopId}/aftersales:
+    get:
+      summary: 商户查询售后列表
+      deprecated: false
+      description: |-
+        ## 用例对应
+        对应用例 MALL-AFTERSALE-001
+        - 步骤 1：商户按多条件查询售后
+        - 步骤 2：系统显示符合条件的售后列表
+
+        ## 界面对应
+        - **触发方式**：进入「售后处理中心」页面、点击状态筛选标签、修改筛选条件
+        - **界面元素**：
+          - 状态筛选标签 (pill-tabs)：待审核/处理中/待收货/已完成
+          - 筛选条件：售后单号、售后类型、顾客电话、运单号
+          - 列表表格：售后单号、顾客、申请时间、售后类型、状态、操作
+
+        ## 界面状态映射
+        界面简化状态与API状态的映射关系：
+        - 待审核 → status=0
+        - 处理中 → status=1,2 (待验收+待上门)
+        - 待收货 → status=4,5 (已验收+维修中)
+        - 已完成 → status=6
+        - 已取消 → status=3 (界面建议增加此筛选)
+      operationId: listAftersales
+      tags:
+        - aftersale
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户店铺ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+        - name: aftersaleSn
+          in: query
+          description: 售后单号
+          required: false
+          schema:
+            type: string
+        - name: orderItemId
+          in: query
+          description: 订单明细ID
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: status
+          in: query
+          description: 售后状态：0-申请中 1-待验收 2-待上门 3-已取消 4-已验收 5-维修中 6-已完成
+          required: false
+          schema:
+            type: integer
+            enum:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+        - name: type
+          in: query
+          description: 售后类型：0-退货 1-换货 2-寄修 3-上门维修
+          required: false
+          schema:
+            type: integer
+            enum:
+              - 0
+              - 1
+              - 2
+              - 3
+        - name: customerPhone
+          in: query
+          description: 顾客电话
+          required: false
+          schema:
+            type: string
+        - name: waybillNo
+          in: query
+          description: 运单号
+          required: false
+          schema:
+            type: string
+        - name: regionId
+          in: query
+          description: 地区ID
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: page
+          in: query
+          description: 页码，从1开始
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: 每页数目
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: 成功返回售后列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errno:
+                    type: integer
+                    example: 0
+                  errmsg:
+                    type: string
+                    example: 成功
+                  data:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                        description: 当前页码
+                      pageSize:
+                        type: integer
+                        description: 每页数目
+                      total:
+                        type: integer
+                        description: 总记录数
+                      list:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AftersaleSimple'
+          headers: {}
+        '401':
+          description: 未登录
+          headers: {}
+        '403':
+          description: 无权限访问该店铺
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/aftersales/{id}:
+    get:
+      summary: 商户查看售后详情
+      deprecated: false
+      description: |-
+        ## 用例对应
+        对应用例 MALL-AFTERSALE-001 步骤 3-4
+        - 步骤 3：用户点击具体要查看的售后
+        - 步骤 4：系统显示所选售后的详细信息
+
+        ## 界面对应
+        - **触发方式**：点击列表中的「详情」按钮、点击「查看服务单」按钮
+        - **界面元素**：售后详情弹窗 (openAftersaleDetail)
+        - **显示内容**：
+          - 顾客信息：姓名、电话、关联订单
+          - 售后概览：类型、状态、申请时间
+          - 问题描述：原因、附件数量
+          - 处理记录：时间线轨迹
+          - 服务单信息（如有）：服务单号、类型、指派人、状态、物流信息、处理步骤
+      operationId: getAftersaleDetail
+      tags:
+        - aftersale
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户店铺ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: 售后单ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 成功返回售后详情
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errno:
+                    type: integer
+                    example: 0
+                  errmsg:
+                    type: string
+                    example: 成功
+                  data:
+                    $ref: '#/components/schemas/AftersaleDetail'
+          headers: {}
+        '403':
+          description: 该售后单不属于本店铺
+          headers: {}
+        '404':
+          description: 售后单不存在
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/aftersales/{id}/review:
+    put:
+      summary: 商户审核售后申请
+      deprecated: false
+      description: |-
+        ## 用例对应
+        对应用例 MALL-AFTERSALE-002
+        - 步骤 4：商户审核后同意售后申请
+        - 扩展 4a：商户不同意售后申请
+        - 扩展 4b：商户修改售后类型后同意
+        - 步骤 5：系统根据类型自动生成运单或服务单
+
+        ## 界面对应
+        - **触发方式**：
+          - 点击「审核通过」按钮 → approved=true
+          - 点击「驳回申请」按钮 → approved=false
+        - **界面元素**：
+          - 审核通过弹窗：可选择/修改售后类型（退货/换货/寄修/上门维修）
+          - 驳回申请弹窗：需填写驳回原因
+        - **操作条件**：仅在 status=0(待审核) 时显示这两个按钮
+
+        ## 状态转换
+        - 同意 + 退货/换货/寄修(type=0,1,2) → 状态变为 1-PENDING_INSPECTION，产生运单
+        - 同意 + 上门维修(type=3) → 状态变为 2-PENDING_ONSITE，产生服务单
+        - 拒绝 → 状态变为 3-CANCELLED
+      operationId: reviewAftersale
+      tags:
+        - aftersale
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户店铺ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: 售后单ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 审核成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errno:
+                    type: integer
+                    example: 0
+                  errmsg:
+                    type: string
+                    example: 成功
+                  data:
+                    $ref: '#/components/schemas/AftersaleDetail'
+          headers: {}
+        '400':
+          description: 参数错误
+          headers: {}
+        '404':
+          description: 售后单不存在
+          headers: {}
+        '409':
+          description: 当前状态不允许审核（非申请中状态）
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/aftersales/{id}/inspection:
+    put:
+      summary: 商户验收售后商品
+      deprecated: false
+      description: |-
+        ## 用例对应
+        对应用例 MALL-AFTERSALE-003
+        - 步骤 3：商户确认商品验收通过
+        - 步骤 4：系统更新售后状态为已验收
+        - 扩展 4a：商户发现退回商品不符售后条件，拒收
+
+        ## 界面对应
+        - **触发方式**：
+          - 点击「确认收货」按钮
+          - 点击顶部「按运单收货」按钮 → 输入运单号查询 → 验收确认弹窗
+        - **界面元素**：
+          - 验收确认弹窗 (openAftersaleReceiveConfirm)
+          - 验收结果选择：通过/不通过
+          - 异常说明输入框（不通过时填写）
+        - **操作条件**：仅在 status=1(待验收) 或 status=2(待上门) 时可操作
+
+        ## 状态转换
+        - 从 1-PENDING_INSPECTION 验收通过 → 4-ACCEPTED
+        - 从 2-PENDING_ONSITE 验收通过 → 5-REPAIRING
+        - 验收不通过 → 3-CANCELLED
+      operationId: inspectAftersale
+      tags:
+        - aftersale
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户店铺ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: 售后单ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 验收结果提交成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errno:
+                    type: integer
+                    example: 0
+                  errmsg:
+                    type: string
+                    example: 成功
+                  data:
+                    $ref: '#/components/schemas/AftersaleDetail'
+          headers: {}
+        '400':
+          description: 参数错误
+          headers: {}
+        '404':
+          description: 售后单不存在
+          headers: {}
+        '409':
+          description: 当前状态不允许验收（非待验收/待上门状态）
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/aftersales/{id}/complete:
+    put:
+      summary: 商户完成售后
+      deprecated: false
+      description: |-
+        ## 用例对应
+        将售后单标记为已完成，对应售后处理的最终步骤
+
+        ## 界面对应
+        - **触发方式**：点击「完成售后」按钮（界面当前使用「登记处理结果」弹窗中的状态更新）
+        - **界面元素**：登记处理结果弹窗 (openAftersaleLogForm) 中选择「完成售后」
+        - **操作条件**：仅在 status=4(已验收) 或 status=5(维修中) 时可操作
+        - **界面建议**：建议增加独立的「完成售后」按钮，与「登记备注」分离
+
+        ## 状态转换
+        - 从 4-ACCEPTED → 6-COMPLETED（退货/换货/寄修完成）
+        - 从 5-REPAIRING → 6-COMPLETED（上门维修完成）
+      operationId: completeAftersale
+      tags:
+        - aftersale
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户店铺ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: 售后单ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 完成成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errno:
+                    type: integer
+                    example: 0
+                  errmsg:
+                    type: string
+                    example: 成功
+                  data:
+                    $ref: '#/components/schemas/AftersaleDetail'
+          headers: {}
+        '404':
+          description: 售后单不存在
+          headers: {}
+        '409':
+          description: 当前状态不允许完成（非已验收/维修中状态）
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/aftersales/{id}/cancel:
+    put:
+      summary: 商户取消售后
+      deprecated: false
+      description: |
+        ## 用例对应
+        取消售后单，对应售后处理的异常终止流程
+
+        ## 界面对应
+        - **触发方式**：点击「取消售后」按钮
+        - **界面元素**：取消确认弹窗，需填写取消原因
+        - **操作条件**：仅在非终态状态时可操作，即除了已完成(6)和已取消(3)外的所有状态
+        - **界面问题**：当前界面缺少「取消售后」按钮，建议在已验收/维修中状态增加此操作
+
+        ## 状态转换：
+        - 从 0-PENDING_REVIEW → 3-CANCELLED（取消待审核的售后）
+        - 从 1-PENDING_INSPECTION → 3-CANCELLED（取消待验收的售后）
+        - 从 2-PENDING_ONSITE → 3-CANCELLED（取消待上门的售后）
+        - 从 4-ACCEPTED → 3-CANCELLED（取消已验收的售后）
+        - 从 5-REPAIRING → 3-CANCELLED（取消维修中的售后）
+      operationId: cancelAftersale
+      tags:
+        - aftersale
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户店铺ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: 售后单ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 取消成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errno:
+                    type: integer
+                    example: 0
+                  errmsg:
+                    type: string
+                    example: 成功
+                  data:
+                    $ref: '#/components/schemas/AftersaleDetail'
+          headers: {}
+        '400':
+          description: 取消原因不能为空
+          headers: {}
+        '404':
+          description: 售后单不存在
+          headers: {}
+        '409':
+          description: 当前状态不允许取消
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/aftersales/{id}/logs:
+    post:
+      summary: 商户登记处理备注
+      deprecated: false
+      description: |-
+        ## 用例对应
+        为售后单添加处理备注/日志，不改变状态
+
+        ## 界面对应
+        - **触发方式**：点击「登记处理结果」按钮
+        - **界面元素**：登记处理结果弹窗 (openAftersaleLogForm)
+        - **输入内容**：处理备注文本
+        - **操作条件**：所有非终态(已完成/已取消)的售后单都可添加备注
+        - **界面问题**：当前界面的「登记处理结果」同时支持更新状态和添加备注，建议分离为两个独立操作
+      operationId: addAftersaleLog
+      tags:
+        - aftersale
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户店铺ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: 售后单ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '201':
+          description: 备注添加成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errno:
+                    type: integer
+                    example: 0
+                  errmsg:
+                    type: string
+                    example: 成功
+                  data:
+                    $ref: '#/components/schemas/AftersaleHistory'
+          headers: {}
+        '400':
+          description: 备注内容不能为空
+          headers: {}
+        '404':
+          description: 售后单不存在
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/aftersales/export:
+    get:
+      summary: 导出售后单
+      deprecated: false
+      description: |-
+        ## 界面对应
+        - **触发方式**：点击顶部「导出售后单」按钮
+        - **界面元素**：section__actions 中的导出按钮
+        - **功能说明**：根据当前筛选条件导出售后单列表为Excel/CSV文件
+        - **返回格式**：文件流（application/octet-stream）
+      operationId: exportAftersales
+      tags:
+        - aftersale
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户店铺ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+        - name: status
+          in: query
+          description: 售后状态筛选
+          required: false
+          schema:
+            type: integer
+            enum:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+        - name: type
+          in: query
+          description: 售后类型筛选
+          required: false
+          schema:
+            type: integer
+            enum:
+              - 0
+              - 1
+              - 2
+              - 3
+        - name: startTime
+          in: query
+          description: 开始时间
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: endTime
+          in: query
+          description: 结束时间
+          required: false
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: 成功返回文件流
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          headers: {}
+        '401':
+          description: 未登录
+          headers: {}
+        '403':
+          description: 无权限
+          headers: {}
+      security:
+        - bearerAuth: []
+  /orderitems/available-aftersales:
+    get:
+      summary: 顾客查询可申请售后的订单明细
+      deprecated: false
+      description: |-
+        ## 用例对应
+        对应用例：查看可售后的商品
+
+        ## 界面对应
+        - **触发方式**：选择售后类型后，显示该类型支持的商品列表
+        - **界面元素**：图4-2 选择退款售后商品页面
+
+        ## 业务规则
+        - 顾客只能查询到自己的订单明细
+        - 已经申请过售后的订单明细不会重复返回
+        - 根据售后类型筛选支持该类型的商品
+        - 返回商品的售后截止时间
+      operationId: getAvailableAftersales
+      tags:
+        - aftersale
+      parameters:
+        - name: type
+          in: query
+          description: 售后类型：0-换货 1-退货 2-寄修 3-上门维修
+          required: true
+          schema:
+            type: integer
+            enum:
+              - 0
+              - 1
+              - 2
+              - 3
+        - name: page
+          in: query
+          description: 页码，从1开始
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: 每页数目
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: 成功返回可申请售后的订单明细列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errno:
+                    type: integer
+                    example: 0
+                  errmsg:
+                    type: string
+                    example: 成功
+                  data:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                        description: 当前页码
+                      pageSize:
+                        type: integer
+                        description: 每页数目
+                      total:
+                        type: integer
+                        description: 总记录数
+                      list:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AvailableAftersaleOrderItem'
+          headers: {}
+        '400':
+          description: 参数错误
+          headers: {}
+        '401':
+          description: 未登录
+          headers: {}
+      security:
+        - bearerAuth: []
+  /orderitems/{id}/aftersales:
+    post:
+      summary: 顾客提交售后申请
+      deprecated: false
+      description: |-
+        ## 用例对应
+        对应用例：提交售后表单
+
+        ## 界面对应
+        - **触发方式**：填写完售后信息后，点击「提交」按钮
+        - **界面元素**：图1-1 维修申请页面的提交按钮
+
+        ## 业务规则
+        - 一个售后单可以包含多个商品明细
+        - 每个明细可以指定不同的处理方式（换货/退货/寄修/维修）
+        - 申请的数量不能超过订单明细中的可售后数量
+        - 创建后售后单状态为 0-处理中，明细状态为 0-申请中
+
+        ## 状态转换
+        - 创建成功后：aftersale.status = 0, aftersale_items.item_status = 0
+      operationId: createAftersale
+      tags:
+        - aftersale
+      parameters:
+        - name: id
+          in: path
+          description: 订单明细ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AftersaleCreateRequest'
+        required: true
+      responses:
+        '201':
+          description: 售后申请创建成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errno:
+                    type: integer
+                    example: 0
+                  errmsg:
+                    type: string
+                    example: 成功
+                  data:
+                    $ref: '#/components/schemas/AftersaleDetail'
+          headers: {}
+        '400':
+          description: 参数错误或申请数量超过可售后数量
+          headers: {}
+        '401':
+          description: 未登录
+          headers: {}
+        '404':
+          description: 订单明细不存在
+          headers: {}
+        '409':
+          description: 该订单明细不支持申请售后
+          headers: {}
+      security:
+        - bearerAuth: []
+  /aftersales:
+    get:
+      summary: 顾客查询售后单列表
+      deprecated: false
+      description: |-
+        ## 用例对应
+        对应用例：查看售后单列表
+
+        ## 界面对应
+        - **触发方式**：进入售后列表页面
+        - **界面元素**：售后单列表页面
+
+        ## 业务规则
+        - 顾客只能查询到自己的售后单
+        - 支持按状态、类型筛选
+        - 支持按售后单号搜索
+      operationId: listAftersales
+      tags:
+        - aftersale
+      parameters:
+        - name: aftersaleSn
+          in: query
+          description: 售后单号
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: 售后单整体状态：0-处理中 1-已完成 2-已取消
+          required: false
+          schema:
+            type: integer
+            enum:
+              - 0
+              - 1
+              - 2
+        - name: itemStatus
+          in: query
+          description: 商品明细状态：0-申请中 1-待验收 2-待上门 3-已取消 4-已验收 5-维修中 6-已完成
+          required: false
+          schema:
+            type: integer
+            enum:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+        - name: type
+          in: query
+          description: 售后类型：0-换货 1-退货 2-寄修 3-上门维修
+          required: false
+          schema:
+            type: integer
+            enum:
+              - 0
+              - 1
+              - 2
+              - 3
+        - name: page
+          in: query
+          description: 页码，从1开始
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: 每页数目
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: 成功返回售后单列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errno:
+                    type: integer
+                    example: 0
+                  errmsg:
+                    type: string
+                    example: 成功
+                  data:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                        description: 当前页码
+                      pageSize:
+                        type: integer
+                        description: 每页数目
+                      total:
+                        type: integer
+                        description: 总记录数
+                      list:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AftersaleSimple'
+          headers: {}
+        '401':
+          description: 未登录
+          headers: {}
+      security:
+        - bearerAuth: []
+  /aftersales/{id}:
+    get:
+      summary: 顾客查看售后单详情
+      deprecated: false
+      description: |-
+        ## 用例对应
+        对应用例：售后单详情查看
+
+        ## 界面对应
+        - **触发方式**：点击售后单列表中的某个售后单
+        - **界面元素**：图2、图3、图4-1 服务单详情页面
+
+        ## 业务规则
+        - 顾客只能查看自己的售后单
+        - 返回售后单完整信息：基本信息、商品明细、物流信息、服务进度、处理轨迹
+        - 处理轨迹按时间倒序排列，直接包含在详情响应中
+      operationId: getAftersaleDetail
+      tags:
+        - aftersale
+      parameters:
+        - name: id
+          in: path
+          description: 售后单ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 成功返回售后单详情
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errno:
+                    type: integer
+                    example: 0
+                  errmsg:
+                    type: string
+                    example: 成功
+                  data:
+                    $ref: '#/components/schemas/AftersaleDetail'
+          headers: {}
+        '401':
+          description: 未登录
+          headers: {}
+        '403':
+          description: 无权限访问该售后单
+          headers: {}
+        '404':
+          description: 售后单不存在
+          headers: {}
+      security:
+        - bearerAuth: []
+    put:
+      summary: 顾客修改售后单信息
+      deprecated: false
+      description: |-
+        ## 用例对应
+        对应用例：修改售后单
+
+        ## 界面对应
+        - **触发方式**：在售后详情页点击「修改申请」按钮
+        - **界面元素**：图1-2 修改申请信息页面
+
+        ## 业务规则
+        - 只能在申请中状态（aftersale.status=0, item_status=0）修改
+        - 可修改：地址、联系方式、取件时间、商品明细信息
+        - 修改后需要重新审核
+      operationId: updateAftersale
+      tags:
+        - aftersale
+      parameters:
+        - name: id
+          in: path
+          description: 售后单ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 修改成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errno:
+                    type: integer
+                    example: 0
+                  errmsg:
+                    type: string
+                    example: 成功
+                  data:
+                    $ref: '#/components/schemas/AftersaleDetail'
+          headers: {}
+        '400':
+          description: 参数错误
+          headers: {}
+        '401':
+          description: 未登录
+          headers: {}
+        '403':
+          description: 无权限访问该售后单
+          headers: {}
+        '404':
+          description: 售后单不存在
+          headers: {}
+        '409':
+          description: 当前状态不允许修改（非申请中状态）
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/services:
+    post:
+      summary: 新增商品服务
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-001
+        界面对应：商户界面 → 服务目录 → 新建服务按钮
+      operationId: createService
+      tags:
+        - 商户-服务管理
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户ID
+          required: true
+          example: 1001
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceCreateRequest'
+        required: true
+      responses:
+        '201':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse'
+          headers: {}
+        '400':
+          description: 参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers: {}
+        '404':
+          description: 商品不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+    get:
+      summary: 查询商品服务列表
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-004
+        界面对应：商户界面 → 服务目录 → 列表和筛选
+      operationId: listServices
+      tags:
+        - 商户-服务管理
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户ID
+          required: true
+          example: 1001
+          schema:
+            type: integer
+            format: int64
+        - name: serviceName
+          in: query
+          description: 服务名称关键字
+          required: false
+          example: 清洗
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: 服务类型
+          required: false
+          example: 维修
+          schema:
+            type: string
+        - name: productId
+          in: query
+          description: 适用商品ID
+          required: false
+          example: 5002
+          schema:
+            type: integer
+            format: int64
+        - name: status
+          in: query
+          description: 服务状态（0禁用/1启用）
+          required: false
+          example: 1
+          schema:
+            type: integer
+        - name: regionId
+          in: query
+          description: 服务地区ID
+          required: false
+          example: 110100
+          schema:
+            type: integer
+            format: int64
+        - name: page
+          in: query
+          description: 页码
+          required: false
+          example: 1
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: 每页数量
+          required: false
+          example: 10
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceListResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/services/{id}:
+    get:
+      summary: 查看服务详情
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-004（步骤3）
+        界面对应：商户界面 → 服务目录 → 查看详情
+      operationId: getServiceDetail
+      tags:
+        - 商户-服务管理
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户ID
+          required: true
+          example: 1001
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: 服务ID
+          required: true
+          example: 2005
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceDetailResponse'
+          headers: {}
+        '404':
+          description: 服务不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+    put:
+      summary: 修改商品服务
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-002
+        界面对应：商户界面 → 服务目录 → 编辑服务
+      operationId: updateService
+      tags:
+        - 商户-服务管理
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户ID
+          required: true
+          example: 1001
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: 服务ID
+          required: true
+          example: 2005
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse'
+          headers: {}
+        '400':
+          description: 参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers: {}
+        '404':
+          description: 服务不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+    delete:
+      summary: 删除商品服务
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-003
+        界面对应：商户界面 → 服务目录 → 删除操作
+      operationId: deleteService
+      tags:
+        - 商户-服务管理
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户ID
+          required: true
+          example: 1001
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: 服务ID
+          required: true
+          example: 2005
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: 删除成功
+          headers: {}
+        '404':
+          description: 服务不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers: {}
+        '409':
+          description: 服务存在进行中的订单，无法删除
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/contracts/{id}/reject:
+    put:
+      summary: 拒绝服务合同
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-007（扩展场景4a）
+        商户拒绝服务合同，需填写原因
+      operationId: rejectShopContract
+      tags:
+        - 商户-服务合同管理
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: 合同ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - reason
+              properties:
+                reason:
+                  type: string
+                  description: 拒绝原因
+            examples: {}
+        required: true
+      responses:
+        '200':
+          description: 拒绝成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/contracts/{id}/confirm:
+    put:
+      summary: 确认服务合同
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-007
+        商户确认并接受服务合同
+      operationId: confirmShopContract
+      tags:
+        - 商户-服务合同管理
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: 合同ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 确认成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/contracts:
+    post:
+      summary: 创建服务合同
+      deprecated: false
+      description: |-
+        界面对应：商户界面 → 合作伙伴与合同 → 创建合同
+        支持一次性选择多个服务创建合同草案
+      operationId: createContract
+      tags:
+        - 商户-服务合同管理
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContractCreateRequest'
+        required: true
+      responses:
+        '201':
+          description: 创建成功，返回合同草案列表
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractBatchResponse'
+          headers: {}
+        '400':
+          description: 参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+    get:
+      summary: 查询服务合同列表
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-046
+        界面对应：商户界面 → 合作伙伴与合同 → 合同列表
+      operationId: listShopContracts
+      tags:
+        - 商户-服务合同管理
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+        - name: serviceProviderName
+          in: query
+          description: 服务商名称
+          required: false
+          schema:
+            type: string
+        - name: serviceName
+          in: query
+          description: 服务名称
+          required: false
+          schema:
+            type: string
+        - name: regionId
+          in: query
+          description: 服务地区ID
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: status
+          in: query
+          description: 合同状态（0申请中/1生效中/2暂停/3取消/4拒绝/5到期）
+          required: false
+          schema:
+            type: integer
+        - name: startDate
+          in: query
+          description: 起始日期
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          description: 结束日期
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: page
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractListResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/contracts/{id}:
+    get:
+      summary: 查看合同详情
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-046（步骤5）
+        界面对应：商户界面 → 合作伙伴与合同 → 查看合同详情
+      operationId: getShopContractDetail
+      tags:
+        - 商户-服务合同管理
+      parameters:
+        - name: shopId
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractDetailResponse'
+          headers: {}
+        '404':
+          description: 合同不存在
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/contracts/{id}/suspend:
+    put:
+      summary: 暂停服务合同
+      deprecated: false
+      description: 界面对应：商户界面 → 合作伙伴与合同 → 暂停操作
+      operationId: suspendShopContract
+      tags:
+        - 商户-服务合同管理
+      parameters:
+        - name: shopId
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: 暂停原因
+      responses:
+        '200':
+          description: 暂停成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/contracts/{id}/restore:
+    put:
+      summary: 恢复服务合同
+      deprecated: false
+      description: 界面对应：商户界面 → 合作伙伴与合同 → 恢复操作
+      operationId: restoreShopContract
+      tags:
+        - 商户-服务合同管理
+      parameters:
+        - name: shopId
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 恢复成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/contracts/{id}/cancel:
+    put:
+      summary: 取消服务合同
+      deprecated: false
+      description: 界面对应：商户界面 → 合作伙伴与合同 → 取消操作
+      operationId: cancelShopContract
+      tags:
+        - 商户-服务合同管理
+      parameters:
+        - name: shopId
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: 取消原因
+      responses:
+        '200':
+          description: 取消成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/service-orders:
+    get:
+      summary: 查询服务单列表
+      deprecated: false
+      description: 商户端查看其店铺下的服务单列表，支持按关键字、状态、时间范围与地区筛选。
+      operationId: listServiceOrders
+      tags:
+        - 商户-服务单管理
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户ID
+          required: true
+          example: 1001
+          schema:
+            type: integer
+            format: int64
+        - name: keyword
+          in: query
+          description: 搜索关键词（服务单号/服务名称/顾客）
+          required: false
+          example: SORD-1001
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: 服务单状态过滤（pending/approved/rejected/assigned/in_progress/completed）
+          required: false
+          example: pending
+          schema:
+            type: string
+        - name: regionId
+          in: query
+          description: 地区ID（可用于区域筛选）
+          required: false
+          example: 310100
+          schema:
+            type: integer
+            format: int64
+        - name: createdAfter
+          in: query
+          description: 创建时间范围起（ISO 8601）
+          required: false
+          example: '2025-11-01T00:00:00.000'
+          schema:
+            type: string
+            format: date-time
+        - name: createdBefore
+          in: query
+          description: 创建时间范围止（ISO 8601）
+          required: false
+          example: '2025-11-30T23:59:59.999'
+          schema:
+            type: string
+            format: date-time
+        - name: page
+          in: query
+          description: 页码
+          required: false
+          example: 1
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: 每页数量
+          required: false
+          example: 10
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderListResponse'
+          headers: {}
+        '400':
+          description: 参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers: {}
+        '401':
+          description: 未登录
+          headers: {}
+        '403':
+          description: 无权限访问/非本店资源
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /shops/{shopId}/service-orders/{id}:
+    get:
+      summary: 查看服务单详情
+      deprecated: false
+      description: 返回单个服务单的详细信息与审核记录。
+      operationId: getServiceOrderDetail
+      tags:
+        - 商户-服务单管理
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户ID
+          required: true
+          example: 1001
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: 服务单号/ID
+          required: true
+          example: SORD-1001
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderDetailResponse'
+          headers: {}
+        '403':
+          description: 无权限访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers: {}
+        '404':
+          description: 服务单不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+    put:
+      summary: 商户审核服务单（更新状态）
+      deprecated: false
+      description: 商户审核服务单，操作包括通过/驳回。会在审核记录中追加条目并返回更新后的服务单状态。
+      operationId: auditServiceOrder
+      tags:
+        - 商户-服务单管理
+      parameters:
+        - name: shopId
+          in: path
+          description: 商户ID
+          required: true
+          example: 1001
+          schema:
+            type: integer
+            format: int64
+        - name: id
+          in: path
+          description: 服务单号/ID
+          required: true
+          example: SORD-1001
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceOrderAuditRequest'
+        required: true
+      responses:
+        '200':
+          description: 审核成功，返回更新后的服务单
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderResponse'
+          headers: {}
+        '400':
+          description: 参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers: {}
+        '403':
+          description: 无权限操作
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers: {}
+        '404':
+          description: 服务单不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /providers/contracts:
+    get:
+      summary: 查询服务合同列表（服务商）
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-046
+        界面对应：服务商界面 → 服务合同 → 合同列表和筛选
+      operationId: listProviderContracts
+      tags:
+        - 服务商-服务合同管理
+      parameters:
+        - name: serviceName
+          in: query
+          description: 服务名称
+          required: false
+          schema:
+            type: string
+        - name: regionId
+          in: query
+          description: 服务地区ID
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: status
+          in: query
+          description: 合同状态（0申请中/1生效中/2暂停/3取消/4拒绝/5到期）
+          required: false
+          schema:
+            type: integer
+        - name: startDate
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: page
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractListResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /providers/contracts/{id}:
+    get:
+      summary: 查看合同详情（服务商）
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-042（步骤3）、MALL-SERVICE-046（步骤5）
+        界面对应：服务商界面 → 服务合同 → 查看详情
+      operationId: getProviderContractDetail
+      tags:
+        - 服务商-服务合同管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractDetailResponse'
+          headers: {}
+        '404':
+          description: 合同不存在
+          headers: {}
+      security:
+        - bearerAuth: []
+  /providers/contracts/{id}/confirm:
+    put:
+      summary: 确认服务合同
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-042
+        界面对应：服务商界面 → 服务合同 → 确认按钮
+      operationId: confirmContract
+      tags:
+        - 服务商-服务合同管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 确认成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /providers/contracts/{id}/reject:
+    put:
+      summary: 拒绝服务合同
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-042（扩展场景4a）
+        界面对应：服务商界面 → 服务合同 → 拒绝按钮
+      operationId: rejectContract
+      tags:
+        - 服务商-服务合同管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - reason
+              properties:
+                reason:
+                  type: string
+                  description: 拒绝原因
+            examples: {}
+        required: true
+      responses:
+        '200':
+          description: 拒绝成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /providers/contracts/{id}/cancel:
+    put:
+      summary: 取消服务合同（服务商）
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-043
+        界面对应：服务商界面 → 服务合同 → 取消操作
+      operationId: cancelProviderContract
+      tags:
+        - 服务商-服务合同管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+            examples: {}
+      responses:
+        '200':
+          description: 取消成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /providers/contracts/{id}/suspend:
+    put:
+      summary: 暂停服务合同（服务商）
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-044
+        界面对应：服务商界面 → 服务合同 → 暂停操作
+      operationId: suspendProviderContract
+      tags:
+        - 服务商-服务合同管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+            examples: {}
+      responses:
+        '200':
+          description: 暂停成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /providers/contracts/{id}/restore:
+    put:
+      summary: 恢复服务合同（服务商）
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-045
+        界面对应：服务商界面 → 服务合同 → 恢复操作
+      operationId: restoreProviderContract
+      tags:
+        - 服务商-服务合同管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 恢复成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /providers/service-orders/{id}/cancel-returned:
+    put:
+      summary: 取消已退回的服务单
+      deprecated: false
+      description: 用于取消处于已退回状态的服务单（例如检查后发现无法继续服务等），界面对应：服务商界面 → 服务单管理 → 已退回 → 取消服务单
+      operationId: cancelReturnedServiceOrder
+      tags:
+        - 服务商-服务单管理
+      parameters:
+        - name: id
+          in: path
+          description: 服务单 ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - reason
+              properties:
+                reason:
+                  type: string
+                  description: 取消原因，将通知商户
+            examples: {}
+        required: true
+      responses:
+        '200':
+          description: 取消成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderStatusResponse'
+          headers: {}
+        '400':
+          description: 状态不允许取消或参数错误
+          headers: {}
+        '404':
+          description: 服务单不存在
+          headers: {}
+      security:
+        - bearerAuth: []
+  /providers/service-orders/{id}/reassign:
+    put:
+      summary: 重新派工（针对已退回的服务单）
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-033（扩展）
+        界面对应：服务商界面 → 服务单管理 → 已退回 / 重新派工 操作，选择新的维修师傅并记录原因
+      operationId: reassignServiceOrder
+      tags:
+        - 服务商-服务单管理
+      parameters:
+        - name: id
+          in: path
+          description: 服务单 ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - maintainerId
+              properties:
+                maintainerId:
+                  type: integer
+                  format: int64
+                  description: 要指派的维修师傅 ID
+                reason:
+                  type: string
+                  description: 重新派工原因（可选）
+            examples: {}
+        required: true
+      responses:
+        '200':
+          description: 重新派工成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderAssignResponse'
+          headers: {}
+        '400':
+          description: 状态不允许重新派工或参数错误
+          headers: {}
+        '404':
+          description: 服务单或维修师傅不存在
+          headers: {}
+      security:
+        - bearerAuth: []
+  /providers/service-orders:
+    get:
+      summary: 查询服务单列表
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-032
+        界面对应：服务商界面 → 服务单管理 → 服务单列表
+      operationId: listProviderServiceOrders
+      tags:
+        - 服务商-服务单管理
+      parameters:
+        - name: status
+          in: query
+          description: 服务单状态（0待审核/1待接受/2已接受/3已派工/4已收工/5已上门/6已完成/7已退回/8已取消）
+          required: false
+          schema:
+            type: integer
+        - name: keyword
+          in: query
+          description: 服务单号或商户名称
+          required: false
+          schema:
+            type: string
+        - name: waybillNo
+          in: query
+          description: 快递单号
+          required: false
+          schema:
+            type: string
+        - name: regionId
+          in: query
+          description: 服务地区ID
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: page
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderListResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /providers/service-orders/{id}:
+    get:
+      summary: 查看服务单详情
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-032（步骤3）
+        界面对应：服务商界面 → 服务单管理 → 查看详情
+      operationId: getProviderServiceOrderDetail
+      tags:
+        - 服务商-服务单管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderDetailResponse'
+          headers: {}
+        '404':
+          description: 服务单不存在
+          headers: {}
+      security:
+        - bearerAuth: []
+  /providers/service-orders/{id}/accept:
+    put:
+      summary: 接受服务单
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-031
+        界面对应：服务商界面 → 服务单管理 → 接受按钮
+      operationId: acceptServiceOrder
+      tags:
+        - 服务商-服务单管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 接受成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderStatusResponse'
+          headers: {}
+        '400':
+          description: 状态不允许接受
+          headers: {}
+        '404':
+          description: 服务单不存在
+          headers: {}
+      security:
+        - bearerAuth: []
+  /providers/service-orders/{id}/reject:
+    put:
+      summary: 拒绝服务单
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-031（扩展场景4a）
+        界面对应：服务商界面 → 服务单管理 → 拒绝按钮
+      operationId: rejectServiceOrder
+      tags:
+        - 服务商-服务单管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - reason
+              properties:
+                reason:
+                  type: string
+                  description: 拒绝原因
+            examples: {}
+        required: true
+      responses:
+        '200':
+          description: 拒绝成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /providers/service-orders/{id}/assign:
+    put:
+      summary: 派工
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-033
+        界面对应：服务商界面 → 服务单管理 → 派工操作
+      operationId: assignServiceOrder
+      tags:
+        - 服务商-服务单管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - maintainerId
+              properties:
+                maintainerId:
+                  type: integer
+                  format: int64
+                  description: 维修师傅ID
+            examples: {}
+        required: true
+      responses:
+        '200':
+          description: 派工成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderAssignResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /providers/service-orders/{id}/cancel:
+    put:
+      summary: 取消服务单
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-036
+        界面对应：服务商界面 → 服务单管理 → 取消操作
+      operationId: cancelProviderServiceOrder
+      tags:
+        - 服务商-服务单管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: 取消原因
+            examples: {}
+      responses:
+        '200':
+          description: 取消成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /maintainers/service-orders/{id}/reject-acceptance:
+    put:
+      summary: 拒绝接受服务单（上门取件场景）
+      deprecated: false
+      description: 维修师傅在查看派单后，因各种原因拒绝接受该服务单（上门取件/上门服务场景）。界面对应：服务单详情 → 拒绝接受按钮
+      operationId: rejectAcceptance
+      tags:
+        - 维修师傅-服务单管理
+      parameters:
+        - name: id
+          in: path
+          description: 服务单ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RejectServiceOrderRequest'
+            examples: {}
+        required: true
+      responses:
+        '200':
+          description: 拒绝接受成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderRejectResponse'
+          headers: {}
+        '404':
+          description: 服务单不存在
+          headers: {}
+      security:
+        - bearerAuth: []
+  /maintainers/service-orders/{id}/reject-receipt:
+    put:
+      summary: 拒绝收件（寄修场景）
+      deprecated: false
+      description: 寄修场景下，维修师傅在验收快递包裹时发现问题（例如物品与单不符、严重破损等），拒绝收件并填写拒绝原因。界面对应：服务单详情 → 拒绝收件按钮
+      operationId: rejectReceipt
+      tags:
+        - 维修师傅-服务单管理
+      parameters:
+        - name: id
+          in: path
+          description: 服务单ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RejectServiceOrderRequest'
+            examples: {}
+        required: true
+      responses:
+        '200':
+          description: 拒绝收件成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderRejectResponse'
+          headers: {}
+        '404':
+          description: 服务单不存在
+          headers: {}
+      security:
+        - bearerAuth: []
+  /maintainers/service-orders/{id}/appointment:
+    put:
+      summary: 预约上门时间
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-038
+        维修师傅与客户确认后提交上门时间
+      operationId: makeAppointment
+      tags:
+        - 维修师傅-服务单管理
+      parameters:
+        - name: id
+          in: path
+          description: 服务单ID
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - reserveTime
+              properties:
+                reserveTime:
+                  type: string
+                  format: date-time
+                  description: 预约上门时间
+        required: true
+      responses:
+        '200':
+          description: 预约成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderStatusResponse'
+          headers: {}
+        '404':
+          description: 服务单不存在
+          headers: {}
+      security:
+        - bearerAuth: []
+  /maintainers/service-orders:
+    get:
+      summary: 查询派给我的服务单列表
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-034（步骤1）、MALL-SERVICE-037（步骤1）
+        界面对应：维修师傅界面 → 服务单列表 → 待处理/已完成标签
+      operationId: listMaintainerServiceOrders
+      tags:
+        - 维修师傅-服务单管理
+      parameters:
+        - name: status
+          in: query
+          description: 服务单状态
+          required: false
+          schema:
+            type: integer
+        - name: tab
+          in: query
+          description: 标签页（pending待处理/completed已完成）
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintainerServiceOrderListResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /maintainers/service-orders/{id}:
+    get:
+      summary: 查看服务单详情（维修师傅）
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-034（步骤3）、MALL-SERVICE-037（步骤3）
+        界面对应：维修师傅界面 → 服务单详情页
+      operationId: getMaintainerServiceOrderDetail
+      tags:
+        - 维修师傅-服务单管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintainerServiceOrderDetailResponse'
+          headers: {}
+        '404':
+          description: 服务单不存在
+          headers: {}
+      security:
+        - bearerAuth: []
+  /maintainers/service-orders/{id}/confirm-receipt:
+    put:
+      summary: 确认收件（寄修场景）
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-035
+        界面对应：维修师傅界面 → 服务单详情 → 确认收件按钮
+      operationId: confirmReceipt
+      tags:
+        - 维修师傅-服务单管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmReceiptRequest'
+            examples: {}
+      responses:
+        '200':
+          description: 确认成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /maintainers/service-orders/{id}/start:
+    put:
+      summary: 开始服务（上门服务场景）
+      deprecated: false
+      description: 界面对应：维修师傅界面 → 上门服务详情 → 我已抵达，开始服务
+      operationId: startService
+      tags:
+        - 维修师傅-服务单管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartServiceRequest'
+            examples: {}
+      responses:
+        '200':
+          description: 开始成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /maintainers/service-orders/{id}/complete:
+    put:
+      summary: 完成服务单
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-034
+        界面对应：维修师傅界面 → 服务单详情 → 完成服务按钮
+      operationId: completeServiceOrder
+      tags:
+        - 维修师傅-服务单管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompleteServiceOrderRequest'
+            examples: {}
+        required: true
+      responses:
+        '200':
+          description: 完成成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderCompleteResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /maintainers/service-orders/{id}/send-back:
+    put:
+      summary: 退回服务单
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-037
+        界面对应：维修师傅界面 → 服务单详情 → 退回服务单按钮
+      operationId: sendBackServiceOrder
+      tags:
+        - 维修师傅-服务单管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendBackServiceOrderRequest'
+            examples: {}
+        required: true
+      responses:
+        '200':
+          description: 退回成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrderSendBackResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /admin/providers:
+    get:
+      summary: 查询服务商列表（管理员）
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-015
+        界面对应：平台管理员界面 → 服务商管理 → 服务商列表
+      operationId: listAdminProviders
+      tags:
+        - 平台管理员-服务商管理
+      parameters:
+        - name: name
+          in: query
+          description: 服务商名称
+          required: false
+          schema:
+            type: string
+        - name: category
+          in: query
+          description: 服务商类别
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: 状态（0审核中/1营业中/2已暂停/3不通过）
+          required: false
+          schema:
+            type: integer
+        - name: regionId
+          in: query
+          description: 服务地区ID
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: page
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderListResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /admin/providers/{id}:
+    get:
+      summary: 查看服务商详情（管理员）
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-015（查看详情）
+        界面对应：平台管理员界面 → 服务商管理 → 查看详情
+      operationId: getAdminProviderDetail
+      tags:
+        - 平台管理员-服务商管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderDetailResponse'
+          headers: {}
+        '404':
+          description: 服务商不存在
+          headers: {}
+      security:
+        - bearerAuth: []
+  /admin/providers/{id}/audit-register:
+    put:
+      summary: 审核服务商开户
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-022
+        界面对应：平台管理员界面 → 服务商管理 → 审核开户申请
+      operationId: auditProviderRegister
+      tags:
+        - 平台管理员-服务商管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditRequest'
+            examples: {}
+        required: true
+      responses:
+        '200':
+          description: 审核成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderAuditResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /admin/providers/{id}/audit-modify:
+    put:
+      summary: 审核服务商变更
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-014
+        界面对应：平台管理员界面 → 服务商管理 → 审核变更申请
+      operationId: auditProviderModify
+      tags:
+        - 平台管理员-服务商管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditRequest'
+            examples: {}
+        required: true
+      responses:
+        '200':
+          description: 审核成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderAuditResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /admin/providers/{id}/suspend:
+    put:
+      summary: 暂停服务商
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-016
+        界面对应：平台管理员界面 → 服务商管理 → 暂停操作
+      operationId: suspendProvider
+      tags:
+        - 平台管理员-服务商管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: 暂停原因
+            examples: {}
+      responses:
+        '200':
+          description: 暂停成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+  /admin/providers/{id}/restore:
+    put:
+      summary: 恢复服务商
+      deprecated: false
+      description: |-
+        用例编号：MALL-SERVICE-017
+        界面对应：平台管理员界面 → 服务商管理 → 恢复操作
+      operationId: restoreProvider
+      tags:
+        - 平台管理员-服务商管理
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          example: 0
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 恢复成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderStatusResponse'
+          headers: {}
+      security:
+        - bearerAuth: []
+components:
+  schemas:
+    AdminUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        userName:
+          type: string
+        mobile:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        avatar:
+          type: string
+        lastLoginTime:
+          type: string
+        lastLoginIp:
+          type: string
+        status:
+          type: integer
+          format: int32
+          description: 用户状态
+        depart_id:
+          type: integer
+          format: int64
+        gmtCreate:
+          type: string
+        gmtModified:
+          type: string
+        creator:
+          $ref: '#/components/schemas/IDName'
+    AftersaleSimple:
+      type: object
+      description: 售后单简要信息（列表用）
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 售后单ID
+        aftersaleSn:
+          type: string
+          description: 售后单序号
+        orderItemId:
+          type: integer
+          format: int64
+          description: 订单明细ID
+        status:
+          type: integer
+          description: 售后单整体状态：0-处理中 1-已完成 2-已取消
+          enum:
+            - 0
+            - 1
+            - 2
+        reason:
+          type: string
+          description: 售后原因
+        createdAt:
+          type: string
+          format: date-time
+          description: 申请时间
+        updatedAt:
+          type: string
+          format: date-time
+          description: 更新时间
+        items:
+          type: array
+          description: 售后商品明细简要信息
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+                description: 明细ID
+              productName:
+                type: string
+                description: 商品名称
+              type:
+                type: integer
+                description: 售后类型：0-换货 1-退货 2-寄修 3-上门维修
+                enum:
+                  - 0
+                  - 1
+                  - 2
+                  - 3
+              itemStatus:
+                type: integer
+                description: 明细状态：0-申请中 1-待验收 2-待上门 3-已取消 4-已验收 5-维修中 6-已完成
+                enum:
+                  - 0
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+                  - 6
+              quantity:
+                type: integer
+                description: 数量
+    AvailableAftersaleOrderItem:
+      type: object
+      description: 可申请售后的订单明细
+      properties:
+        orderItemId:
+          type: integer
+          format: int64
+          description: 订单明细ID
+        orderId:
+          type: integer
+          format: int64
+          description: 订单ID
+        productId:
+          type: integer
+          format: int64
+          description: 商品ID
+        productName:
+          type: string
+          description: 商品名称
+        productImageUrl:
+          type: string
+          description: 商品图片URL
+        specs:
+          type: string
+          description: 商品规格
+        quantity:
+          type: integer
+          description: 订购数量
+        availableQuantity:
+          type: integer
+          description: 可申请售后的数量
+        price:
+          type: integer
+          format: int64
+          description: 商品单价（分）
+        aftersaleDeadline:
+          type: string
+          format: date-time
+          description: 售后截止时间
+        orderTime:
+          type: string
+          format: date-time
+          description: 下单时间
+    ProxyUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        userA:
+          $ref: '#/components/schemas/IDName'
+        userB:
+          $ref: '#/components/schemas/IDName'
+        beginDate:
+          type: string
+        endDate:
+          type: string
+        valid:
+          type: boolean
+        gmtCreate:
+          type: string
+    AftersaleDetail:
+      type: object
+      description: 售后单详细信息
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 售后单ID
+        aftersaleSn:
+          type: string
+          description: 售后单序号
+        shopId:
+          type: integer
+          format: int64
+          description: 店铺ID
+        orderItemId:
+          type: integer
+          format: int64
+          description: 订单明细ID
+        customerId:
+          type: integer
+          format: int64
+          description: 顾客ID
+        status:
+          type: integer
+          description: 售后单整体状态：0-处理中 1-已完成 2-已取消
+          enum:
+            - 0
+            - 1
+            - 2
+        reason:
+          type: string
+          description: 售后原因
+        cancelReason:
+          type: string
+          description: 取消原因（商户取消时填写）
+        regionId:
+          type: integer
+          format: int64
+          description: 取货地区ID
+        address:
+          type: string
+          description: 取货详细地址
+        contact:
+          type: string
+          description: 联系人
+        mobile:
+          type: string
+          description: 联系电话
+        serviceId:
+          type: integer
+          format: int64
+          description: 服务单ID（上门维修时）
+        refundId:
+          type: integer
+          format: int64
+          description: 退款单ID
+        createdAt:
+          type: string
+          format: date-time
+          description: 申请时间
+        updatedAt:
+          type: string
+          format: date-time
+          description: 更新时间
+        items:
+          type: array
+          description: 售后商品明细
+          items:
+            $ref: '#/components/schemas/AftersaleItem'
+        packages:
+          type: array
+          description: 物流信息
+          items:
+            $ref: '#/components/schemas/AftersalePackage'
+        progress:
+          type: array
+          description: 服务进度
+          items:
+            $ref: '#/components/schemas/AftersaleProgress'
+        history:
+          type: array
+          description: 处理轨迹（按时间倒序）
+          items:
+            $ref: '#/components/schemas/AftersaleHistory'
+    AftersaleCreateRequest:
+      type: object
+      description: 创建售后请求
+      required:
+        - reason
+        - items
+      properties:
+        reason:
+          type: string
+          description: 售后原因
+        regionId:
+          type: integer
+          format: int64
+          description: 取货地区ID
+        address:
+          type: string
+          description: 取货详细地址
+        contact:
+          type: string
+          description: 联系人
+        mobile:
+          type: string
+          description: 联系电话
+        items:
+          type: array
+          description: 售后商品明细列表
+          items:
+            type: object
+            required:
+              - productId
+              - type
+              - quantity
+            properties:
+              productId:
+                type: integer
+                format: int64
+                description: 商品ID
+              type:
+                type: integer
+                description: 售后类型：0-换货 1-退货 2-寄修 3-上门维修
+                enum:
+                  - 0
+                  - 1
+                  - 2
+                  - 3
+              quantity:
+                type: integer
+                description: 申请数量
+              specificReason:
+                type: string
+                description: 具体原因描述
+              evidenceUrl:
+                type: string
+                description: 售后凭证图片URL
+              serialNo:
+                type: string
+                description: 商品序列号（SN码）
+    Role:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        desc:
+          type: string
+        departId:
+          type: integer
+        gmtCreate:
+          type: string
+        gmtModified:
+          type: string
+        creator:
+          $ref: '#/components/schemas/IDName'
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    AftersaleItem:
+      type: object
+      description: 售后商品明细
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 明细ID
+        aftersaleId:
+          type: integer
+          format: int64
+          description: 售后单ID
+        productId:
+          type: integer
+          format: int64
+          description: 商品ID
+        productName:
+          type: string
+          description: 商品名称
+        productImageUrl:
+          type: string
+          description: 商品图片URL
+        quantity:
+          type: integer
+          description: 数量
+        evidenceUrl:
+          type: string
+          description: 售后凭证图片URL
+        serialNo:
+          type: string
+          description: 商品序列号（SN码）
+        specificReason:
+          type: string
+          description: 具体原因
+        type:
+          type: integer
+          description: 售后类型：0-换货 1-退货 2-寄修 3-上门维修
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+        conclusion:
+          type: string
+          description: 处理结论
+        itemStatus:
+          type: integer
+          description: 明细状态：0-申请中 1-待验收 2-待上门 3-已取消 4-已验收 5-维修中 6-已完成
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+    AftersaleUpdateRequest:
+      type: object
+      description: 修改售后请求
+      properties:
+        reason:
+          type: string
+          description: 售后原因
+        regionId:
+          type: integer
+          format: int64
+          description: 取货地区ID
+        address:
+          type: string
+          description: 取货详细地址
+        contact:
+          type: string
+          description: 联系人
+        mobile:
+          type: string
+          description: 联系电话
+        items:
+          type: array
+          description: 售后商品明细列表（可修改明细信息）
+          items:
+            type: object
+            required:
+              - aftersaleItemId
+            properties:
+              aftersaleItemId:
+                type: integer
+                format: int64
+                description: 售后明细ID
+              quantity:
+                type: integer
+                description: 申请数量
+              specificReason:
+                type: string
+                description: 具体原因描述
+              evidenceUrl:
+                type: string
+                description: 售后凭证图片URL
+              serialNo:
+                type: string
+                description: 商品序列号（SN码）
+    UserRole:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        user:
+          $ref: '#/components/schemas/IDName'
+        role:
+          $ref: '#/components/schemas/IDName'
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtModified:
+          type: string
+    AftersalePackage:
+      type: object
+      description: 售后物流信息
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 记录ID
+        packageId:
+          type: integer
+          format: int64
+          description: 包裹ID
+        aftersaleId:
+          type: integer
+          format: int64
+          description: 售后单ID
+        type:
+          type: integer
+          description: 物流方向：0-商家→顾客 1-顾客→商家
+          enum:
+            - 0
+            - 1
+        logisticsId:
+          type: integer
+          format: int64
+          description: 物流单ID
+        waybillNo:
+          type: string
+          description: 运单号
+    Privilege:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        url:
+          type: string
+        requestType:
+          type: integer
+          format: int32
+        gmtCreate:
+          type: string
+        gmtModified:
+          type: string
+    AftersaleHistory:
+      type: object
+      description: 售后处理轨迹
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 记录ID
+        aftersaleId:
+          type: integer
+          format: int64
+          description: 售后单ID
+        aftersaleItemsId:
+          type: integer
+          format: int64
+          description: 售后明细ID
+        operatorType:
+          type: integer
+          description: 操作者类型：0-系统 1-商户 2-顾客
+          enum:
+            - 0
+            - 1
+            - 2
+        action:
+          type: string
+          description: 操作描述
+        notes:
+          type: string
+          description: 备注
+        createdAt:
+          type: string
+          format: date-time
+          description: 操作时间
+    RolePrivilege:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        role:
+          $ref: '#/components/schemas/IDName'
+        privilege:
+          $ref: '#/components/schemas/IDName'
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtModified:
+          type: string
+    ReviewAftersaleRequest:
+      type: object
+      description: 审核售后请求
+      required:
+        - approved
+      properties:
+        approved:
+          type: boolean
+          description: 是否同意：true-同意 false-拒绝
+        type:
+          type: integer
+          description: 修改后的售后类型（可选，仅同意时可修改）：0-退货 1-换货 2-寄修 3-上门维修
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+        rejectReason:
+          type: string
+          description: 拒绝原因（拒绝时必填）
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+        userName:
+          type: string
+        name:
+          type: string
+        invalid:
+          type: integer
+          description: 0 有效 1 无效
+        gmtCreate:
+          type: string
+        gmtModified:
+          type: string
+        creator:
+          $ref: '#/components/schemas/IDName'
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    InspectionRequest:
+      type: object
+      description: 验收请求
+      required:
+        - passed
+      properties:
+        passed:
+          type: boolean
+          description: 是否验收通过：true-通过 false-不通过
+        failReason:
+          type: string
+          description: 不通过原因（不通过时必填）
+        conclusion:
+          type: string
+          description: 验收结论/备注
+    Cart:
+      type: object
+      properties:
+        id:
+          type: integer
+        product:
+          $ref: '#/components/schemas/SimpleProduct'
+        quantity:
+          type: integer
+        price:
+          type: integer
+          description: 商品被加入购物车时的价格
+        activities:
+          type: array
+          description: 适用的优惠活动
+          items:
+            $ref: '#/components/schemas/SimpleActivity'
+        gmtCreate:
+          type: string
+        gmtModified:
+          type: string
+    Address:
+      description: 地址
+      type: object
+      properties:
+        id:
+          type: integer
+        region:
+          $ref: '#/components/schemas/IDName'
+        address:
+          type: string
+        consignee:
+          type: string
+        mobile:
+          type: string
+        beDefault:
+          type: boolean
+    AftersaleProgress:
+      type: object
+      description: 售后服务进度节点
+      properties:
+        step:
+          type: integer
+          description: 步骤序号
+        name:
+          type: string
+          description: 步骤名称
+        status:
+          type: string
+          description: 步骤状态：completed-已完成 current-进行中 pending-待处理
+          enum:
+            - completed
+            - current
+            - pending
+        time:
+          type: string
+          format: date-time
+          description: 完成时间（未完成时为null）
+        description:
+          type: string
+          description: 步骤描述
+    Aftersale:
+      description: 售后服务
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 售后单id
+        orderItem:
+          $ref: '#/components/schemas/SimpleOrderItem'
+        customer:
+          $ref: '#/components/schemas/IDName'
+        shop:
+          $ref: '#/components/schemas/IDName'
+        aftersaleSn:
+          type: string
+          description: 售后单序号
+        type:
+          type: integer
+          description: 0换货，1退货, 2维修
+        reason:
+          type: string
+          description: 原因
+        conclusion:
+          type: string
+          description: 处理意见
+        quantity:
+          type: integer
+          description: 货物数量
+        consignee:
+          $ref: '#/components/schemas/Consignee'
+        status:
+          type: integer
+          description: 状态
+        product:
+          $ref: '#/components/schemas/IDName'
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    SimpleAftersale:
+      description: 售后服务
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 售后单id
+        aftersaleSn:
+          type: string
+          description: 售后单序号
+        type:
+          type: integer
+          description: 0换货，1退货, 2维修
+        conclusion:
+          type: string
+          description: 处理意见
+        quantity:
+          type: integer
+          description: 货物数量
+        status:
+          type: integer
+          description: 状态
+    ServiceProvider:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          description: 名称
+        consignee:
+          $ref: '#/components/schemas/Consignee'
+        regionList:
+          description: 服务地区
+          type: array
+          items:
+            $ref: '#/components/schemas/IDName'
+        status:
+          type: integer
+        creator:
+          $ref: '#/components/schemas/IDName'
+        deposit:
+          type: integer
+          description: 保证金
+        depositThreshold:
+          type: integer
+          description: 保证金门槛
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    SimpleService:
+      description: 服务单
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: integer
+          description: 0上门 1寄件 2线下
+        consignee:
+          type: string
+          description: 联系人
+    Service:
+      description: 服务单
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: integer
+          description: 0上门 1寄件 2线下
+        consignee:
+          type: string
+          description: 联系人
+        region:
+          $ref: '#/components/schemas/IDName'
+        address:
+          type: string
+          description: 详细地址
+        mobile:
+          type: string
+          description: 联系人电话
+        status:
+          type: string
+        maintainerName:
+          type: string
+          description: 服务人员姓名
+        maintainerMobile:
+          type: string
+          description: 服务人员电话
+        description:
+          type: string
+          description: 描述
+        result:
+          type: string
+          description: 服务结果
+        maintainer:
+          $ref: '#/components/schemas/IDName'
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    SimpleArbitration:
+      description: 仲裁单
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 仲裁单id
+        status:
+          type: integer
+          description: 状态
+        reason:
+          type: string
+          description: 原因
+        result:
+          type: string
+          description: 结果
+        gmtArbitration:
+          type: string
+          format: datetime
+          description: 仲裁日期
+        gmtAccept:
+          type: string
+          format: datetime
+          description: 受理日期
+        applicantType:
+          type: integer
+          description: 申请类型 0 顾客 1 商户
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 申请时间
+    Arbitration:
+      description: 仲裁单
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 仲裁单id
+        status:
+          type: integer
+          description: 状态
+        reason:
+          type: string
+          description: 原因
+        result:
+          type: string
+          description: 结果
+        aftersale:
+          $ref: '#/components/schemas/SimpleAftersale'
+        arbitrator:
+          $ref: '#/components/schemas/IDName'
+        gmtArbitration:
+          type: string
+          format: datetime
+          description: 仲裁日期
+        gmtAccept:
+          type: string
+          format: datetime
+          description: 受理日期
+        applicantType:
+          type: integer
+          description: 申请类型 0 顾客 1 商户
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 申请时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    History:
+      description: 售后轨迹
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 售后轨迹id
+        aftersaleId:
+          type: integer
+          description: 售后单id
+        content:
+          type: string
+          description: 详细信息
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+    MaintainerPageResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            page:
+              type: integer
+            pageSize:
+              type: integer
+            total:
+              type: integer
+            list:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  sn:
+                    type: string
+                  name:
+                    type: string
+                  mobile:
+                    type: string
+                  role:
+                    type: string
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  skill:
+                    type: string
+                  region:
+                    type: string
+    State:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: 状态码
+        name:
+          type: string
+          description: 状态描述
+    MaintainerCreateRequest:
+      type: object
+      required:
+        - name
+        - mobile
+      properties:
+        name:
+          type: string
+          description: 姓名
+        mobile:
+          type: string
+          description: 联系电话
+        skill:
+          type: string
+          description: 技能
+        region:
+          type: string
+          description: 负责区域
+    SimpleOrderItem:
+      description: 订单明细
+      type: object
+      properties:
+        productId:
+          description: 货品 id
+          type: integer
+          format: int64
+        orderId:
+          description: 订单id
+          type: integer
+          format: int64
+        name:
+          description: 商品被下单时的名称
+          type: string
+        quantity:
+          description: 订购数量
+          type: integer
+          format: int32
+        price:
+          description: 下单时商品单价
+          type: integer
+          format: int64
+        discountPrice:
+          description: 优惠后单价
+          type: integer
+          format: int64
+    MaintainerUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        mobile:
+          type: string
+        skill:
+          type: string
+        region:
+          type: string
+        status:
+          type: integer
+    OrderItem:
+      description: 订单明细
+      type: object
+      properties:
+        productId:
+          description: 货品 id
+          type: integer
+          format: int64
+        orderId:
+          description: 订单id
+          type: integer
+          format: int64
+        name:
+          description: 商品被下单时的名称
+          type: string
+        quantity:
+          description: 订购数量
+          type: integer
+          format: int32
+        price:
+          description: 下单时商品单价
+          type: integer
+          format: int64
+        discountPrice:
+          description: 优惠后单价
+          type: integer
+          format: int64
+        activity:
+          $ref: '#/components/schemas/SimpleActivity'
+        coupon:
+          $ref: '#/components/schemas/SimpleCoupon'
+    MaintainerResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            sn:
+              type: string
+            name:
+              type: string
+            mobile:
+              type: string
+            status:
+              type: integer
+            skill:
+              type: string
+            region:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+    SimpleOrderInfo:
+      description: 订单概要信息
+      type: object
+      properties:
+        id:
+          description: 订单id
+          type: integer
+          format: int64
+        status:
+          description: 订单状态
+          type: integer
+          format: int32
+        gmtCreate:
+          description: 订单创建时间
+          type: integer
+          format: timestamp
+        originPrice:
+          description: 订单商品优惠前价格
+          type: integer
+          format: int64
+        discountPrice:
+          description: 订单优惠价格
+          type: integer
+          format: int64
+        expressFee:
+          description: 运费
+          type: integer
+          format: int64
+    MaintainerStatusResponse: &ref_1
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            status:
+              type: integer
+            statusText:
+              type: string
+            updatedAt:
+              type: string
+              format: date-time
+    OrderInfo:
+      description: 订单的完整信息
+      type: object
+      properties:
+        id:
+          description: 订单id
+          type: integer
+          format: int64
+        orderSn:
+          description: 订单序号
+          type: string
+        customer:
+          $ref: '#/components/schemas/IDName'
+        shop:
+          $ref: '#/components/schemas/IDName'
+        status:
+          description: 订单状态
+          type: integer
+          format: int32
+        gmtCreate:
+          description: 订单创建时间
+          type: string
+        gmtModified:
+          description: 订单修改时间
+          type: string
+        originPrice:
+          description: 订单商品优惠前价格
+          type: integer
+          format: int64
+        discountPrice:
+          description: 订单优惠价格
+          type: integer
+          format: int64
+        expressFee:
+          description: 运费
+          type: integer
+          format: int64
+        message:
+          description: 附言
+          type: string
+        consignee:
+          $ref: '#/components/schemas/Consignee'
+        pack:
+          $ref: '#/components/schemas/SimplePackage'
+        orderItems:
+          description: 所有订单内容物的完整信息
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+    Template:
+      description: 运费模板
+      type: object
+      properties:
+        id:
+          description: 运费模板id
+          type: integer
+          format: int64
+        name:
+          description: 卖家定义的运费模板名
+          type: string
+        defaultModel:
+          description: 0产品模板  1默认模板
+          type: integer
+        divideStrategy:
+          description: 分包策略
+          type: string
+        packAlgorithm:
+          description: 装包算法
+          type: string
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    WeightTemplate:
+      description: 重量运费模版内容
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id
+        unit:
+          description: 计量单位（克），在模板中续重按照此单位计算费用
+          type: integer
+        firstWeight:
+          description: 首重(单位克)
+          type: integer
+        firstWeightFreight:
+          description: 首重价格(单位分)
+          type: integer
+        thresholds:
+          description: 计价门槛
+          type: array
+          items:
+            $ref: '#/components/schemas/WeightThreshold'
+        region:
+          $ref: '#/components/schemas/IDName'
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    WeightThreshold:
+      description: 重量明细
+      type: object
+      properties:
+        below:
+          description: 重量以下(单位克)
+          type: integer
+          format: int32
+        price:
+          description: 每单位重量价格(单位分)
+          type: integer
+          format: int32
+    PieceTemplate:
+      description: 按件数运费模版内容
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id
+        region:
+          $ref: '#/components/schemas/IDName'
+        unit:
+          description: 计量单位（个），在模板中续件按照此单位计算费用
+          type: integer
+        firstItem:
+          description: 首件数
+          type: integer
+          format: int32
+        firstItemPrice:
+          description: 首件数目内的运费
+          type: integer
+          format: int64
+        additionalItems:
+          description: 续件数（在续件范围内都按续费收费）
+          type: integer
+          format: int32
+        additionalItemsPrice:
+          description: 续件数目内的运费
+          type: integer
+          format: int64
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    SimpleCoupon:
+      type: object
+      description: 优惠卷
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 优惠卷id
+        activity:
+          $ref: '#/components/schemas/SimpleCouponActivity'
+        name:
+          type: string
+          description: 优惠券名称
+        couponSn:
+          type: string
+          description: 优惠券编号
+    Coupon:
+      type: object
+      description: 优惠卷
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 优惠卷id
+        activity:
+          $ref: '#/components/schemas/SimpleCouponActivity'
+        customerId:
+          type: integer
+          format: int64
+          description: 顾客ID
+        name:
+          type: string
+          description: 优惠券名称
+        couponSn:
+          type: string
+          description: 优惠券编号
+        used:
+          type: integer
+          description: 0 未用 1 已用
+        beginTime:
+          type: string
+          format: datetime
+          description: 优惠卷开始时间
+        endTime:
+          type: string
+          format: datetime
+          description: 优惠卷结束时间
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        creator:
+          $ref: '#/components/schemas/IDName'
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    SimpleCouponActivity:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 活动id
+        name:
+          type: string
+          description: 优惠活动名称
+        quantity:
+          type: integer
+          format: int32
+          description: 优惠券数目，0-不用优惠券
+        couponTime:
+          type: string
+          format: datetime
+          description: 开始领优惠卷时间
+    CouponActivity:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 活动id
+        name:
+          type: string
+          description: 优惠活动名称
+        shop:
+          $ref: '#/components/schemas/IDName'
+        quantity:
+          type: integer
+          format: int32
+          description: 优惠券数目，0-不用优惠券
+        quantityType:
+          type: integer
+          description: 0-每人数量，1-总数控制
+        validTerm:
+          type: integer
+          description: 从领卷起的有效天数，0-与活动同
+        couponTime:
+          type: string
+          format: datetime
+          description: 开始领优惠卷时间
+        strategy:
+          type: string
+          description: 活动规则JSON
+    FullCouponActivity:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 活动id
+        name:
+          type: string
+          description: 优惠活动名称
+        shop:
+          $ref: '#/components/schemas/IDName'
+        quantity:
+          type: integer
+          format: int32
+          description: 优惠券数目，0-不用优惠券
+        quantityType:
+          type: integer
+          description: 0-每人数量，1-总数控制
+        validTerm:
+          type: integer
+          description: 从领卷起的有效天数，0-与活动同
+        couponTime:
+          type: string
+          format: datetime
+          description: 开始领优惠卷时间
+        strategy:
+          type: string
+          description: 活动规则JSON
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        commissionRatio:
+          type: integer
+          format: int32
+          description: 抽佣比例（百分比整数表示）
+        name:
+          type: string
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    SimpleOnsale:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: id
+        price:
+          type: integer
+          format: int64
+          description: 浮动价格（单位分）
+        beginTime:
+          type: string
+          format: datetime
+          description: 开始时间
+        endTime:
+          type: string
+          format: datetime
+          description: 结束时间
+        type:
+          type: integer
+          format: int32
+          description: 0为无活动，1为秒杀，3为预售
+    Onsale:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: id
+        shop:
+          $ref: '#/components/schemas/IDName'
+        product:
+          $ref: '#/components/schemas/IDName'
+        price:
+          type: integer
+          format: int64
+          description: 价格（单位分）
+        beginTime:
+          type: string
+          format: datetime
+          description: 开始时间
+        endTime:
+          type: string
+          format: datetime
+          description: 结束时间
+        quantity:
+          type: integer
+          format: int64
+          description: 可销售的数量
+        maxQuantity:
+          type: integer
+          format: int64
+          description: 单次可销售的数量
+        type:
+          type: integer
+          format: int32
+          description: 0为普通，1为秒杀，3为预售
+        payTime:
+          type: string
+          format: datetime
+          description: 开始支付尾款时间
+        deposit:
+          type: integer
+          format: int64
+          description: 订金（单位分）
+        actList:
+          type: array
+          description: 参与活动
+          items:
+            $ref: '#/components/schemas/SimpleActivity'
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    SimpleActivity:
+      description: 活动
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          format: 活动名称
+        type:
+          type: integer
+          description: 活动类型 0 优惠 1 团购
+    SimpleGrouponActivity:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 活动id
+        name:
+          type: string
+          description: 活动名称
+        beginTime:
+          type: string
+          format: datetime
+          description: 开始时间
+        endTime:
+          type: string
+          format: datetime
+          description: 结束时间
+    GrouponActivity:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 活动id
+        name:
+          type: string
+          description: 活动名称
+        shop:
+          $ref: '#/components/schemas/IDName'
+        thresholds:
+          type: array
+          items:
+            $ref: '#/components/schemas/Threshold'
+    ProviderRegisterRequest:
+      type: object
+      required:
+        - name
+        - category
+        - serviceProducts
+        - address
+        - contactPhone
+        - serviceRange
+        - loginAccount
+        - password
+      properties:
+        name:
+          type: string
+          description: 服务商名称
+        category:
+          type: string
+          description: 服务商类别
+        serviceProducts:
+          type: string
+          description: 服务商品
+        address:
+          type: string
+          description: 公司地址
+        contactPhone:
+          type: string
+          description: 联系电话
+        email:
+          type: string
+          description: 联系邮箱
+        serviceRange:
+          type: string
+          description: 服务范围
+        loginAccount:
+          type: string
+          description: 登录账号
+        password:
+          type: string
+          description: 密码
+        businessLicense:
+          type: string
+          description: 营业执照
+    FullGroupon:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 活动id
+        name:
+          type: string
+          description: 活动名称
+        shop:
+          $ref: '#/components/schemas/IDName'
+        thresholds:
+          type: array
+          items:
+            $ref: '#/components/schemas/Threshold'
+        onsaleList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimpleOnsale'
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    ProviderRegisterResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            name:
+              type: string
+            loginAccount:
+              type: string
+            status:
+              type: integer
+            statusText:
+              type: string
+    Threshold:
+      description: 分享规则
+      type: object
+      properties:
+        quantity:
+          type: integer
+          description: 门槛超过最大门槛按最大值计算
+        percentage:
+          type: integer
+          description: 返点比例（千分位）
+    ProviderAccountInfoResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            name:
+              type: string
+            category:
+              type: string
+            serviceProducts:
+              type: string
+            address:
+              type: string
+            contactPhone:
+              type: string
+            email:
+              type: string
+            serviceRange:
+              type: string
+            businessLicense:
+              type: string
+            status:
+              type: integer
+            statusText:
+              type: string
+            rating:
+              type: number
+              format: double
+    SimpleProductDraft:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Product ID
+        name:
+          type: string
+          description: 货品名称
+        unit:
+          type: string
+          description: 单位
+        originalPrice:
+          type: integer
+          description: 原价(单位分)
+        originPlace:
+          type: string
+          description: 产地
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    ProviderModifyRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        serviceProducts:
+          type: string
+        address:
+          type: string
+        contactPhone:
+          type: string
+        email:
+          type: string
+        businessLicense:
+          type: string
+    ProductDraft:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Product ID
+        shop:
+          $ref: '#/components/schemas/IDName'
+        name:
+          type: string
+          description: 货品名称
+        originalPrice:
+          type: integer
+          description: 原价(单位分)
+        unit:
+          type: string
+          description: 单位
+        originPlace:
+          type: string
+          description: 产地
+        category:
+          $ref: '#/components/schemas/IDName'
+        product:
+          $ref: '#/components/schemas/IDName'
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    ProviderModifyResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            applyId:
+              type: string
+            status:
+              type: string
+            modifyFields:
+              type: array
+              items:
+                type: string
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Product ID
+        shop:
+          $ref: '#/components/schemas/IDName'
+        name:
+          type: string
+          description: 货品名称
+        originalPrice:
+          type: integer
+          description: 原价(单位分)
+        weight:
+          type: integer
+          description: 重量（单位克）
+        price:
+          type: integer
+          description: 售价(单位分)，-1表示暂无报价
+        quantity:
+          type: integer
+          description: 可销售数量
+        maxQuantity:
+          type: integer
+          description: 一次最大购买数量
+        status:
+          type: integer
+          description: 商品状态
+        unit:
+          type: string
+          description: 单位
+        barCode:
+          type: string
+          description: 条码
+        originPlace:
+          type: string
+          description: 产地
+        category:
+          $ref: '#/components/schemas/IDName'
+        freightTemplate:
+          $ref: '#/components/schemas/IDName'
+        otherProducts:
+          type: array
+          description: 相关商品
+          items:
+            $ref: '#/components/schemas/SimpleProduct'
+        actList:
+          type: array
+          description: 当前有效的活动
+          items:
+            $ref: '#/components/schemas/SimpleActivity'
+        freeThreshold:
+          description: 免邮金额，如果是-1 返回商铺默认门槛
+          type: integer
+          format: int64
+        commissionRatio:
+          description: 平台分成比例，百分数
+          type: integer
+          format: int64
+    ServiceAreasModifyRequest:
+      type: object
+      properties:
+        addAreas:
+          type: array
+          items:
+            type: string
+          description: 新增服务区域
+        removeAreas:
+          type: array
+          items:
+            type: string
+          description: 移除服务区域
+    IDName:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Product ID
+        name:
+          type: string
+          description: 名称
+    ServiceAreasModifyResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            currentAreas:
+              type: array
+              items:
+                type: string
+            auditStatus:
+              type: string
+    SimpleProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Product ID
+        name:
+          type: string
+          description: 名称
+        price:
+          type: integer
+          description: 价格
+        quantity:
+          type: integer
+          description: 数量
+        status:
+          type: integer
+          description: 状态
+    FullProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Product ID
+        shop:
+          $ref: '#/components/schemas/IDName'
+        otherProducts:
+          type: array
+          description: 相关商品
+          items:
+            $ref: '#/components/schemas/IDName'
+        name:
+          type: string
+          description: 货品名称
+        skuSn:
+          type: string
+          description: SKU序号
+        originalPrice:
+          type: integer
+          description: 原价(单位分)
+        weight:
+          type: integer
+          description: 重量（单位克）
+        status:
+          type: integer
+          description: 商品状态
+        unit:
+          type: string
+          description: 单位
+        barCode:
+          type: string
+          description: 条码
+        originPlace:
+          type: string
+          description: 产地
+        freeThreshold:
+          description: 免邮金额, -1则返回默认门槛
+          type: integer
+          format: int64
+        commissionRatio:
+          description: 平台分成比例，百分数
+          type: integer
+          format: int64
+        category:
+          $ref: '#/components/schemas/IDName'
+        template:
+          $ref: '#/components/schemas/IDName'
+        shopLogistic:
+          $ref: '#/components/schemas/SimpleLogistics'
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    ProductService:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        beginTime:
+          type: string
+          description: 开始时间
+        endTime:
+          type: string
+          description: 结束时间
+        invalid:
+          type: integer
+          description: 0 有效 1 无效
+        priority:
+          type: integer
+          description: 0 最高
+        product:
+          $ref: '#/components/schemas/IDName'
+        maintainer:
+          $ref: '#/components/schemas/IDName'
+        region:
+          $ref: '#/components/schemas/IDName'
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    Shop:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          description: 名称
+        consignee:
+          $ref: '#/components/schemas/Consignee'
+        status:
+          type: integer
+        creator:
+          $ref: '#/components/schemas/IDName'
+        deposit:
+          type: integer
+          description: 保证金
+        depositThreshold:
+          type: integer
+          description: 保证金门槛
+        freeThreshold:
+          description: 商铺默认免邮金额
+          type: integer
+          format: int64
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    SimpleShopChannel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        subMchid:
+          type: integer
+          description: 子商户号
+        status:
+          type: integer
+          description: 状态
+    ShopChannel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        subMchid:
+          type: integer
+          description: 子商户号
+        status:
+          type: integer
+          description: 状态
+        channel:
+          $ref: '#/components/schemas/SimpleChannel'
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    SimpleChannel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: integer
+          description: 支付渠道名称
+        beginTime:
+          type: string
+          format: datetime
+          description: 开始时间
+        endTime:
+          type: string
+          format: datetime
+          description: 结束时间
+        status:
+          type: integer
+          description: 状态
+    Channel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        spMchid:
+          type: integer
+          description: 平台商户号
+        name:
+          type: integer
+          description: 支付渠道名称
+        beginTime:
+          type: string
+          format: datetime
+          description: 开始时间
+        endTime:
+          type: string
+          format: datetime
+          description: 结束时间
+        status:
+          type: integer
+          description: 状态
+        beanName:
+          type: string
+          description: 适配对象名
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    PayTrans:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 支付id
+        outNo:
+          type: string
+          description: 内部交易号
+        transNo:
+          type: string
+          description: 渠道交易号
+        amount:
+          type: integer
+          description: 支付金额
+        divAmount:
+          type: integer
+          description: 分账金额
+        successTime:
+          type: string
+          format: datetime
+          description: 支付时间
+        prepayId:
+          type: string
+          description: 预支付id
+        inRefund:
+          type: integer
+          description: 退款中
+        channel:
+          $ref: '#/components/schemas/IDName'
+        status:
+          type: integer
+          description: 支付状态
+        timeBegin:
+          type: string
+          format: datetime
+          description: 交易开始时间
+        timeExpire:
+          type: string
+          format: datetime
+          description: 交易结束时间
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+        divTrans:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimpleTrans'
+        refundTransList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimpleRefundTrans'
+        adjustor:
+          $ref: '#/components/schemas/IDName'
+        adjustTime:
+          type: string
+          format: datetime
+          description: 调账时间
+        ledger:
+          $ref: '#/components/schemas/Ledger'
+    SimpleRefundTrans:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 退款id
+        outNo:
+          type: string
+          description: 内部交易号
+        transNo:
+          type: string
+          description: 渠道交易号
+        amount:
+          type: integer
+          description: 退款金额
+        status:
+          type: integer
+          description: 退款状态
+        userReceivedAccount:
+          type: string
+          description: 用户退回账户
+        successTime:
+          type: string
+          format: datetime
+          description: 退款时间
+        adjustor:
+          $ref: '#/components/schemas/IDName'
+        adjustTime:
+          type: string
+          format: datetime
+          description: 调账时间
+    RefundTrans:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 退款id
+        outNo:
+          type: string
+          description: 内部交易号
+        transNo:
+          type: string
+          description: 渠道交易号
+        amount:
+          type: integer
+          description: 退款金额
+        divAmount:
+          type: integer
+          description: 分账退款金额
+        successTime:
+          type: string
+          format: datetime
+          description: 退款时间
+        channel:
+          $ref: '#/components/schemas/SimpleChannel'
+        status:
+          type: integer
+          description: 退款状态
+        userReceivedAccount:
+          type: string
+          description: 用户退回账户
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+        payTrans:
+          $ref: '#/components/schemas/SimpleTrans'
+        divTrans:
+          $ref: '#/components/schemas/SimpleTrans'
+        adjustor:
+          $ref: '#/components/schemas/IDName'
+        adjustTime:
+          type: string
+          format: datetime
+          description: 调账时间
+        ledger:
+          $ref: '#/components/schemas/Ledger'
+    PayResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 支付单id
+        outTradeNo:
+          type: string
+          description: alipay:out_trade_no 商户网站唯一订单号
+        prepayId:
+          type: string
+          description: wepay:prepay_id 预支付单号 alipay:trade_no 该交易在支付宝系统中的交易流水号。最长64位。
+        totalAmount:
+          type: integer
+          description: alipay:total_amount 该笔订单的资金总额，单位为人民币（分）
+        sellerId:
+          type: string
+          description: alipay:seller_id 收款支付宝账号对应的支付宝唯一用户号
+        merchantOrderNo:
+          type: string
+          description: alipay:merchant_order_no 商户原始订单号
+    SimpleTrans:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 回退分账id
+        outNo:
+          type: string
+          description: 内部交易号
+        transNo:
+          type: string
+          description: 渠道交易号
+        amount:
+          type: integer
+          description: 退款金额
+        successTime:
+          type: string
+          format: datetime
+          description: 账目时间
+        channel:
+          $ref: '#/components/schemas/IDName'
+        status:
+          type: integer
+          description: 状态
+        adjustor:
+          $ref: '#/components/schemas/IDName'
+        adjustTime:
+          type: string
+          format: datetime
+          description: 调账时间
+        ledger:
+          $ref: '#/components/schemas/Ledger'
+    DivRefundTrans:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 回退分账id
+        outNo:
+          type: string
+          description: 内部交易号
+        transNo:
+          type: string
+          description: 渠道交易号
+        amount:
+          type: integer
+          description: 退款金额
+        successTime:
+          type: string
+          format: datetime
+          description: 分账回退时间
+        channel:
+          $ref: '#/components/schemas/IDName'
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+        adjustor:
+          $ref: '#/components/schemas/IDName'
+        adjustTime:
+          type: string
+          format: datetime
+          description: 调账时间
+        ledger:
+          $ref: '#/components/schemas/Ledger'
+    DivPayTrans:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 分账id
+        outNo:
+          type: string
+          description: 内部交易号
+        transNo:
+          type: string
+          description: 渠道交易号
+        amount:
+          type: integer
+          description: 退款金额
+        successTime:
+          type: string
+          format: datetime
+          description: 分账时间
+        channel:
+          $ref: '#/components/schemas/IDName'
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+        adjustor:
+          $ref: '#/components/schemas/IDName'
+        adjustTime:
+          type: string
+          format: datetime
+          description: 调账时间
+        ledger:
+          $ref: '#/components/schemas/Ledger'
+    Ledger:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 账目id
+        outNo:
+          type: string
+          description: 内部交易号
+        transNo:
+          type: string
+          description: 渠道交易号
+        amount:
+          type: integer
+          description: 金额
+        checkTime:
+          type: string
+          format: datetime
+          description: 对账时间
+    Region:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          type: integer
+          description: 0有效/1暂停/2废弃
+        level:
+          type: integer
+          description: 级别
+        shortName:
+          type: string
+          description: 简称
+        mergerName:
+          type: string
+          description: 全称
+        pinyin:
+          type: string
+          description: 拼音
+        lng:
+          type: string
+          description: 经度
+        lat:
+          type: string
+          description: 纬度
+        areaCode:
+          type: string
+          description: 地区码
+        zipCode:
+          type: string
+          description: ' 邮政编码'
+        cityCode:
+          type: string
+          description: 电话区号
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    RegionWarehouse:
+      type: object
+      properties:
+        warehouse:
+          $ref: '#/components/schemas/SimpleWarehouse'
+        beginTime:
+          type: string
+          format: datetime
+          description: 起效时间
+        endTime:
+          type: string
+          format: datetime
+          description: 终止时间
+        creator:
+          $ref: '#/components/schemas/IDName'
+        modifier:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+    WarehouseRegion:
+      type: object
+      properties:
+        region:
+          $ref: '#/components/schemas/IDName'
+        beginTime:
+          type: string
+          format: datetime
+          description: 起效时间
+        endTime:
+          type: string
+          format: datetime
+          description: 终止时间
+        creator:
+          $ref: '#/components/schemas/IDName'
+        modifier:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+    Warehouse:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        address:
+          type: string
+          description: 详细地址
+        region:
+          $ref: '#/components/schemas/IDName'
+        senderName:
+          type: string
+          description: 联系人姓名
+        senderMobile:
+          type: string
+          description: 联系人电话
+        invalid:
+          type: integer
+          description: 0有效 1无效
+        priority:
+          type: integer
+          description: 优先级 0 - 优先
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    SimpleWarehouse:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        invalid:
+          type: integer
+          description: 0有效 1无效
+        priority:
+          type: integer
+          description: 优先级 0 - 优先
+    Logistics:
+      description: 物流
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          description: 物流渠道名称
+          type: string
+        appId:
+          description: 平台的应用id
+          type: integer
+        secret:
+          description: 密钥
+          type: string
+        snPattern:
+          description: 运单编号匹配规则
+          type: string
+        creator:
+          $ref: '#/components/schemas/IDName'
+        modifier:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+    SimpleLogistics:
+      description: 物流
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          description: 物流渠道名称
+          type: string
+    ShopLogistics:
+      type: object
+      description: 商铺物流
+      properties:
+        id:
+          type: integer
+        logistics:
+          $ref: '#/components/schemas/SimpleLogistics'
+        invalid:
+          type: integer
+          description: 状态：0有效；1无效
+        secret:
+          description: 密钥
+          type: string
+        priority:
+          description: 优先级（小-优先）
+          type: integer
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        creator:
+          $ref: '#/components/schemas/IDName'
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    WarehouseLogistics:
+      type: object
+      properties:
+        shopLogistics:
+          $ref: '#/components/schemas/ShopLogistics'
+        beginTime:
+          description: 起效时间
+          type: string
+          format: datetime
+        endTime:
+          description: 终止时间
+          type: string
+          format: datetime
+        invalid:
+          description: 状态:0有效/1无效
+          type: integer
+        creator:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+        modifier:
+          $ref: '#/components/schemas/IDName'
+    Package:
+      type: object
+      properties:
+        id:
+          type: integer
+        billCode:
+          type: string
+          description: 运单号
+        logistics:
+          $ref: '#/components/schemas/SimpleLogistics'
+        shipper:
+          $ref: '#/components/schemas/Consignee'
+        receiver:
+          $ref: '#/components/schemas/Consignee'
+        status:
+          type: integer
+          description: 订单状态
+        creator:
+          $ref: '#/components/schemas/IDName'
+        modifier:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+    SimplePackage:
+      type: object
+      properties:
+        id:
+          type: integer
+        billCode:
+          type: string
+          description: 运单号
+    Consignee:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 姓名
+        mobile:
+          type: string
+          description: 电话
+        regionId:
+          type: integer
+          description: 地区id
+        address:
+          type: string
+          description: 详细地址
+    Route:
+      type: object
+      properties:
+        content:
+          type: string
+          description: 内容
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+    Undeliverable:
+      type: object
+      properties:
+        id:
+          type: integer
+        region:
+          $ref: '#/components/schemas/IDName'
+        beginTime:
+          description: 开始时间
+          type: string
+        endTime:
+          description: 结束时间
+          type: string
+        creator:
+          $ref: '#/components/schemas/IDName'
+        modifier:
+          $ref: '#/components/schemas/IDName'
+        gmtCreate:
+          type: string
+          format: datetime
+          description: 创建时间
+        gmtModified:
+          type: string
+          format: datetime
+          description: 修改时间
+    loginBody:
+      properties:
+        userName:
+          type: string
+        password:
+          type: string
+      type: object
+    changeMyAdminselfInfoBody:
+      properties:
+        name:
+          type: string
+        avatar:
+          type: string
+        mobile:
+          type: string
+        email:
+          type: string
+      type: object
+    maintainerFinishBody:
+      properties:
+        result:
+          type: string
+          description: 服务结果描述
+      type: object
+    postPieceTemplatesFreightmodelinfo:
+      type: object
+      properties:
+        unit:
+          description: 计量单位（个），在模板中续件按照此单位计算费用
+          type: integer
+        upperLimit:
+          description: 上限
+          type: integer
+        firstItem:
+          description: 首件数
+          type: integer
+          format: int32
+        firstItemPrice:
+          description: 首件数目内的运费
+          type: integer
+          format: int64
+        additionalItems:
+          description: 续件数（在续件范围内都按续费收费）
+          type: integer
+          format: int32
+        additionalItemsPrice:
+          description: 续件数目内的运费
+          type: integer
+          format: int64
+    postRegionsBody:
+      properties:
+        name:
+          type: string
+        shortName:
+          type: string
+          description: 简称
+        mergerName:
+          type: string
+          description: 全称
+        pinyin:
+          type: string
+          description: 拼音
+        lng:
+          type: string
+          description: 经度
+        lat:
+          type: string
+          description: 纬度
+        areaCode:
+          type: string
+          description: 地区码
+        zipCode:
+          type: string
+          description: ' 邮政编码'
+        cityCode:
+          type: string
+          description: 电话区号
+      type: object
+    postWeightTemplatesFreightmodelinfo:
+      type: object
+      properties:
+        unit:
+          description: 计量单位（克），在模板中续重按照此单位计算费用
+          type: integer
+        upperLimit:
+          description: 上限
+          type: integer
+        firstWeight:
+          description: 首重(单位克)
+          type: integer
+        firstWeightFreight:
+          description: 首重价格(单位分)
+          type: integer
+        thresholds:
+          description: 计价门槛
+          type: array
+          items:
+            $ref: '#/components/schemas/WeightThreshold'
+    undeliverlogisticsBody:
+      properties:
+        beginTime:
+          description: 开始时间
+          type: string
+        endTime:
+          description: 结束时间
+          type: string
+      type: object
+    addWareHouseRegionBody:
+      properties:
+        beginTime:
+          type: string
+          format: datetime
+          description: 起效时间
+        endTime:
+          type: string
+          format: datetime
+          description: 终止时间
+      type: object
+    Body:
+      properties:
+        captcha:
+          type: string
+          description: 验证码
+        newPassword:
+          type: string
+      type: object
+    Body2:
+      properties:
+        beginDate:
+          type: string
+        endDate:
+          type: string
+      type: object
+    ErrorResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 3
+        errmsg:
+          type: string
+          example: 参数值不合法：审核结果不能为空
+    ServiceCreateRequest:
+      type: object
+      required:
+        - serviceName
+        - serviceType
+        - serviceTime
+        - regionId
+        - applicableProductIds
+      properties:
+        serviceName:
+          type: string
+          description: 服务名称
+          example: 空调深度清洗服务
+        serviceType:
+          type: string
+          description: 服务类型（安装/维修/上门安装等）
+          example: 清洗保养
+        serviceTime:
+          type: string
+          description: 服务时间说明，如：周一至周日 09:00-21:00
+          example: 工作日 09:00-18:00
+        description:
+          type: string
+          description: 服务描述
+          example: 提供专业的挂机/柜机空调深度清洗，包含内外机
+        regionId:
+          type: integer
+          format: int64
+          description: 服务地区ID
+          example: 110100
+        applicableProductIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+            example: 5001
+          description: 适用商品ID列表
+          example:
+            - 5001
+            - 5002
+            - 5003
+    ServiceOrderSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          example: SORD-1001
+        serviceId:
+          type: string
+          example: SRV-1001
+        serviceName:
+          type: string
+          example: 电视上门安装标准版
+        product:
+          type: string
+          example: 星河智能电视 75英寸
+        customer:
+          type: string
+          example: 陈女士
+        phone:
+          type: string
+          example: 138****3331
+        region:
+          type: string
+          example: 长三角
+        status:
+          type: string
+          example: pending
+        createdAt:
+          type: string
+          format: date-time
+          example: '2025-11-20T10:00:00.000'
+    ServiceUpdateRequest:
+      type: object
+      properties:
+        serviceName:
+          type: string
+          example: 格力空调上门清洗
+        status:
+          type: integer
+          description: 状态（0禁用/1启用）
+          example: 1
+        serviceType:
+          type: string
+          example: 清洗保养
+        serviceTime:
+          type: string
+          description: 服务时间
+          example: 周一至周日 08:00-20:00
+        providerIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+            example: 8001
+          description: 更新负责该服务的服务商ID列表
+          example:
+            - 8001
+            - 8002
+        regionId:
+          type: integer
+          format: int64
+          example: 110100
+        description:
+          type: string
+          example: 服务内容更新：包含高温蒸汽杀菌
+        applicableProductIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+            example: 5001
+          example:
+            - 5001
+            - 5005
+    ContractBatchResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContractResponse'
+          description: 批量创建的合同列表
+    ServiceResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+              example: 2005
+            serviceName:
+              type: string
+              example: 空调深度清洗服务
+            serviceType:
+              type: string
+              example: 清洗保养
+            description:
+              type: string
+              example: 提供专业的挂机/柜机空调深度清洗
+            regionId:
+              type: integer
+              format: int64
+              example: 110100
+            status:
+              type: integer
+              example: 1
+            createdAt:
+              type: string
+              format: date-time
+              example: '2025-06-01T12:00:00.000'
+            updatedAt:
+              type: string
+              format: date-time
+              example: '2025-06-01T12:00:00.000'
+    ServiceListResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            page:
+              type: integer
+              example: 1
+            pageSize:
+              type: integer
+              example: 10
+            total:
+              type: integer
+              example: 45
+            pages:
+              type: integer
+              example: 5
+            list:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 2005
+                  serviceName:
+                    type: string
+                    example: 空调深度清洗服务
+                  serviceType:
+                    type: string
+                    example: 清洗保养
+                  regionName:
+                    type: string
+                    example: 北京市
+                  status:
+                    type: integer
+                    example: 1
+                  applicableProductCount:
+                    type: integer
+                    example: 3
+                  createdAt:
+                    type: string
+                    format: date-time
+                    example: '2025-06-01T12:00:00.000'
+    ServiceOrderAuditRequest:
+      type: object
+      required:
+        - action
+      properties:
+        action:
+          type: string
+          description: 审核动作：approved 或 rejected
+          example: approved
+        remark:
+          type: string
+          description: 审核备注（可选）
+          example: 客户信息已核实，允许上门
+    ServiceDetailResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+              example: 2005
+            serviceName:
+              type: string
+              example: 空调深度清洗服务
+            serviceType:
+              type: string
+              example: 清洗保养
+            serviceTime:
+              type: string
+              description: 服务时间说明
+              example: 工作日 09:00-18:00
+            description:
+              type: string
+              example: 提供专业的挂机/柜机空调深度清洗，包含内外机
+            regionId:
+              type: integer
+              format: int64
+              example: 110100
+            regionName:
+              type: string
+              example: 北京市
+            status:
+              type: integer
+              example: 1
+            createdAt:
+              type: string
+              format: date-time
+              example: '2025-06-01T12:00:00.000'
+            updatedAt:
+              type: string
+              format: date-time
+              example: '2025-06-02T14:30:00.000'
+            applicableProducts:
+              type: array
+              items:
+                type: object
+                properties:
+                  productId:
+                    type: integer
+                    format: int64
+                    example: 5001
+                  productName:
+                    type: string
+                    example: 格力变频空调1.5匹
+                  productSku:
+                    type: string
+                    example: KFR-35GW
+            relatedContracts:
+              type: array
+              items:
+                type: object
+                properties:
+                  contractId:
+                    type: integer
+                    format: int64
+                    example: 9001
+                  serviceProviderName:
+                    type: string
+                    example: 顺风家电维修公司
+                  status:
+                    type: integer
+                    example: 1
+                  startDate:
+                    type: string
+                    format: date
+                    example: '2025-01-01'
+                  endDate:
+                    type: string
+                    format: date
+                    example: '2026-01-01'
+            auditHistory:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 12
+                  operatorType:
+                    type: integer
+                    example: 0
+                  operationContent:
+                    type: string
+                    example: 创建服务
+                  operationTime:
+                    type: string
+                    format: date-time
+                    example: '2025-06-01T12:00:00.000'
+                  operatorName:
+                    type: string
+                    example: System
+    ServiceOrderResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties: {}
+    ContractCreateRequest:
+      type: object
+      required:
+        - serviceIds
+        - serviceProviderId
+        - regionId
+        - startDate
+        - endDate
+      properties:
+        serviceIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: 服务ID列表（支持批量创建）
+        serviceProviderId:
+          type: integer
+          format: int64
+          description: 服务商ID
+        regionId:
+          type: integer
+          format: int64
+          description: 服务地区ID
+        startDate:
+          type: string
+          format: date
+          description: 合同开始日期
+        endDate:
+          type: string
+          format: date
+          description: 合同结束日期
+        servicePrice:
+          type: number
+          format: double
+          description: 服务价格
+        paymentMethod:
+          type: string
+          description: 付款方式
+        liabilityTerms:
+          type: string
+          description: 责任条款
+        content:
+          type: string
+          description: 合同详细内容
+        contactPerson:
+          type: string
+          description: 联系人
+        contactPhone:
+          type: string
+          description: 联系电话
+    ContractResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            serviceId:
+              type: integer
+              format: int64
+            serviceName:
+              type: string
+            serviceProviderId:
+              type: integer
+              format: int64
+            serviceProviderName:
+              type: string
+            status:
+              type: integer
+              description: 0-申请中 1-生效中 2-暂停 3-取消 4-拒绝
+            createdAt:
+              type: string
+              format: date-time
+    ContractListResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            page:
+              type: integer
+            pageSize:
+              type: integer
+            total:
+              type: integer
+            list:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  serviceName:
+                    type: string
+                  serviceProviderName:
+                    type: string
+                  shopName:
+                    type: string
+                  regionName:
+                    type: string
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  startDate:
+                    type: string
+                    format: date
+                  endDate:
+                    type: string
+                    format: date
+                  contactPerson:
+                    type: string
+                  contactPhone:
+                    type: string
+                  productNames:
+                    type: array
+                    items:
+                      type: string
+                    description: 服务关联的商品名称列表
+                  createdAt:
+                    type: string
+                    format: date-time
+    ContractDetailResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            serviceId:
+              type: integer
+              format: int64
+            serviceName:
+              type: string
+            serviceProviderId:
+              type: integer
+              format: int64
+            serviceProviderName:
+              type: string
+            shopId:
+              type: integer
+              format: int64
+            shopName:
+              type: string
+            regionId:
+              type: integer
+              format: int64
+            regionName:
+              type: string
+            status:
+              type: integer
+            statusText:
+              type: string
+            startDate:
+              type: string
+              format: date
+            endDate:
+              type: string
+              format: date
+            signDate:
+              type: string
+              format: date-time
+              description: 签订时间
+            servicePrice:
+              type: number
+              format: double
+            paymentMethod:
+              type: string
+            liabilityTerms:
+              type: string
+            content:
+              type: string
+            contactPerson:
+              type: string
+            contactPhone:
+              type: string
+            applicableProducts:
+              type: array
+              items:
+                type: object
+                properties:
+                  productId:
+                    type: integer
+                    format: int64
+                  productName:
+                    type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+    RejectServiceOrderRequest:
+      type: object
+      required:
+        - reason
+      properties:
+        reason:
+          type: string
+          description: 拒绝原因（简短）
+        reasonDetail:
+          type: string
+          description: 拒绝原因详细说明
+        evidencePics:
+          type: array
+          items:
+            type: string
+          description: 凭证照片URL列表（如果有）
+    ContractStatusResponse: &ref_0
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            status:
+              type: integer
+            statusText:
+              type: string
+            reason:
+              type: string
+            updatedAt:
+              type: string
+              format: date-time
+    ServiceOrderRejectResponse: *ref_0
+    ServiceOrderListResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            page:
+              type: integer
+            pageSize:
+              type: integer
+            total:
+              type: integer
+            list:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  serviceOrderNo:
+                    type: string
+                  serviceName:
+                    type: string
+                  shopName:
+                    type: string
+                  serviceType:
+                    type: string
+                  regionName:
+                    type: string
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  customerName:
+                    type: string
+                  customerPhone:
+                    type: string
+                  reserveTime:
+                    type: string
+                    format: date-time
+                  createdAt:
+                    type: string
+                    format: date-time
+    ServiceOrderDetailResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            serviceOrderNo:
+              type: string
+            serviceId:
+              type: integer
+              format: int64
+            serviceName:
+              type: string
+            serviceContractId:
+              type: integer
+              format: int64
+            shopId:
+              type: integer
+              format: int64
+            shopName:
+              type: string
+            type:
+              type: integer
+              description: 0上门服务/1寄修服务
+            serviceType:
+              type: string
+            regionId:
+              type: integer
+              format: int64
+            regionName:
+              type: string
+            address:
+              type: string
+            customerName:
+              type: string
+            consignee:
+              type: string
+            customerPhone:
+              type: string
+            mobile:
+              type: string
+            status:
+              type: integer
+            statusText:
+              type: string
+            description:
+              type: string
+            result:
+              type: string
+            productId:
+              type: integer
+              format: int64
+            productName:
+              type: string
+            serialNo:
+              type: string
+            reserveTime:
+              type: string
+              format: date-time
+            deadline:
+              type: string
+              format: date-time
+            priority:
+              type: integer
+              description: 0低/1中/2高
+            priorityText:
+              type: string
+            aftersaleId:
+              type: string
+            orderId:
+              type: string
+            waybillNo:
+              type: string
+            evidencePics:
+              type: array
+              items:
+                type: string
+            maintainerId:
+              type: integer
+              format: int64
+            maintainerName:
+              type: string
+            maintainerMobile:
+              type: string
+            reason:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+    ServiceOrderStatusResponse: *ref_1
+    ServiceOrderAssignResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            status:
+              type: integer
+            statusText:
+              type: string
+            maintainerId:
+              type: integer
+              format: int64
+            maintainerName:
+              type: string
+            maintainerMobile:
+              type: string
+            updatedAt:
+              type: string
+              format: date-time
+    MaintainerListResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            list:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  sn:
+                    type: string
+                  name:
+                    type: string
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  skill:
+                    type: string
+                  region:
+                    type: string
+                  mobile:
+                    type: string
+                  currentServiceOrderId:
+                    type: integer
+                    format: int64
+    MaintainerServiceOrderListResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            page:
+              type: integer
+            pageSize:
+              type: integer
+            total:
+              type: integer
+            list:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  serviceOrderNo:
+                    type: string
+                  shopName:
+                    type: string
+                  serviceType:
+                    type: string
+                  priority:
+                    type: integer
+                  priorityText:
+                    type: string
+                  reserveTime:
+                    type: string
+                    format: date-time
+                  appointmentTime:
+                    type: string
+                    format: date-time
+                    description: 兼容字段（与前端 appointmentTime 对应）
+                  customerName:
+                    type: string
+                  address:
+                    type: string
+                  aftersaleId:
+                    type: string
+                  orderId:
+                    type: string
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+    MaintainerServiceOrderDetailResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            serviceOrderNo:
+              type: string
+            shopName:
+              type: string
+            serviceType:
+              type: string
+            priority:
+              type: integer
+            priorityText:
+              type: string
+            reserveTime:
+              type: string
+              format: date-time
+            appointmentTime:
+              type: string
+              format: date-time
+              description: 兼容字段（与前端 appointmentTime 对应）
+            customerName:
+              type: string
+            customerPhone:
+              type: string
+            address:
+              type: string
+            description:
+              type: string
+            productName:
+              type: string
+            serialNo:
+              type: string
+            aftersaleId:
+              type: string
+            orderId:
+              type: string
+            waybillNo:
+              type: string
+            status:
+              type: integer
+            statusText:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+    ConfirmReceiptRequest:
+      type: object
+      properties:
+        receiptPhotos:
+          type: array
+          items:
+            type: string
+          description: 收件照片URL列表
+        receiptNote:
+          type: string
+          description: 收件备注
+    StartServiceRequest:
+      type: object
+      properties:
+        startLocation:
+          type: object
+          properties:
+            latitude:
+              type: number
+              format: double
+            longitude:
+              type: number
+              format: double
+        startNote:
+          type: string
+          description: 开始服务备注
+    CompleteServiceOrderRequest:
+      type: object
+      required:
+        - result
+      properties:
+        result:
+          type: string
+          description: 服务完成结果
+        evidencePics:
+          type: array
+          items:
+            type: string
+          description: 完成照片URL列表
+        customerSignature:
+          type: string
+          description: 客户签名（Base64）
+        customerRating:
+          type: integer
+          description: 客户评分（1-5）
+        completionNote:
+          type: string
+          description: 完成备注
+    ServiceOrderCompleteResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            status:
+              type: integer
+            statusText:
+              type: string
+            result:
+              type: string
+            updatedAt:
+              type: string
+              format: date-time
+    SendBackServiceOrderRequest:
+      type: object
+      required:
+        - reason
+      properties:
+        reason:
+          type: string
+          description: 退回原因
+        reasonDetail:
+          type: string
+          description: 详细说明
+        evidencePics:
+          type: array
+          items:
+            type: string
+          description: 凭证照片URL列表
+    ServiceOrderSendBackResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            status:
+              type: integer
+            statusText:
+              type: string
+            reason:
+              type: string
+            returnWaybillNo:
+              type: string
+              description: 退回物流单号
+            updatedAt:
+              type: string
+              format: date-time
+    ServiceOrderByWaybillResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            serviceOrderNo:
+              type: string
+            shopName:
+              type: string
+            productName:
+              type: string
+            waybillNo:
+              type: string
+            status:
+              type: integer
+            statusText:
+              type: string
+            customerName:
+              type: string
+            description:
+              type: string
+    ProviderListResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            page:
+              type: integer
+            pageSize:
+              type: integer
+            total:
+              type: integer
+            list:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  name:
+                    type: string
+                  category:
+                    type: string
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  regionName:
+                    type: string
+                  mobile:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+    ProviderDetailResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            name:
+              type: string
+            category:
+              type: string
+            serviceProducts:
+              type: string
+            address:
+              type: string
+            mobile:
+              type: string
+            email:
+              type: string
+            serviceRange:
+              type: string
+            loginAccount:
+              type: string
+            status:
+              type: integer
+            statusText:
+              type: string
+            regionId:
+              type: integer
+              format: int64
+            regionName:
+              type: string
+            legalPerson:
+              type: string
+            type:
+              type: string
+            evidence:
+              type: string
+            consigneeName:
+              type: string
+            description:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+    AuditRequest:
+      type: object
+      required:
+        - approved
+      properties:
+        approved:
+          type: boolean
+          description: 是否通过
+        reason:
+          type: string
+          description: 审核意见/拒绝原因
+    ProviderAuditResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            status:
+              type: integer
+            statusText:
+              type: string
+            reason:
+              type: string
+            auditTime:
+              type: string
+              format: date-time
+    ProviderStatusResponse: *ref_1
+    ProviderCancelResponse:
+      type: object
+      properties:
+        errno:
+          type: integer
+          example: 0
+        errmsg:
+          type: string
+          example: 成功
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            deleted:
+              type: boolean
+            deletedAt:
+              type: string
+              format: date-time
+  responses: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+servers: []
+security: []
