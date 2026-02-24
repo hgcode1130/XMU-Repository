@@ -1,0 +1,45 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Tue Dec  5 20:37:25 2023
+| Host         : X-BELIEVER running 64-bit major release  (build 9200)
+| Command      : report_methodology -file example_6_11_exe_methodology_drc_routed.rpt -pb example_6_11_exe_methodology_drc_routed.pb -rpx example_6_11_exe_methodology_drc_routed.rpx
+| Design       : example_6_11_exe
+| Device       : xc7a75tfgg484-1
+| Speed File   : -1
+| Design State : Fully Routed
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Report Methodology
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: design_1
+      Design limits: <entire design considered>
+             Max violations: <unlimited>
+             Violations found: 2
++-----------+----------+--------------------------+------------+
+| Rule      | Severity | Description              | Violations |
++-----------+----------+--------------------------+------------+
+| TIMING-23 | Warning  | Combinational loop found | 2          |
++-----------+----------+--------------------------+------------+
+
+2. REPORT DETAILS
+-----------------
+TIMING-23#1 Warning
+Combinational loop found  
+A timing loop has been detected on a combinational path. A timing arc has been disabled between led_pin_OBUF[7]_inst_i_1/I0 and led_pin_OBUF[7]_inst_i_1/O to disable the timing loop
+Related violations: <none>
+
+TIMING-23#2 Warning
+Combinational loop found  
+A timing loop has been detected on a combinational path. A timing arc has been disabled between led_pin_OBUF[7]_inst_i_2/I3 and led_pin_OBUF[7]_inst_i_2/O to disable the timing loop
+Related violations: <none>
+
+
